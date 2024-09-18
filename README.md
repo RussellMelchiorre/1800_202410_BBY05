@@ -6,9 +6,9 @@ This browser based web application to ...
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
-* ... Hailey Kim, I'm from Korea
 * ... Tyrone : First Year CST Student
 * ...Russell, First year CST Student from Vancouver ....
+* ... Hailey Kim, I'm from Korea, I'm a cat person
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
