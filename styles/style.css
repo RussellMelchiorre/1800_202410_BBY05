@@ -1,1 +1,21 @@
+.bg-info {
+    background-color: #898989 !important;
+}
 
+.bx.bx-home,
+.bx.bx-time-five,
+.bx.bx-user-circle {
+    font-size: 200%;
+}
+
+.navicons{
+    display: flex;
+    flex-direction: row;
+    color: black;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+}
