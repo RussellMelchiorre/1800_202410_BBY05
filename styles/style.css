@@ -62,3 +62,27 @@ body{
     top: 45px; /* Slide down to show */
   }
   
+  #name-goes-here{
+   
+    font-size: 5vw;
+    text-align: center;
+  }
+
+  #email-goes-here{
+   
+    font-size: 5vw;
+    text-align: center;
+  }
+
+  #profilePhoto{
+    background-color: aqua;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vw;
+    width: 20%;
+    height: 20vw;
+  }
+
+  #display-4{
+    font-size: 5vw;
+  }
