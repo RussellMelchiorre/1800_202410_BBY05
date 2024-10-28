@@ -23,3 +23,20 @@ function getNameFromAuth() {
     });
 }
 getNameFromAuth(); //run the function
+
+//the banner
+
+window.addEventListener("load", function() {
+    const banner = document.getElementById("banner");
+  
+    // Slide down after 1 second
+    setTimeout(() => {
+      banner.classList.add("show");
+  
+      // Slide back up after 3 seconds
+      setTimeout(() => {
+        banner.classList.remove("show");
+      }, 3000);
+    }, 1000);
+  });
+  

@@ -14,6 +14,7 @@
 
 .navbar.navbar-expand-lg{
     border-bottom: 3px solid black;
+    z-index: 2;
 }
 
 .navicons{
@@ -43,3 +44,21 @@ body{
 .navicons{
     height: 50px;
 }
+
+.banner {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 15px;
+    text-align: center;
+    position: absolute; /* Absolute positioning relative to the header */
+    top: -40px; /* Start hidden */
+    left: 0;
+    width: 100%;
+    z-index: 1; /* Keep below header */
+    transition: top 0.5s ease; /* Smooth transition */
+  }
+  
+  .banner.show {
+    top: 45px; /* Slide down to show */
+  }
+  
