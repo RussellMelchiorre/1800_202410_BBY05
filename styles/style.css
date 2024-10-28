@@ -29,7 +29,11 @@
 }
 
 .login{
-    margin-top: 20vh;
+    margin-top: 15vh;
+}
+
+.welcome-text{
+    margin-bottom: 30px;
 }
 
 body{
