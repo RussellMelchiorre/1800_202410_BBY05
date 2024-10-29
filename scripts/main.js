@@ -30,16 +30,23 @@ getNameFromAuth(); //run the function
 //the banner
 
 window.addEventListener("load", function() {
-    const banner = document.getElementById("banner");
-  
-    // Slide down after 1 second
-    setTimeout(() => {
-      banner.classList.add("show");
-  
-      // Slide back up after 3 seconds
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromLogin = urlParams.get('from') === 'login';
+
+  // Only show banner if redirected from login
+  if (fromLogin) {
+      const banner = document.getElementById("banner");
+
+      // Slide down after 1 second
       setTimeout(() => {
-        banner.classList.remove("show");
-      }, 3000);
-    }, 1000);
-  });
+          banner.classList.add("show");
+
+          // Slide back up after 3 seconds
+          setTimeout(() => {
+              banner.classList.remove("show");
+          }, 3000);
+      }, 1000);
+  }
+});
+
   

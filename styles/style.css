@@ -48,7 +48,7 @@ body{
 .banner {
     background-color: #ffcc00;
     color: #333;
-    padding: 15px;
+    padding: 0px;
     text-align: center;
     position: absolute; /* Absolute positioning relative to the header */
     top: -40px; /* Start hidden */
@@ -59,7 +59,7 @@ body{
   }
   
   .banner.show {
-    top: 45px; /* Slide down to show */
+    top: 60px; /* Slide down to show */
   }
   
   #name-goes-here{
