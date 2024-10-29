@@ -86,3 +86,9 @@ body{
   #display-4{
     font-size: 5vw;
   }
+
+  .timerArea{
+    background-color: #ffcc00;
+    height: 70vh;
+    margin: 10%;
+  }
