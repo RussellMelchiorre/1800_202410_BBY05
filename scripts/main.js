@@ -17,7 +17,6 @@ function getNameFromAuth() {
 
             //method #3:  insert using querySelector
             //document.querySelector("#name-goes-here").innerText = userName
-
         } else {
             // No user is signed in.
             console.log ("No user is logged in");
@@ -26,13 +25,28 @@ function getNameFromAuth() {
 }
 getNameFromAuth(); //run the function
 
+var timerStart;
+
+function start() {
+  timerStart = performance.now(); //Holds value of time since the timer started
+}
+
+function updateElapsedTime() {
+  const elapsed = Math.floor((performance.now() - timerStart) / 1000); //Gets the time difference from timerStart and the time now in seconds (1000 milliseconds)
+  document.getElementById("time-goes-here").innerText = elapsed + " seconds ago";
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const fromLogin = urlParams.get('from') === 'login';
+
 if (fromLogin) {
-const toastLiveExample = document.getElementById('liveToast');
-const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-toastBootstrap.show();
+  const toastLiveExample = document.getElementById('liveToast');
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  toastBootstrap.show();
+  
+  start(); //Begins timer
+  setInterval(updateElapsedTime, 1000); //Runs function updateElapsedTime() every second (1000 milliseconds)
 }
 
 
-  
+
