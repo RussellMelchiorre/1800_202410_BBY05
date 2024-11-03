@@ -59,8 +59,8 @@ body {
   height: 20vw;
 }
 
-#display-4 {
-  font-size: 5vw;
+.toast-body {
+  font-size: 3.5vw;
 }
 
 .timerArea {
@@ -81,17 +81,16 @@ body {
 .nav-item .nav-link,
 .card-title,
 .card-text,
-.navbar-toggler,
-a {
+.navbar-toggler {
   color: black !important;
 }
 
 .card {
-  background-color: rgb(248, 248, 248);
+  background-color: #f4f4f4;
 }
 
 .btn-custom {
-  background-color: #5787f6;
+  background-color: #4753b3;
 }
 
 .card{
@@ -101,5 +100,9 @@ a {
 .start-button a{
   text-align: center;
   width: 100%;
+  color: white;
 }
 
+.start-button {
+  color: white;
+}
