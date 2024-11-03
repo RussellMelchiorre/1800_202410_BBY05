@@ -1,94 +1,125 @@
-.bg-info {
-    background-color: #898989 !important;
+body {
+  background-color: #E0E1DD !important;
 }
 
 .bx.bx-home,
 .bx.bx-time-five,
 .bx.bx-user-circle {
-    font-size: 200%;
+  font-size: 200%;
 }
 
-.navbar.fixed-bottom{
-    border-top: 3px solid black;
+.navbar.fixed-bottom {
+  border-top: 3px solid black;
 }
 
-.navbar.navbar-expand-lg{
-    border-bottom: 3px solid black;
-    z-index: 2;
+.navbar.navbar-expand-lg {
+  border-bottom: 3px solid black;
+  z-index: 2;
 }
 
-.navicons{
-    display: flex;
-    flex-direction: row;
-    color: black;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    justify-content: space-evenly;
-    width: 100%;
-    height: 100%;
+.navicons {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
 }
 
-.login{
-    margin-top: 15vh;
+.login {
+  margin-top: 15vh;
 }
 
-.welcome-text{
-    margin-bottom: 30px;
+.welcome-text {
+  margin-bottom: 30px;
 }
 
-body{
-    background-color: white;
-}
-
-.navicons{
-    height: 50px;
+.navicons {
+  height: 50px;
 }
 
 .banner {
-    background-color: #ffcc00;
-    color: #333;
-    padding: 0px;
-    text-align: center;
-    position: absolute; /* Absolute positioning relative to the header */
-    top: -40px; /* Start hidden */
-    left: 0;
-    width: 100%;
-    z-index: 1; /* Keep below header */
-    transition: top 0.5s ease; /* Smooth transition */
-  }
-  
-  .banner.show {
-    top: 60px; /* Slide down to show */
-  }
-  
-  #name-goes-here{
-   
-    font-size: 5vw;
-    text-align: center;
-  }
+  background-color: #1B263B;
+  color: #E0E1DD;
+  padding: 0px;
+  text-align: center;
+  position: absolute;
+  /* Absolute positioning relative to the header */
+  top: -40px;
+  /* Start hidden */
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  /* Keep below header */
+  transition: top 0.5s ease;
+  /* Smooth transition */
+}
 
-  #email-goes-here{
-   
-    font-size: 5vw;
-    text-align: center;
-  }
+.banner.show {
+  top: 60px;
+  /* Slide down to show */
+}
 
-  #profilePhoto{
-    background-color: aqua;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10vw;
-    width: 20%;
-    height: 20vw;
-  }
+#name-goes-here {
 
-  #display-4{
-    font-size: 5vw;
-  }
+  font-size: 5vw;
+  text-align: center;
+  color: #1B263B;
+}
 
-  .timerArea{
-    background-color: #ffcc00;
-    height: 70vh;
-    margin: 10%;
-  }
+#email-goes-here {
+
+  font-size: 5vw;
+  text-align: center;
+  color: #0D1B2A !important;
+}
+
+#profilePhoto {
+  background-color: aqua;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10vw;
+  width: 20%;
+  height: 20vw;
+}
+
+#display-4 {
+  font-size: 5vw;
+}
+
+.timerArea {
+  background-color: #ffcc00;
+  height: 70vh;
+  margin: 10%;
+}
+
+.card-img-overlay {
+  margin-top: 5%;
+}
+
+.custom-navbar {
+  background-color: #0D1B2A;
+}
+
+.custom-navbar .navbar-brand,
+.nav-item .nav-link,
+.card-title,
+.card-text,
+.navbar-toggler,
+a {
+  color: #E0E1DD !important;
+}
+
+.card {
+  background-color: #0D1B2A;
+}
+
+.btn-custom {
+  background-color: #1B263B;
+  border: 0.1px solid rgb(224, 225, 221, 0.5);
+}
+
+
