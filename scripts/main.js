@@ -89,4 +89,3 @@ addButton.addEventListener('click', function () {
     presetTimer.style.display = 'none';
   }
 });
-
