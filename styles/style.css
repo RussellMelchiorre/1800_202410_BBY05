@@ -10,12 +10,16 @@ body {
 
 .navicons {
   display: flex;
+  flex-direction: row;
   color: black;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
 }
+
 
 .login {
   margin-top: 15vh;
@@ -63,10 +67,10 @@ body {
 }
 
 .custom-navbar {
-  background-color: white;
+  background-color: #ffffff;
 }
 
-.custom-navbar .navbar-brand,
+.custom-navbar,
 .nav-item .nav-link,
 .card-title,
 .card-text,
@@ -94,27 +98,4 @@ body {
 
 .start-button {
   color: white;
-}
-
-.dropdown .btn-custom{
-  border-color: transparent !important;
-}
-
-.dropdown .dropdown-item:hover{
-  background-color: #4753b3;
-  color: white;
-}
-
-.preset-timer{
-  position: fixed;
-  margin-top: 9rem;
-  width: 90%;
-  margin-left: 5%;
-}
-
-#addTimerButton{
-  float:right;
-  margin-right:2%;
-  background-color:transparent;
-  font-size: 100%;
 }
