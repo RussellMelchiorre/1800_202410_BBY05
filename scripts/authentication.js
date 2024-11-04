@@ -51,11 +51,13 @@ var uiConfig = {
     const user = firebase.auth().currentUser;
 
     if (user) {
+      const presetName = document.getElementById("presetName").value;
       const hours = document.getElementById("hours").value;
       const minutes = document.getElementById("minutes").value;
       const seconds = document.getElementById("seconds").value;
 
       const timerPreset = {
+        presetName: presetName || "",
         hours: parseInt(hours) || 0,
         minutes: parseInt(minutes) || 0,
         seconds: parseInt(seconds) || 0
