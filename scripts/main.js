@@ -1,27 +1,27 @@
 function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-        // Check if a user is signed in:
-        if (user) {
-            // Do something for the currently logged-in user here: 
-            console.log(user.uid); //print the uid in the browser console
-            console.log(user.displayName);  //print the user name in the browser console
-            userName = user.displayName;
-            userEmail = user.email;
-            //method #1:  insert with JS
-            
-            document.getElementById("name-goes-here").innerText = userName;    
-            document.getElementById("email-goes-here").innerText = userEmail;
+  firebase.auth().onAuthStateChanged(user => {
+    // Check if a user is signed in:
+    if (user) {
+      // Do something for the currently logged-in user here: 
+      console.log(user.uid); //print the uid in the browser console
+      console.log(user.displayName);  //print the user name in the browser console
+      userName = user.displayName;
+      userEmail = user.email;
+      //method #1:  insert with JS
 
-            //method #2:  insert using jquery
-            //$("#name-goes-here").text(userName); //using jquery
+      document.getElementById("name-goes-here").innerText = userName;
+      document.getElementById("email-goes-here").innerText = userEmail;
 
-            //method #3:  insert using querySelector
-            //document.querySelector("#name-goes-here").innerText = userName
-        } else {
-            // No user is signed in.
-            console.log ("No user is logged in");
-        }
-    });
+      //method #2:  insert using jquery
+      //$("#name-goes-here").text(userName); //using jquery
+
+      //method #3:  insert using querySelector
+      //document.querySelector("#name-goes-here").innerText = userName
+    } else {
+      // No user is signed in.
+      console.log("No user is logged in");
+    }
+  });
 }
 getNameFromAuth(); //run the function
 
@@ -43,10 +43,50 @@ if (fromLogin) {
   const toastLiveExample = document.getElementById('liveToast');
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
   toastBootstrap.show();
-  
+
   start(); //Begins timer
   setInterval(updateElapsedTime, 1000); //Runs function updateElapsedTime() every second (1000 milliseconds)
 }
 
 
+const hoursInput = document.getElementById('hours');
+const minutesInput = document.getElementById('minutes');
+const secondsInput = document.getElementById('seconds');
+
+hoursInput.addEventListener('input', function () {
+  if (this.value > 99) {
+    this.value = 99;
+  }
+  if (this.value < 0) {
+    this.value = 0;
+  }
+});
+
+minutesInput.addEventListener('input', function () {
+  if (this.value > 59) {
+    this.value = 59;
+  }
+  if (this.value < 0) {
+    this.value = 0;
+  }
+});
+secondsInput.addEventListener('input', function () {
+  if (this.value > 59) {
+    this.value = 59;
+  }
+  if (this.value < 0) {
+    this.value = 0;
+  }
+});
+
+const addButton = document.getElementById('addTimerButton');
+const presetTimer = document.getElementById('presetTimerContainer');
+
+addButton.addEventListener('click', function () {
+  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
+    presetTimer.style.display = 'block';
+  } else {
+    presetTimer.style.display = 'none';
+  }
+});
 
