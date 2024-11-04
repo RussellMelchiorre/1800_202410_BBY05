@@ -26,10 +26,6 @@ body {
   margin-top: 15vh;
 }
 
-.welcome-text {
-  margin-bottom: 30px;
-}
-
 .navicons {
   height: 50px;
 }
@@ -42,7 +38,7 @@ body {
 }
 
 .toast #name-goes-here {
-  font-size: 3.5vw
+  font-size: 2vh;
 }
 
 #email-goes-here {
@@ -53,7 +49,7 @@ body {
 }
 
 #profilePhoto {
-  background-color: aqua;
+  background-color: #4753b3;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10vw;
@@ -62,7 +58,7 @@ body {
 }
 
 .toast-body {
-  font-size: 3.5vw;
+  font-size: 2vh;
 }
 
 .timerArea {
