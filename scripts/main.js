@@ -82,6 +82,9 @@ secondsInput.addEventListener('input', function () {
 const addButton = document.getElementById('addTimerButton');
 const presetTimer = document.getElementById('presetTimerContainer');
 
+const cancelPreset = document.getElementById('cancelPreset');
+const savePreset = document.getElementById('savePreset');
+
 addButton.addEventListener('click', function () {
   if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
     presetTimer.style.display = 'block';
@@ -89,3 +92,21 @@ addButton.addEventListener('click', function () {
     presetTimer.style.display = 'none';
   }
 });
+
+cancelPreset.addEventListener('click', function () {
+  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
+    presetTimer.style.display = 'block';
+  } else {
+    presetTimer.style.display = 'none';
+  }
+});
+
+savePreset.addEventListener('click', function () {
+  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
+    presetTimer.style.display = 'block';
+  } else {
+    presetTimer.style.display = 'none';
+  }
+});
+
+
