@@ -21,9 +21,7 @@ var uiConfig = {
             
             }).then(function () {
                    console.log("New user added to Firestore");
-
-                   // Initialize friends subcollection with empty arrays for currentFriends and pendingFriends
-                return db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").set({
+                db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").set({
                   currentFriends: [],
                   pendingFriends: []
               });
