@@ -48,8 +48,7 @@ if (fromLogin) {
   setInterval(updateElapsedTime, 1000); //Runs function updateElapsedTime() every second (1000 milliseconds)
 }
 
-
-document.getElementById("addFriendButton").addEventListener("click", function () {
+document.getElementById('addFriendButton').addEventListener('click', function () {
   console.log("Button clicked!"); // Test to see if the button click is registered
   const friendEmail = document.getElementById("friendEmailInput").value;
 
@@ -75,41 +74,6 @@ document.getElementById("addFriendButton").addEventListener("click", function ()
         console.log("invalid email"); 
       }
     });
-  }
-});
-
-
-
-
-
-
-const hoursInput = document.getElementById('hours');
-const minutesInput = document.getElementById('minutes');
-const secondsInput = document.getElementById('seconds');
-
-hoursInput.addEventListener('input', function () {
-  if (this.value > 99) {
-    this.value = 99;
-  }
-  if (this.value < 0) {
-    this.value = 0;
-  }
-});
-
-minutesInput.addEventListener('input', function () {
-  if (this.value > 59) {
-    this.value = 59;
-  }
-  if (this.value < 0) {
-    this.value = 0;
-  }
-});
-secondsInput.addEventListener('input', function () {
-  if (this.value > 59) {
-    this.value = 59;
-  }
-  if (this.value < 0) {
-    this.value = 0;
   }
 });
 
@@ -140,6 +104,36 @@ savePreset.addEventListener('click', function () {
     presetTimer.style.display = 'block';
   } else {
     presetTimer.style.display = 'none';
+  }
+});
+
+const hoursInput = document.getElementById('hours');
+const minutesInput = document.getElementById('minutes');
+const secondsInput = document.getElementById('seconds');
+
+hoursInput.addEventListener('input', function () {
+  if (this.value > 99) {
+    this.value = 99;
+  }
+  if (this.value < 0) {
+    this.value = 0;
+  }
+});
+
+minutesInput.addEventListener('input', function () {
+  if (this.value > 59) {
+    this.value = 59;
+  }
+  if (this.value < 0) {
+    this.value = 0;
+  }
+});
+secondsInput.addEventListener('input', function () {
+  if (this.value > 59) {
+    this.value = 59;
+  }
+  if (this.value < 0) {
+    this.value = 0;
   }
 });
 
