@@ -5,8 +5,8 @@ function getNameFromAuth() {
       // Do something for the currently logged-in user here: 
       console.log(user.uid); //print the uid in the browser console
       console.log(user.displayName);  //print the user name in the browser console
-      userName = user.displayName;
-      userEmail = user.email;
+     const userName = user.displayName;
+     const userEmail = user.email;
       //method #1:  insert with JS
 
       document.getElementById("name-goes-here").innerText = userName;
@@ -48,6 +48,11 @@ if (fromLogin) {
   setInterval(updateElapsedTime, 1000); //Runs function updateElapsedTime() every second (1000 milliseconds)
 }
 
+const addFirendButton = document.getElementById('addFriendButton');
+
+addFriendButton.addEventListener('click', function () {
+  console.log("button test");
+});
 
 const hoursInput = document.getElementById('hours');
 const minutesInput = document.getElementById('minutes');

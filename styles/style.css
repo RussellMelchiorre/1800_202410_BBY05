@@ -148,3 +148,10 @@ body {
   margin-bottom: 5%;
 }
 
+.friendsArea{
+  margin: 20%;
+  text-align: center;
+}
+.form-label-friend{
+  font-size: 5vw;
+}

@@ -17,9 +17,19 @@ var uiConfig = {
             db.collection("users").doc(user.uid).set({  // Write to Firestore using UID as document ID
                    name: user.displayName,
                    email: user.email,
-                   country: "Canada"  // Optional default profile info
+                   country: "Canada" 
+            
             }).then(function () {
                    console.log("New user added to Firestore");
+
+                   // Initialize friends subcollection with empty arrays for currentFriends and pendingFriends
+                return db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").set({
+                  currentFriends: [],
+                  pendingFriends: []
+              });
+          })
+          
+          .then(function () {
                    window.location.assign("main.html?from=login");  // Redirect to main.html after signup
             }).catch(function (error) {
                    console.log("Error adding new user: " + error);
