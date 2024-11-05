@@ -49,6 +49,39 @@ if (fromLogin) {
 }
 
 
+document.getElementById("addFriendButton").addEventListener("click", function () {
+  console.log("Button clicked!"); // Test to see if the button click is registered
+  const friendEmail = document.getElementById("friendEmailInput").value;
+
+  if (friendEmail) {
+
+    const user = firebase.auth().currentUser; // Assume a user is logged in
+    const userId = user.uid;
+
+    // Find user by the entered email
+    db.collection("users").where("email", "==", friendEmail).get().then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const userId = querySnapshot.docs[0].id; // Get the user ID
+
+        console.log("test")
+
+        // Add the logged-in user's email to the pendingFriends array
+        db.collection("users").doc(userId).collection("friends").doc("friendStatus").set({
+          pendingFriends: firebase.firestore.FieldValue.arrayUnion(userId)
+        }, { merge: true }); // Use merge to avoid overwriting existing data
+
+        console.log("requset sent"); 
+      } else {
+        console.log("invalid email"); 
+      }
+    });
+  }
+});
+
+
+
+
+
 
 const hoursInput = document.getElementById('hours');
 const minutesInput = document.getElementById('minutes');
@@ -77,36 +110,6 @@ secondsInput.addEventListener('input', function () {
   }
   if (this.value < 0) {
     this.value = 0;
-  }
-});
-
-const addButton = document.getElementById('addTimerButton');
-const presetTimer = document.getElementById('presetTimerContainer');
-
-const cancelPreset = document.getElementById('cancelPreset');
-const savePreset = document.getElementById('savePreset');
-
-addButton.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
-
-cancelPreset.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
-
-savePreset.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
   }
 });
 
