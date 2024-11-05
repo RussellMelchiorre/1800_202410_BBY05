@@ -48,7 +48,8 @@ if (fromLogin) {
   setInterval(updateElapsedTime, 1000); //Runs function updateElapsedTime() every second (1000 milliseconds)
 }
 
-document.getElementById('addFriendButton').addEventListener('click', function () {
+
+document.getElementById("addFriendButton").addEventListener("click", function () {
   console.log("Button clicked!"); // Test to see if the button click is registered
   const friendEmail = document.getElementById("friendEmailInput").value;
 
@@ -77,35 +78,10 @@ document.getElementById('addFriendButton').addEventListener('click', function ()
   }
 });
 
-const addButton = document.getElementById('addTimerButton');
-const presetTimer = document.getElementById('presetTimerContainer');
 
-const cancelPreset = document.getElementById('cancelPreset');
-const savePreset = document.getElementById('savePreset');
 
-addButton.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
 
-cancelPreset.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
 
-savePreset.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
 
 const hoursInput = document.getElementById('hours');
 const minutesInput = document.getElementById('minutes');
