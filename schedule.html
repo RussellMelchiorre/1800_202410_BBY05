@@ -41,6 +41,7 @@
 
 </head>
 
+
 <body>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
@@ -72,47 +73,39 @@
         </div>
       </div>
     </nav>
-  
-  
       
 
     <!-- The body of your page goes here -->
     <div class="container mt-5">
-      <h2>Add new event</h2>
-      <form id="newEventForm" action="save_schedule.html" method="POST">
-      
-        <div class="mb-3">
-          <label for="eventTitle" class="form-label">Event Title</label>
-          <input type="text" class="form-control" id="eventTitle" name="title" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="startDate" class="form-label">Start Date</label>
-          <input type="datetime-local" class="form-control" id="startDate" name="start_date" required>
-        </div>
-  
-        <div class="mb-3">
-          <label for="endDate" class="form-label">End Date</label>
-          <input type="datetime-local" class="form-control" id="endDate" name="end_date" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="repeat" class="form-label">Repeat</label>
-          <select class="form-select" id="repeat" name="repeat">
-            <option value="none">No Repeat</option>
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="location" class="form-label">Location</label>
-          <input type="text" class="form-control" id="location" name="location">
-        </div>
-  
-        <button type="submit" class="btn btn-primary">Save Event</button>
-      </form>
+        <h2>Add New Event</h2>
+        <form id="newEventForm">
+            <div class="mb-3">
+                <label for="eventTitle" class="form-label">Event Title</label>
+                <input type="text" class="form-control" id="eventTitle" name="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="datetime-local" class="form-control" id="startDate" name="start_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="datetime-local" class="form-control" id="endDate" name="end_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="repeat" class="form-label">Repeat</label>
+                <select class="form-select" id="repeat" name="repeat">
+                    <option value="none">No Repeat</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location">
+            </div>
+            <button type="submit" class="btn btn-primary">Save Event</button>
+        </form>
     </div>
   
 
@@ -138,7 +131,8 @@
     <script src="./scripts/firebaseAPI_TEAM05.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/main.js"></script>
-    <script src="./scripts/authentication.js"></script>
+    <script src="./scripts/script.js"></script>
+    <script src="./scripts/calendar.js"></script>
 
 </body>
 
