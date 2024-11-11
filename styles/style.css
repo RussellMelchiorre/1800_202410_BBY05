@@ -101,26 +101,26 @@ body {
   color: white;
 }
 
-.dropdown .btn-custom{
+.dropdown .btn-custom {
   border-color: transparent !important;
 }
 
-.dropdown .dropdown-item:hover{
+.dropdown .dropdown-item:hover {
   background-color: #4753b3;
   color: white;
 }
 
-.preset-timer{
+.preset-timer {
   position: fixed;
   margin-top: 9rem;
   width: 90%;
   margin-left: 5%;
 }
 
-#addTimerButton{
-  float:right;
-  margin-right:2%;
-  background-color:transparent;
+#addTimerButton {
+  float: right;
+  margin-right: 2%;
+  background-color: transparent;
   font-size: 100%;
 }
 
@@ -128,30 +128,71 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px; 
-  height: 40px; 
-  border-radius: 40px; 
-  background-color: #417ab8; 
+  width: 80px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #417ab8;
 }
 
 .icon-circle i {
-  font-size: 24px; 
-  color: white; 
+  font-size: 24px;
+  color: white;
 }
-.navbar-brandft{
+
+.navbar-brandft {
   margin-top: 5%;
   margin-left: 0%;
   padding: none;
 }
 
-.welcome-text{
+.welcome-text {
   margin-bottom: 5%;
 }
 
-.friendsArea{
-  margin: 20%;
+.friendsArea {
+  padding: 0vw;
+  margin: none;
   text-align: center;
 }
-.form-label-friend{
-  font-size: 5vw;
+
+.form-label-friend {
+  font-size: 4vw;
+}
+
+.friends-section {
+  max-width: 200vw;
+  margin: 10vw auto;
+  padding: 1vw;
+  border: 1vw solid #417ab8;
+  border-radius: 10px;
+  background-color: #e0e1dd;
+}
+
+
+.friends-section h3 {
+  margin-top: 1vw;
+  background-color: #417ab8;
+  color: #ffffff;
+  padding: 1vw;
+}
+
+
+.friends-section input, .friends-section button {
+  width: 100%;
+}
+
+.toast {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#addFriendButton {
+  background-color: #417ab8;
+  color: #ffffff;
+}
+
+.list-group-item {
+  padding: 1vw;
+  border: 5px solid #0D1B2A;
 }
