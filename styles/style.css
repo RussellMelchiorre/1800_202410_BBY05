@@ -175,6 +175,7 @@ body {
   background-color: #417ab8;
   color: #ffffff;
   padding: 1vw;
+  border-radius: 5px;
 }
 
 .friends-section input, .friends-section button {
@@ -188,7 +189,6 @@ body {
 
 .list-group-item {
   padding: 1vw;
-  border: 5px solid #0D1B2A;
 }
 
 .preset-hours,
