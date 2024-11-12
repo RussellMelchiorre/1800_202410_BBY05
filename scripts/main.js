@@ -29,6 +29,7 @@ function showToast(message) {
   new bootstrap.Toast(document.getElementById("basicToast")).show();
 }
 
+
 var timerStart;
 
 function start() {
