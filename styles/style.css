@@ -175,6 +175,7 @@ body {
   background-color: #417ab8;
   color: #ffffff;
   padding: 1vw;
+  border-radius: 5px;
 }
 
 .friends-section input, .friends-section button {
