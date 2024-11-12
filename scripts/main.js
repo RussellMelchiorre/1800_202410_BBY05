@@ -162,3 +162,97 @@ if(toggleButton){
     }
   });
 }});
+
+function updateCalendar() {
+  const now = new Date();
+  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+ 
+  const firstDayOfWeek = firstDayOfMonth.getDay();
+
+  
+  const lastDate = lastDayOfMonth.getDate();
+
+  let calendarDates = [];
+
+ 
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    calendarDates.push('');
+  }
+
+
+  for (let i = 1; i <= lastDate; i++) {
+    calendarDates.push(i);
+  }
+
+
+  while (calendarDates.length % 7 !== 0) {
+    calendarDates.push('');
+  }
+
+
+  const tableBody = document.querySelector('tbody');
+  tableBody.innerHTML = '';
+
+  let row = document.createElement('tr');
+  calendarDates.forEach((date, index) => {
+    if (index % 7 === 0 && index !== 0) {
+      tableBody.appendChild(row);
+      row = document.createElement('tr');
+    }
+    const cell = document.createElement('td');
+    cell.innerHTML = date ? `<p>${date}</p>` : '';
+    row.appendChild(cell);
+  });
+
+  tableBody.appendChild(row);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  updateCalendar();
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      loadUpcomingEvents(); 
+    } else {
+      console.log("No user signed in.");
+    }
+  });
+});
+
+
+function loadUpcomingEvents() {
+  const db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+
+  if (user) {
+    const eventListElement = document.getElementById('eventList');
+    eventListElement.innerHTML = '';
+
+
+    db.collection("users").doc(user.uid).collection("events")
+      .orderBy("start_date")
+      .limit(3)
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const eventData = doc.data();
+          const listItem = document.createElement('li');
+          listItem.classList.add('list-group-item');
+          listItem.innerHTML = `
+            <strong>${eventData.title}</strong><br>
+            ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
+            ${eventData.location}<br>
+            Repeat: ${eventData.repeat}
+          `;
+          eventListElement.appendChild(listItem);
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching events: ", error);
+      });
+  } else {
+    console.log("User is not signed in.");
+  }
+}
