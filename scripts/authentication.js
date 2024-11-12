@@ -54,31 +54,3 @@ var uiConfig = {
   };
 
   ui.start('#firebaseui-auth-container', uiConfig);
-
-  document.getElementById("savePreset").addEventListener("click", function () {
-    const user = firebase.auth().currentUser;
-
-    if (user) {
-      const presetName = document.getElementById("presetName").value;
-      const hours = document.getElementById("hours").value;
-      const minutes = document.getElementById("minutes").value;
-      const seconds = document.getElementById("seconds").value;
-
-      const timerPreset = {
-        presetName: presetName || "",
-        hours: parseInt(hours) || 0,
-        minutes: parseInt(minutes) || 0,
-        seconds: parseInt(seconds) || 0
-      };
-
-      db.collection("users").doc(user.uid).collection("timers").add(timerPreset)
-        .then(function () {
-          console.log("Timer preset saved:", timerPreset);
-        })
-        .catch(function (error) {
-          console.error("Error saving preset timer: ", error);
-        });
-    } else {
-      console.log("No user is signed in.");
-    }
-  });

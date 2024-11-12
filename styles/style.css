@@ -68,7 +68,7 @@ body {
 }
 
 .custom-navbar {
-  background-color: #ffffff;
+  background-color: #f4f4f4;
 }
 
 .custom-navbar,
@@ -176,15 +176,8 @@ body {
   padding: 1vw;
 }
 
-
 .friends-section input, .friends-section button {
   width: 100%;
-}
-
-.toast {
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 #addFriendButton {
@@ -195,4 +188,36 @@ body {
 .list-group-item {
   padding: 1vw;
   border: 5px solid #0D1B2A;
+}
+
+.preset-hours,
+.preset-minutes,
+.preset-seconds {
+  font-size: 300%;
+  display: inline;
+}
+
+.form-check-input {
+  margin-top: 52%;
+}
+
+.form-check-label {
+  margin-top: 40%;
+}
+
+.preset-name {
+  position: relative;
+  text-align: left;
+  left: 5px;
+  top: 10px;
+  font-size: 110%;
+}
+
+.timeContainer {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.list-group-item {
+  padding-top: 5%;
 }

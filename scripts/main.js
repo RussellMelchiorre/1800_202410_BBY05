@@ -58,6 +58,7 @@ const secondsInput = document.getElementById('seconds');
 
 if (hoursInput){
 hoursInput.addEventListener('input', function () {
+  //if user enters value over 99 hours or below 0 hours it is automatically set to corresponding value
   if (this.value > 99) {
     this.value = 99;
   }
@@ -70,6 +71,7 @@ hoursInput.addEventListener('input', function () {
 
 if (minutesInput){
 minutesInput.addEventListener('input', function () {
+  //if user enters value over 59 minutes or below 0 minutes it is automatically set to corresponding value
   if (this.value > 59) {
     this.value = 59;
   }
@@ -81,6 +83,7 @@ minutesInput.addEventListener('input', function () {
 
 if (secondsInput){
 secondsInput.addEventListener('input', function () {
+  //if user enters value over 59 seconds or below 0 seconds it is automatically set to corresponding value
   if (this.value > 59) {
     this.value = 59;
   }
@@ -92,37 +95,69 @@ secondsInput.addEventListener('input', function () {
 
 const addButton = document.getElementById('addTimerButton');
 const presetTimer = document.getElementById('presetTimerContainer');
-
 const cancelPreset = document.getElementById('cancelPreset');
 const savePreset = document.getElementById('savePreset');
+const savedTimerContainers = document.querySelectorAll('.presetTimer');
 
 if(addButton){
-addButton.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
+  addButton.addEventListener('click', function () {
+    if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
+      presetTimer.style.display = 'block';
+      savedTimerContainers.forEach(container => {
+        container.style.display = 'none';
+      });
+    } else {
+      presetTimer.style.display = 'none';
+      savedTimerContainers.forEach(container => {
+        container.style.display = 'block';
+      });
+    }
+  });
 }
 
 if (cancelPreset){
-cancelPreset.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
+  cancelPreset.addEventListener('click', function () {
+    if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
+      presetTimer.style.display = 'block';
+      savedTimerContainers.forEach(container => {
+        container.style.display = 'none';
+      });
+    } else {
+      presetTimer.style.display = 'none';
+      savedTimerContainers.forEach(container => {
+        container.style.display = 'block';
+      });
+    }
+  });
 }
 
 if (savePreset){
-savePreset.addEventListener('click', function () {
-  if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
-    presetTimer.style.display = 'block';
-  } else {
-    presetTimer.style.display = 'none';
-  }
-});
+  savePreset.addEventListener('click', function () {
+    if (presetTimer.style.display === 'none' || presetTimer.style.display === '') {
+      presetTimer.style.display = 'block';
+      savedTimerContainers.forEach(container => {
+        container.style.display = 'none';
+      });
+    } else {
+      presetTimer.style.display = 'none';
+      savedTimerContainers.forEach(container => {
+        container.style.display = 'block';
+      });
+    }
+  });
 }
 
+const toggleButton = document.querySelectorAll('.form-check-input');
+const toggleStatuses = document.querySelectorAll('.form-check-label');
+
+toggleButton.forEach((toggleButton, index) => {
+const toggleStatus = toggleStatuses[index];
+if(toggleButton){
+  toggleButton.addEventListener('change', function () {
+    if(toggleButton.checked) {
+      toggleStatus.textContent = "Active";
+    } else {
+      toggleStatus.textContent = "Inactive";
+    }
+  });
+}});
