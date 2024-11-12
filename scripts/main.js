@@ -202,7 +202,13 @@ function updateCalendar() {
       row = document.createElement('tr');
     }
     const cell = document.createElement('td');
-    cell.innerHTML = date ? `<p>${date}</p>` : '';
+    if (date) {
+      cell.innerHTML = `<p>${date}</p>`;
+      
+      if (date === now.getDate()) {
+        cell.classList.add('highlight-today');
+      }
+    }
     row.appendChild(cell);
   });
 

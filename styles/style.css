@@ -217,3 +217,8 @@ body {
 .timeContainer {
   white-space: nowrap;
 }
+
+.highlight-today {
+  font-weight: bold;
+  color: #2506b0 !important;
+}
