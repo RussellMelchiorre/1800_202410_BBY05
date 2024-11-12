@@ -1,9 +1,8 @@
-/* General Styles */
+
 body {
   background-color: white !important;
 }
 
-<<<<<<< HEAD
 .bx.bx-home,
 .bx.bx-time-five,
 .bx.bx-user-circle {
@@ -73,8 +72,6 @@ body {
   background-color: #f4f4f4;
 }
 
-=======
->>>>>>> a87fbc73f3a58295074a1f66861a92736b358ca7
 .custom-navbar,
 .nav-item .nav-link,
 .card-title,
@@ -83,95 +80,26 @@ body {
   color: black !important;
 }
 
-/* Font Icons */
-.bx.bx-home,
-.bx.bx-time-five,
-.bx.bx-user-circle {
-  font-size: 200%;
-}
-
-/* Navbar Styles */
-.custom-navbar {
-  background-color: #ffffff;
-}
-
-.navicons {
-  display: flex;
-  flex-direction: row;
-  color: black;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  text-align: center;
-}
-
-/* Login Section */
-.login {
-  margin-top: 15vh;
-}
-
-/* Profile & Name Display */
-#name-goes-here {
-  font-size: 5vw;
-  text-align: center;
-  color: #1B263B;
-}
-
-#email-goes-here {
-  font-size: 5vw;
-  text-align: center;
-  color: #0D1B2A !important;
-}
-
-#profilePhoto {
-  background-color: #4753b3;
-  margin: 10vw auto 0 auto;
-  width: 20%;
-  height: 20vw;
-}
-
-/* Toast Styles */
-.toast {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  min-width: 50vw; 
-}
-
-.toast-body {
-  font-size: 3vw;
-  display: inline;
-}
-
-
-.toast #name-goes-here {
-  font-size: 3vw;
-  display: inline;
-}
-
-
-/* Timer Area */
-.timerArea {
-  background-color: #ffcc00;
-  height: 70vh;
-  margin: 10%;
-}
-
-/* Card Styles */
 .card {
   background-color: #f4f4f4;
+}
+
+.btn-custom {
+  background-color: #4753b3;
+}
+
+.card {
   border: none;
 }
 
-.card-img-overlay {
-  margin-top: 5%;
+.start-button a {
+  text-align: center;
+  width: 100%;
+  color: white;
 }
 
-/* Button Styles */
-.btn-custom {
-  background-color: #4753b3;
+.start-button {
+  color: white;
 }
 
 .dropdown .btn-custom {
@@ -183,6 +111,13 @@ body {
   color: white;
 }
 
+.preset-timer {
+  position: fixed;
+  margin-top: 9rem;
+  width: 90%;
+  margin-left: 5%;
+}
+
 #addTimerButton {
   float: right;
   margin-right: 2%;
@@ -190,17 +125,6 @@ body {
   font-size: 100%;
 }
 
-.start-button {
-  color: white;
-}
-
-.start-button a {
-  text-align: center;
-  width: 100%;
-  color: white;
-}
-
-/* Icon Styles */
 .icon-circle {
   display: flex;
   align-items: center;
@@ -216,9 +140,19 @@ body {
   color: white;
 }
 
-/* Friends Section */
+.navbar-brandft {
+  margin-top: 5%;
+  margin-left: 0%;
+  padding: none;
+}
+
+.welcome-text {
+  margin-bottom: 5%;
+}
+
 .friendsArea {
   padding: 0vw;
+  margin: none;
   text-align: center;
 }
 
@@ -235,6 +169,7 @@ body {
   background-color: #e0e1dd;
 }
 
+
 .friends-section h3 {
   margin-top: 1vw;
   background-color: #417ab8;
@@ -242,12 +177,7 @@ body {
   padding: 1vw;
 }
 
-<<<<<<< HEAD
 .friends-section input, .friends-section button {
-=======
-.friends-section input,
-.friends-section button {
->>>>>>> a87fbc73f3a58295074a1f66861a92736b358ca7
   width: 100%;
 }
 
@@ -256,7 +186,6 @@ body {
   color: #ffffff;
 }
 
-<<<<<<< HEAD
 .list-group-item {
   padding: 1vw;
   border: 5px solid #0D1B2A;
@@ -265,7 +194,7 @@ body {
 .preset-hours,
 .preset-minutes,
 .preset-seconds {
-  font-size: 300%;
+  font-size: 200%;
   display: inline;
 }
 
@@ -282,33 +211,9 @@ body {
   text-align: left;
   left: 5px;
   top: 10px;
-  font-size: 110%;
+  font-size: 100%;
 }
 
 .timeContainer {
-  overflow: hidden;
   white-space: nowrap;
 }
-
-.list-group-item {
-  padding-top: 5%;
-}
-=======
-/* Footer */
-.navbar-brandft {
-  margin-top: 5%;
-  padding: none;
-}
-
-.welcome-text {
-  margin-bottom: 5%;
-}
-
-/* Preset Timer */
-.preset-timer {
-  position: fixed;
-  margin-top: 9rem;
-  width: 90%;
-  margin-left: 5%;
-}
->>>>>>> a87fbc73f3a58295074a1f66861a92736b358ca7

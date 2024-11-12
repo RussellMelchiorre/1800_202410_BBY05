@@ -65,17 +65,18 @@
 
   <div id="presetTimerContainer" class="preset-timer" style="display: none;">
     <h1 class="text-center mb-3">Create a Preset Timer</h1>
-    <input type="text" id="presetName" class="form-control" placeholder="Preset Name" style="text-align:Center;">
+    <input type="text" id="presetName" class="form-control" placeholder="Preset Name" style="text-align:Center;"
+      maxlength="18">
     <div class="text-center mt-3">
       <div class="row mb-4">
         <div class="col">
-          <input type="number" id="hours" class="form-control" placeholder="Hours" min="0" max="12">
+          <input type="number" id="hours" class="form-control" placeholder="Hours" min="0" max="99" maxlength="2">
         </div>
         <div class="col">
-          <input type="number" id="minutes" class="form-control" placeholder="Minutes" min="0" max="59">
+          <input type="number" id="minutes" class="form-control" placeholder="Minutes" min="0" max="59" maxlength="25">
         </div>
         <div class="col">
-          <input type="number" id="seconds" class="form-control" placeholder="Seconds" min="0" max="59">
+          <input type="number" id="seconds" class="form-control" placeholder="Seconds" min="0" max="59" maxlength="25">
         </div>
       </div>
       <button id="savePreset" class="btn btn-primary mt-1" style="width: 40%;">Save</button>
@@ -83,107 +84,109 @@
     </div>
   </div>
 
-    <div id="savedTimerContainer" class="presetTimer container mt-4" style="display: block;">
-      <div class="card">
-        <div class="card-header text-center">
-          <h4>Custom Timer Presets</h4>
-        </div>
-        <div class="card-body" style="padding-bottom: 0;">
-          <div id="timerPresets" class="list-group">
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="timeContainer">
-                <span class="preset-name font-weight-bold">Processing...</span>
-                <div class="row mt-2">
-                  <div class="col text-center">
-                    <p class="preset-hours">00 : </p>
-                    <p class="preset-minutes">00 : </p>
-                    <p class="preset-seconds">00</p>
-                    </p>
-                  </div>
+  <div id="savedTimerContainer" class="presetTimer container mt-4" style="display: block;">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4>Custom Timer Presets</h4>
+      </div>
+      <div class="card-body">
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Processing...</span>
+              <div class="row mt-2">
+                <div class="col">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
                 </div>
               </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
-                <label class="form-check-label" for="presetToggle" style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
-              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
             </div>
           </div>
         </div>
-        <div class="card-body" style="padding-bottom: 0;">
-          <div id="timerPresets" class="list-group">
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="timeContainer">
-                <span class="preset-name font-weight-bold">Processing...</span>
-                <div class="row mt-2">
-                  <div class="col text-center">
-                    <p class="preset-hours">00 : </p>
-                    <p class="preset-minutes">00 : </p>
-                    <p class="preset-seconds">00</p>
-                    </p>
-                  </div>
+      </div>
+      <div class="card-body">
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Processing...</span>
+              <div class="row mt-2">
+                <div class="col">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
                 </div>
               </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
-                <label class="form-check-label" for="presetToggle" style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
-              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="saved" class="presetTimer container mt-4" style="display: block;">
-      <div class="card">
-        <div class="card-header text-center">
-          <h4>Study Timer Presets</h4>
-        </div>
-        <div class="card-body" style="padding-bottom: 0;">
-          <div id="timerPresets" class="list-group">
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="timeContainer">
-                <span class="preset-name font-weight-bold">Study | Pomodoro</span>
-                <div class="row mt-2">
-                  <div class="col text-center">
-                    <p class="preset-hours">00 : </p>
-                    <p class="preset-minutes">25 : </p>
-                    <p class="preset-seconds">00</p>
-                    </p>
-                  </div>
+  <div id="saved" class="presetTimer container mt-4" style="display: block;">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4>Study Timer Presets</h4>
+      </div>
+      <div class="card-body">
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Study | Pomodoro</span>
+              <div class="row mt-2">
+                <div class="col text-center">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">25 : </p>
+                  <p class="preset-seconds">00</p>
+                  </p>
                 </div>
-              </div>
-              <div class="form-check form-switch" id="toggleButton">
-                <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
-                <label class="form-check-label" for="presetToggle" style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div id="timerPresets" class="list-group">
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="timeContainer">
-                <span class="preset-name font-weight-bold">Break | Pomodoro</span>
-                <div class="row mt-2">
-                  <div class="col text-center">
-                    <p class="preset-hours">00 : </p>
-                    <p class="preset-minutes">05 : </p>
-                    <p class="preset-seconds">00</p>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="form-check form-switch" id="toggleButton">
-                <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
-                <label class="form-check-label" for="presetToggle" style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
-              </div>
+            <div class="form-check form-switch" id="toggleButton">
+              <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
             </div>
           </div>
         </div>
       </div>
-      <div class="emptySpace" style="padding-bottom: 20%;">
+      <div class="card-body">
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Break | Pomodoro</span>
+              <div class="row mt-2">
+                <div class="col text-center">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">05 : </p>
+                  <p class="preset-seconds">00</p>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch" id="toggleButton">
+              <input class="form-check-input" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:120%;">Inactive</label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="emptySpace" style="padding-bottom: 20%;">
+    </div>
+  </div>
 
 
 
