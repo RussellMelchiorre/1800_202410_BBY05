@@ -1,7 +1,7 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const saveEventForm = document.getElementById('newEventForm');
 
-    saveEventForm.addEventListener('submit', function(event) {
+    saveEventForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
         const eventTitle = document.getElementById('eventTitle').value;
@@ -27,15 +27,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 repeat: repeat,
                 location: location,
             })
-            .then(() => {
-                console.log("Event successfully added to Firestore!");
-                alert("Event successfully added!");
-                saveEventForm.reset();
-            })
-            .catch((error) => {
-                console.error("Error adding event: ", error);
-                alert("Error adding event: " + error.message);
-            });
+                .then(() => {
+                    console.log("Event successfully added to Firestore!");
+                    alert("Event successfully added!");
+                    saveEventForm.reset();
+                })
+                .catch((error) => {
+                    console.error("Error adding event: ", error);
+                    alert("Error adding event: " + error.message);
+                });
         } else {
             alert("Please sign in first!");
         }
