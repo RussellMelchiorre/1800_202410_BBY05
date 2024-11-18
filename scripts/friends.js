@@ -123,7 +123,6 @@ function acceptFriend(friendId) {
   });
 
   db.collection("users").doc(friendId).collection("friends").doc("friendStatus").update({
-    pendingFriends: firebase.firestore.FieldValue.arrayRemove(currentUserId),
     currentFriends: firebase.firestore.FieldValue.arrayUnion(currentUserId)
   });
 

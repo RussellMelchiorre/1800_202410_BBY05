@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       loadUpcomingEvents();
+      loadUpcomingFriendEvents();
     } else {
       console.log("No user signed in.");
     }
@@ -156,3 +157,48 @@ function loadUpcomingEvents() {
     console.log("User is not signed in.");
   }
 }
+
+
+function loadUpcomingFriendEvents() {
+  const db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+
+  if (user) {
+    const eventListElement = document.getElementById('friendsEventList');
+    eventListElement.innerHTML = '';
+
+    // Fetch the current user's current friends
+    db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
+      .then(friendStatusDoc => {
+        const currentFriends = friendStatusDoc.data()?.currentFriends || [];
+
+
+        currentFriends.forEach(friendId => {
+          db.collection("users").doc(friendId).collection("events")
+            .orderBy("start_date")
+            .limit(3)
+            .get()
+            .then(snapshot => {
+              snapshot.forEach(doc => {
+                const eventData = doc.data();
+                const listItem = document.createElement('li');
+                listItem.classList.add('list-group-item');
+                listItem.innerHTML = `
+                  <strong>${eventData.title}</strong><br>
+                  ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
+                  ${eventData.location}<br>
+                  Repeat: ${eventData.repeat}
+                `;
+                eventListElement.appendChild(listItem);
+              });
+            })
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching friend status: ", error);
+      });
+  } else {
+    console.log("User is not signed in.");
+  }
+}
+
