@@ -47,10 +47,12 @@
   <!------------------------------>
 
   <!-- Our own navbar goes here -->
-  <nav id="navbarPlaceholder"></nav>
+  <nav id="navbarPlaceholder" style="position: sticky;"></nav>
+
+  
 
   <!-- The body of your page goes here -->
-  <div class="toast-container position-fixed bottom-1 end-0 p-3">
+  <div class="toast-container position bottom-1 end-0 p-3">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
         <img src="./images/Toast-image.png" class="rounded me-2" alt="...">
@@ -101,7 +103,7 @@
     </ul>
   </div>
 
-  <div id="friendsEvents">
+  <div class="container mt-4" style="padding-bottom: 40%;">
     <h3>Friends' Upcoming Events</h3>
     <ul id="friendsEventList" class="list-group">
       <!-- Friend's events will be added here -->

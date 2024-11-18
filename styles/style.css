@@ -1,5 +1,6 @@
 body {
   background-color: white !important;
+  padding-top: 6rem;
 }
 
 .bx.bx-home,
@@ -226,5 +227,15 @@ body {
 #friendsEvents {
   padding-top: 3%;
   padding-bottom: 40%;
-  margin-left: 3%;
+  margin-left: 12px;
 }
+
+.btn-custom:hover {
+  background-color: #989aca;
+  border-radius: 6px;
+}
+
+.top-shadow {
+  box-shadow: 0 -.5rem 1rem rgba(0,0,0, .15);
+}
+
