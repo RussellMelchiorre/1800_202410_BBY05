@@ -83,10 +83,10 @@ function timeRestriction() {
     hoursInput.addEventListener('input', function () {
       //if user enters value over 99 hours or below 0 hours it is automatically set to corresponding value
       if (this.value > 99) {
-        this.value = 99;
+        this.value = "99";
       }
       if (this.value < 0) {
-        this.value = 0;
+        this.value = "00";
       }
     });
   }
@@ -95,10 +95,10 @@ function timeRestriction() {
     minutesInput.addEventListener('input', function () {
       //if user enters value over 59 minutes or below 0 minutes it is automatically set to corresponding value
       if (this.value > 59) {
-        this.value = 59;
+        this.value = "59";
       }
       if (this.value < 0) {
-        this.value = 0;
+        this.value = "00";
       }
     });
   }
@@ -107,10 +107,10 @@ function timeRestriction() {
     secondsInput.addEventListener('input', function () {
       //if user enters value over 59 seconds or below 0 seconds it is automatically set to corresponding value
       if (this.value > 59) {
-        this.value = 59;
+        this.value = "59";
       }
       if (this.value < 0) {
-        this.value = 0;
+        this.value = "00";
       }
     });
   }
