@@ -64,8 +64,6 @@ function updateCalendar() {
 
 
   const firstDayOfWeek = firstDayOfMonth.getDay();
-
-
   const lastDate = lastDayOfMonth.getDate();
 
   let calendarDates = [];
@@ -85,6 +83,16 @@ function updateCalendar() {
     calendarDates.push('');
   }
 
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June', 
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  const currentMonthName = monthNames[now.getMonth()];
+
+  const monthElement = document.getElementById('currentMonth');
+  if (monthElement) {
+    monthElement.innerText = `${currentMonthName} ${now.getFullYear()}`;
+  }
 
   const tableBody = document.querySelector('tbody');
   tableBody.innerHTML = '';
