@@ -108,10 +108,13 @@ function updateCalendar() {
 
   tableBody.appendChild(row);
 }
-
+const table = document.querySelector('#cal');
+if (table) {
 document.addEventListener('DOMContentLoaded', function () {
-  updateCalendar();
 
+
+  updateCalendar();
+  
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       loadUpcomingEvents();
@@ -159,46 +162,58 @@ function loadUpcomingEvents() {
 }
 
 
+
+// Loads friends' events
 function loadUpcomingFriendEvents() {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
 
   if (user) {
     const eventListElement = document.getElementById('friendsEventList');
-    eventListElement.innerHTML = '';
+    eventListElement.innerHTML = ''; 
 
-    // Fetch the current user's current friends
+    // Get the current user's friends
     db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
       .then(friendStatusDoc => {
         const currentFriends = friendStatusDoc.data()?.currentFriends || [];
 
-
+        // for each friend in the array
         currentFriends.forEach(friendId => {
           db.collection("users").doc(friendId).collection("events")
             .orderBy("start_date")
-            .limit(3)
+            .limit(2)
             .get()
             .then(snapshot => {
               snapshot.forEach(doc => {
                 const eventData = doc.data();
-                const listItem = document.createElement('li');
-                listItem.classList.add('list-group-item');
-                listItem.innerHTML = `
-                  <strong>${eventData.title}</strong><br>
-                  ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
-                  ${eventData.location}<br>
-                  Repeat: ${eventData.repeat}
-                `;
-                eventListElement.appendChild(listItem);
+
+                // Fetch the friend's name
+                db.collection("users").doc(friendId).get()
+                  .then(friendDoc => {
+                    const friendName = friendDoc.data().name;
+
+                    // create items
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item');
+                    listItem.innerHTML = `
+                      <strong>${friendName}'s Event: ${eventData.title}</strong><br>
+                      ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
+                      ${eventData.location}<br>
+                      Repeat: ${eventData.repeat}
+                    `;
+                    eventListElement.appendChild(listItem);
+                  });
               });
-            })
+            });
         });
       })
       .catch(error => {
-        console.error("Error fetching friend status: ", error);
+        console.log("Error fetching events: ", error);
       });
   } else {
     console.log("User is not signed in.");
   }
+}
+
 }
 
