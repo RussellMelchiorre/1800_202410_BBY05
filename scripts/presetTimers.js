@@ -203,9 +203,11 @@ function toggleActiveStatus() {
       toggleButton.addEventListener('change', function () {
         if (toggleButton.checked) {
           toggleStatus.textContent = "Active";
+          toggleButton.disabled = true;
           startCountdown(index);
         } else {
           toggleStatus.textContent = "Inactive";
+          toggleButton.disabled = false;
         }
       });
     }
@@ -225,90 +227,92 @@ function toggleActiveStatus() {
     }
   });
 
-  function startCountdown(index) {
-    const originalHours = parseInt(presetHours[index].textContent.split(' : ')[0]);
-    const originalMinutes = parseInt(presetMinutes[index].textContent.split(' : ')[0]);
-    const originalSeconds = parseInt(presetSeconds[index].textContent);
+function startCountdown(index) {
+  const originalHours = parseInt(presetHours[index].textContent.split(' : ')[0]);
+  const originalMinutes = parseInt(presetMinutes[index].textContent.split(' : ')[0]);
+  const originalSeconds = parseInt(presetSeconds[index].textContent);
 
-    let hours = originalHours;
-    let minutes = originalMinutes;
-    let seconds = originalSeconds;
+  let hours = originalHours;
+  let minutes = originalMinutes;
+  let seconds = originalSeconds;
 
-    let countdownInterval = setInterval(function () {
-      if (seconds > 0) {
-        seconds--;
-      } else if (minutes > 0) {
-        minutes--;
-        seconds = 59;
-      } else if (hours > 0) {
-        hours--;
-        minutes = 59;
-        seconds = 59;
-      }
+  let countdownInterval = setInterval(function () {
+    if (seconds > 0) {
+      seconds--;
+    } else if (minutes > 0) {
+      minutes--;
+      seconds = 59;
+    } else if (hours > 0) {
+      hours--;
+      minutes = 59;
+      seconds = 59;
+    }
 
-      presetHours[index].textContent = formatLeadZero(hours) + " : ";
-      presetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
-      presetSeconds[index].textContent = formatLeadZero(seconds);
+    presetHours[index].textContent = formatLeadZero(hours) + " : ";
+    presetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
+    presetSeconds[index].textContent = formatLeadZero(seconds);
 
-      if (hours === 0 && minutes === 0 && seconds === 0) {
-        clearInterval(countdownInterval);
+    if (hours === 0 && minutes === 0 && seconds === 0) {
+      clearInterval(countdownInterval);
 
-        setTimeout(function () {
-          alert("Time's up!");
+      setTimeout(function () {
+        alert("Time's up!");
 
-          presetHours[index].textContent = formatLeadZero(originalHours) + " : ";
-          presetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
-          presetSeconds[index].textContent = formatLeadZero(originalSeconds);
+        presetHours[index].textContent = formatLeadZero(originalHours) + " : ";
+        presetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
+        presetSeconds[index].textContent = formatLeadZero(originalSeconds);
 
-          toggleButton[index].checked = false;
-          toggleStatuses[index].textContent = "Inactive";
-        }, 500);
-      }
-    }, 1000);
-  }
-
-  function startStudyCountdown(index) {
-    const originalHours = parseInt(studyPresetHours[index].textContent.split(' : ')[0]);
-    const originalMinutes = parseInt(studyPresetMinutes[index].textContent.split(' : ')[0]);
-    const originalSeconds = parseInt(studyPresetSeconds[index].textContent);
-
-    let hours = originalHours;
-    let minutes = originalMinutes;
-    let seconds = originalSeconds;
-
-    let countdownInterval = setInterval(function () {
-      if (seconds > 0) {
-        seconds--;
-      } else if (minutes > 0) {
-        minutes--;
-        seconds = 59;
-      } else if (hours > 0) {
-        hours--;
-        minutes = 59;
-        seconds = 59;
-      }
-
-      studyPresetHours[index].textContent = formatLeadZero(hours) + " : ";
-      studyPresetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
-      studyPresetSeconds[index].textContent = formatLeadZero(seconds);
-
-      if (hours === 0 && minutes === 0 && seconds === 0) {
-        clearInterval(countdownInterval);
-
-        setTimeout(function () {
-          alert("Time's up!");
-
-          studyPresetHours[index].textContent = formatLeadZero(originalHours) + " : ";
-          studyPresetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
-          studyPresetSeconds[index].textContent = formatLeadZero(originalSeconds);
-
-          toggleStudyButton[index].checked = false;
-          toggleStudyStatuses[index].textContent = "Inactive";
-          return;
-        }, 500);
-      }
-    }, 1000);
-  }
+        toggleButton[index].disabled = false;
+        toggleButton[index].checked = false;
+        toggleStatuses[index].textContent = "Inactive";
+      }, 500);
+    }
+  }, 1000);
 }
+
+function startStudyCountdown(index) {
+  const originalHours = parseInt(studyPresetHours[index].textContent.split(' : ')[0]);
+  const originalMinutes = parseInt(studyPresetMinutes[index].textContent.split(' : ')[0]);
+  const originalSeconds = parseInt(studyPresetSeconds[index].textContent);
+
+  let hours = originalHours;
+  let minutes = originalMinutes;
+  let seconds = originalSeconds;
+
+  let countdownInterval = setInterval(function () {
+    if (seconds > 0) {
+      seconds--;
+    } else if (minutes > 0) {
+      minutes--;
+      seconds = 59;
+    } else if (hours > 0) {
+      hours--;
+      minutes = 59;
+      seconds = 59;
+    }
+
+    studyPresetHours[index].textContent = formatLeadZero(hours) + " : ";
+    studyPresetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
+    studyPresetSeconds[index].textContent = formatLeadZero(seconds);
+
+    if (hours === 0 && minutes === 0 && seconds === 0) {
+      clearInterval(countdownInterval);
+
+      setTimeout(function () {
+        alert("Time's up!");
+
+        studyPresetHours[index].textContent = formatLeadZero(originalHours) + " : ";
+        studyPresetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
+        studyPresetSeconds[index].textContent = formatLeadZero(originalSeconds);
+
+        toggleStudyButton[index].disabled = false;
+        toggleStudyButton[index].checked = false;
+        toggleStudyStatuses[index].textContent = "Inactive";
+      }, 500);
+    }
+  }, 1000);
+}
+
+  }
 
 toggleActiveStatus();
