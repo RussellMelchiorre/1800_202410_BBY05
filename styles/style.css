@@ -194,7 +194,10 @@ body {
 
 .preset-hours,
 .preset-minutes,
-.preset-seconds {
+.preset-seconds,
+.study-preset-hours,
+.study-preset-minutes,
+.study-preset-seconds {
   font-size: 200%;
   display: inline;
 }
@@ -207,7 +210,8 @@ body {
   margin-top: 62%;
 }
 
-.preset-name {
+.preset-name,
+.study-preset-name {
   position: relative;
   text-align: left;
   left: 5px;
