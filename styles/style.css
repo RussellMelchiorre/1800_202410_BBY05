@@ -105,9 +105,8 @@ body {
   background-color: #4753b3;
 }
 
-.btn-custom:hover {
-  background-color: #989aca;
-  border-radius: 6px;
+.table-responsive{
+border-radius: 20px;
 }
 
 .start-button {
