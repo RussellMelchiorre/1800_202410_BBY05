@@ -221,7 +221,7 @@ body {
 
 .highlight-today {
   font-weight: bold;
-  color: #2506b0 !important;
+  color: #3c49ff !important;
 }
 
 #friendsEvents {
@@ -255,4 +255,13 @@ body {
   border: 2px solid black;
   background-color: #f4f4f4;
   border-radius: 5px;
+}
+
+.event-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #989898;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }

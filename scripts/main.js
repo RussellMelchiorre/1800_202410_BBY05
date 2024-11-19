@@ -57,6 +57,25 @@ function trackToastTime() {
 
 trackToastTime();
 
+///////////////////////////////////////////////////////////
+document.addEventListener("DOMContentLoaded", function() {
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log('User signed in:', user.uid);
+      updateCalendar();
+      loadUpcomingEvents();
+      loadUpcomingFriendEvents();
+    }
+    else {
+      console.log("No user signed in.");
+    }
+  });
+});
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+//calendar
 function updateCalendar() {
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -110,30 +129,64 @@ function updateCalendar() {
       if (date === now.getDate()) {
         cell.classList.add('highlight-today');
       }
+
+      checkIfEventOnDate(date, cell);
     }
     row.appendChild(cell);
   });
-
   tableBody.appendChild(row);
 }
-const table = document.querySelector('#cal');
-if (table) {
-document.addEventListener('DOMContentLoaded', function () {
+///////////////////////////////////////////////////////////
 
 
-  updateCalendar();
-  
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      loadUpcomingEvents();
-      loadUpcomingFriendEvents();
-    } else {
-      console.log("No user signed in.");
-    }
-  });
-});
+///////////////////////////////////////////////////////////
+function checkIfEventOnDate(date, cell) {
+  const user = firebase.auth().currentUser;
+
+  if (!user) {
+    console.log("No user is signed in.");
+    return;
+  }
+
+    console.log(`Checking events for date: ${date}`);
+
+    const db = firebase.firestore();
+    const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0);
+    const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
+
+    console.log(`Looking for events from ${eventDateStart} to ${eventDateEnd}`); 
+
+    db.collection("users").doc(user.uid).collection("events")
+    .get()
+    .then(snapshot => {
+      if (!snapshot.empty) {
+        snapshot.docs.forEach(doc => {
+          const eventData = doc.data();
+          const eventStartDateStr = eventData.start_date;
+          const eventStartDate = new Date(eventStartDateStr);
+
+          if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
+            console.log(`Found event for date ${date}:`, eventData);
+            
+            const eventDot = document.createElement('div');
+            eventDot.classList.add('event-dot');
+            cell.classList.add('highlight-event');
+            cell.appendChild(eventDot);
+          }
+        });
+      }
+      else {
+        console.log(`No events found for date ${date}`);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching events: ", error);
+    });
+  }
+///////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////////////////
 function loadUpcomingEvents() {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
@@ -168,7 +221,7 @@ function loadUpcomingEvents() {
     console.log("User is not signed in.");
   }
 }
-
+///////////////////////////////////////////////////////////
 
 
 // Loads friends' events
@@ -222,6 +275,3 @@ function loadUpcomingFriendEvents() {
     console.log("User is not signed in.");
   }
 }
-
-}
-
