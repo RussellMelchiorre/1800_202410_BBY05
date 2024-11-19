@@ -42,20 +42,25 @@ body {
 
 .toast {
   position: fixed;
-  top: 10%;
+  top: 12%;
   right: 2%;
-  background-color: #417ab8;
-  color: white;
-  padding: 1vw;
+  color: black;
+  background-color: rgb(255, 255, 255, 0.9);
+  padding: 0.2vw;
   border-radius: 5px;
-  font-size: 5vw;
+  font-size: 2vw;
+  width: 45vw;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.toast-header {
+  background-color: rgb(255, 255, 255, 0.9);
 }
 
 .toast #name-goes-here,
 #time-goes-here {
-  font-size: 2vh;
-  color: #ffffff !important;
+  font-size: 2vw;
+  color: #000000 !important;
 }
 
 #profilePhoto {
@@ -67,11 +72,7 @@ body {
 }
 
 .me-auto {
-  color: #ffffff;
-}
-
-.toast-header {
-  background-color: #417ab8;
+  color: #000000;
 }
 
 .timerArea {
@@ -117,6 +118,7 @@ border-radius: 20px;
 
 .dropdown .btn-custom {
   border-color: transparent !important;
+  margin-left: 2%;
 }
 
 .dropdown .dropdown-item:hover {
@@ -297,8 +299,6 @@ border-radius: 20px;
   background-color: #417ab8;
 }
 
-
-
 .index-card {
   width: 90%;
   max-width: 400px;
@@ -343,7 +343,7 @@ body::before {
   top: 0;
   left: 0;
   width: 100%;
-  height: 300px;
+  height: 250px;
   background: linear-gradient(to bottom, #417ab8, transparent);
   z-index: -1;
 }
