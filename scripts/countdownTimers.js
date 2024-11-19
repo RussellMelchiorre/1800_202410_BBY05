@@ -28,7 +28,7 @@ function timeRestriction() {
           this.value = "99";
         }
         if (this.value < 0) {
-          this.value = "00";
+          this.value = "0";
         }
       });
     }
@@ -40,7 +40,7 @@ function timeRestriction() {
           this.value = "59";
         }
         if (this.value < 0) {
-          this.value = "00";
+          this.value = "0";
         }
       });
     }
@@ -52,7 +52,7 @@ function timeRestriction() {
           this.value = "59";
         }
         if (this.value < 0) {
-          this.value = "00";
+          this.value = "0";
         }
       });
     }
@@ -67,7 +67,7 @@ function timeRestriction() {
 
             if(isNaN(currentValue)) {
                 prevHour.textContent = "99";
-                nextHour.textContent = "01";
+                nextHour.textContent = "1";
                 return;
             }
             if(currentValue === 0) {
@@ -76,7 +76,7 @@ function timeRestriction() {
                 prevHour.textContent = currentValue - 1;
             }
             if(currentValue === 99) {
-                nextHour.textContent = "00";
+                nextHour.textContent = "0";
             } else {
                 nextHour.textContent = currentValue + 1;
             }
@@ -89,7 +89,7 @@ function timeRestriction() {
 
             if(isNaN(currentValue)) {
                 prevMinute.textContent = "59";
-                nextMinute.textContent = "01";
+                nextMinute.textContent = "1";
                 return;
             }
             if(currentValue === 0) {
@@ -98,7 +98,7 @@ function timeRestriction() {
                 prevMinute.textContent = currentValue - 1;
             }
             if(currentValue === 59) {
-                nextMinute.textContent = "00";
+                nextMinute.textContent = "0";
             } else {
                 nextMinute.textContent = currentValue + 1;
             }
@@ -111,7 +111,7 @@ function timeRestriction() {
 
             if(isNaN(currentValue)) {
                 prevSecond.textContent = "59";
-                nextSecond.textContent = "01";
+                nextSecond.textContent = "1";
                 return;
             }
             if(currentValue === 0) {
@@ -120,7 +120,7 @@ function timeRestriction() {
                 prevSecond.textContent = currentValue - 1;
             }
             if(currentValue === 59) {
-                nextSecond.textContent = "00";
+                nextSecond.textContent = "0";
             } else {
                 nextSecond.textContent = currentValue + 1;
             }
@@ -175,7 +175,7 @@ function timeRestriction() {
 
         if (isNaN(currentValue)) {
             prevHour.textContent = "99";
-            nextHour.textContent = "01";
+            nextHour.textContent = "1";
             return;
         }
 
@@ -186,7 +186,7 @@ function timeRestriction() {
         }
 
         if (currentValue === 99) {
-            nextHour.textContent = "00";
+            nextHour.textContent = "0";
         } else {
             nextHour.textContent = currentValue + 1;
         }
@@ -197,7 +197,7 @@ function timeRestriction() {
 
         if (isNaN(currentValue)) {
             prevMinute.textContent = "59";
-            nextMinute.textContent = "01";
+            nextMinute.textContent = "1";
             return;
         }
 
@@ -208,7 +208,7 @@ function timeRestriction() {
         }
 
         if (currentValue === 59) {
-            nextMinute.textContent = "00";
+            nextMinute.textContent = "0";
         } else {
             nextMinute.textContent = currentValue + 1;
         }
@@ -219,7 +219,7 @@ function timeRestriction() {
 
         if (isNaN(currentValue)) {
             prevSecond.textContent = "59";
-            nextSecond.textContent = "01";
+            nextSecond.textContent = "1";
             return;
         }
 
@@ -230,7 +230,7 @@ function timeRestriction() {
         }
 
         if (currentValue === 59) {
-            nextSecond.textContent = "00";
+            nextSecond.textContent = "0";
         } else {
             nextSecond.textContent = currentValue + 1;
         }
