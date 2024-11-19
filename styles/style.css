@@ -1,5 +1,5 @@
 body {
-  background-color: white !important;
+  background-color: white;
   padding-top: 6rem;
 }
 
@@ -13,49 +13,65 @@ body {
   display: flex;
   padding: 0;
   flex-direction: row;
-  color: black;
   align-items: center;
-  justify-content: center;
-  justify-content: space-around;
-  text-align: center;
   justify-content: space-evenly;
   width: 100%;
   height: 100%;
+  color: black;
+  text-align: center;
 }
 
 .login {
   margin-top: 15vh;
 }
 
-#name-goes-here {
-
+#name-goes-here,
+#email-goes-here {
   font-size: 5vw;
   text-align: center;
-  color: #1B263B;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.toast #name-goes-here {
-  font-size: 2vh;
+#name-goes-here {
+  color: #1b263b;
 }
 
 #email-goes-here {
+  color: #0d1b2a !important;
+}
 
+.toast {
+  position: fixed;
+  top: 10%;
+  right: 2%;
+  background-color: #417ab8;
+  color: white;
+  padding: 1vw;
+  border-radius: 5px;
   font-size: 5vw;
-  text-align: center;
-  color: #0D1B2A !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.toast #name-goes-here,
+#time-goes-here {
+  font-size: 2vh;
+  color: #ffffff !important;
 }
 
 #profilePhoto {
-  background-color: #4753b3;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10vw;
+  background-color: #417ab8;
+  margin: 10vw auto 0;
   width: 20%;
   height: 20vw;
+  border-radius: 50%;
 }
 
-.toast-body {
-  font-size: 2vh;
+.me-auto {
+  color: #ffffff;
+}
+
+.toast-header {
+  background-color: #417ab8;
 }
 
 .timerArea {
@@ -68,7 +84,8 @@ body {
   margin-top: 5%;
 }
 
-.custom-navbar {
+.custom-navbar,
+.card {
   background-color: #f4f4f4;
 }
 
@@ -81,24 +98,21 @@ body {
 }
 
 .card {
-  background-color: #f4f4f4;
+  border: none;
 }
 
 .btn-custom {
   background-color: #4753b3;
 }
 
-.card {
-  border: none;
-}
-
-.start-button a {
-  text-align: center;
-  width: 100%;
-  color: white;
+.btn-custom:hover {
+  background-color: #989aca;
+  border-radius: 6px;
 }
 
 .start-button {
+  text-align: center;
+  width: 100%;
   color: white;
 }
 
@@ -111,11 +125,11 @@ body {
   color: white;
 }
 
-.preset-timer {
+.preset-timer,
+.countdownTimer {
   position: fixed;
-  margin-top: 6rem;
   width: 90%;
-  margin-left: 5%;
+  margin: 6rem 5% 0;
 }
 
 #addTimerButton {
@@ -142,8 +156,6 @@ body {
 
 .navbar-brandft {
   margin-top: 5%;
-  margin-left: 0%;
-  padding: none;
 }
 
 .welcome-text {
@@ -151,8 +163,7 @@ body {
 }
 
 .friendsArea {
-  padding: 0vw;
-  margin: none;
+  padding: 0;
   text-align: center;
 }
 
@@ -161,31 +172,51 @@ body {
 }
 
 .friends-section {
-  max-width: 200vw;
-  margin: 10vw auto;
-  padding: 1vw;
-  border: 1vw solid #417ab8;
+  max-width: 800px;
+  margin: 0 auto 100px;
+  padding: 2rem;
   border-radius: 10px;
-  background-color: #e0e1dd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.friends-section h1 {
+  color: #417ab8;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
 
 .friends-section h3 {
-  margin-top: 1vw;
   background-color: #417ab8;
-  color: #ffffff;
-  padding: 1vw;
-  border-radius: 5px;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 
-.friends-section input,
-.friends-section button {
+.friendsArea input,
+.friendsArea button,
+#addFriendButton {
   width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 20px;
+  border: 1px solid #000;
 }
 
 #addFriendButton {
   background-color: #417ab8;
   color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0.7rem;
+  border: none;
+}
+
+#pendingFriendsList,
+#currentFriendsList {
+  border-radius: 20px;
 }
 
 .list-group-item {
@@ -230,22 +261,6 @@ body {
   margin-left: 12px;
 }
 
-.btn-custom:hover {
-  background-color: #989aca;
-  border-radius: 6px;
-}
-
-.top-shadow {
-  box-shadow: 0 -.5rem 1rem rgba(0,0,0, .15);
-}
-
-.countdownTimer {
-  position: fixed;
-  margin-top: 2rem;
-  width: 90%;
-  margin-left: 5%;
-}
-
 #upHours,
 #upMinutes,
 #upSeconds,
@@ -255,4 +270,17 @@ body {
   border: 2px solid black;
   background-color: #f4f4f4;
   border-radius: 5px;
+}
+
+#newEventButton {
+  background-color: #417ab8;
+  border-radius: 20px;
+}
+
+.top-shadow {
+  box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+#startTimer{
+  background-color: #417ab8;
 }
