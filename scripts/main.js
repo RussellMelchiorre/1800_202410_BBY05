@@ -58,14 +58,18 @@ function trackToastTime() {
 trackToastTime();
 
 ///////////////////////////////////////////////////////////
+const CalenderExists = document.getElementById('cal');
+
 document.addEventListener("DOMContentLoaded", function() {
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log('User signed in:', user.uid);
+      if(CalenderExists){
       updateCalendar();
       loadUpcomingEvents();
       loadUpcomingFriendEvents();
+      }
     }
     else {
       console.log("No user signed in.");
@@ -76,6 +80,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 ///////////////////////////////////////////////////////////
 //calendar
+
+//checks if calendar exists before calling 
+if (CalenderExists){
+
 function updateCalendar() {
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -136,6 +144,7 @@ function updateCalendar() {
   });
   tableBody.appendChild(row);
 }
+}
 ///////////////////////////////////////////////////////////
 
 
@@ -187,6 +196,8 @@ function checkIfEventOnDate(date, cell) {
 
 
 ///////////////////////////////////////////////////////////
+//checks if calendar exists before calling 
+if (CalenderExists){
 function loadUpcomingEvents() {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
@@ -221,8 +232,10 @@ function loadUpcomingEvents() {
     console.log("User is not signed in.");
   }
 }
+}
 ///////////////////////////////////////////////////////////
-
+//checks if calendar exists before calling 
+if (CalenderExists){
 
 // Loads friends' events
 function loadUpcomingFriendEvents() {
@@ -274,4 +287,5 @@ function loadUpcomingFriendEvents() {
   } else {
     console.log("User is not signed in.");
   }
+}
 }
