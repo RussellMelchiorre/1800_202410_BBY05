@@ -238,7 +238,7 @@ function loadUpcomingFriendEvents() {
       .then(friendStatusDoc => {
         const currentFriends = friendStatusDoc.data()?.currentFriends || [];
 
-        // for each friend in the array
+        
         currentFriends.forEach(friendId => {
           db.collection("users").doc(friendId).collection("events")
             .orderBy("start_date")
