@@ -352,7 +352,6 @@ body::before {
   box-shadow: none;
 }
 
-<<<<<<< HEAD
 .timerButtons {
   display: flex;
   justify-content: space-evenly;
@@ -375,8 +374,6 @@ body::before {
 .presetTimerButtons a {
   margin-right: 2rem;
 }
-=======
 .mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-password-sign-in{
   box-shadow: none;
->>>>>>> daf17e56a754e9c03ce752abfba1f523799174a5
 }
