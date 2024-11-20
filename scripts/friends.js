@@ -1,4 +1,8 @@
 // for sending friend requsets, watches for the button click
+
+const FriendsExists = document.getElementById('addFriendButton');
+
+if (FriendsExists){
 document.getElementById("addFriendButton").addEventListener("click", function () {
   //takes the email from the form
   const friendEmail = document.getElementById("friendEmailInput").value;
@@ -30,7 +34,7 @@ document.getElementById("addFriendButton").addEventListener("click", function ()
     });
   }
 });
-
+}
 // listens for user login or logout
 firebase.auth().onAuthStateChanged(user => {
   // checks if user is logged in
@@ -67,7 +71,9 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 
+const FriendsListExists = document.getElementById('addFriendButton');
 
+if (FriendsListExists){
 // monitors friend requests and shows pending friends
 firebase.auth().onAuthStateChanged(user => {
   // checks if user is logged in
@@ -111,6 +117,7 @@ firebase.auth().onAuthStateChanged(user => {
       });
   }
 });
+}
 
 // accepts a friend request
 function acceptFriend(friendId) {
