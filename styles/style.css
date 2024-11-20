@@ -297,6 +297,7 @@ border-radius: 20px;
 
 #startTimer{
   background-color: #417ab8;
+  border-radius: 20px;
 }
 
 .index-card {
@@ -352,31 +353,17 @@ body::before {
   box-shadow: none;
 }
 
-<<<<<<< HEAD
 .timerButtons {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 67vh;
-  width: 100vw;
+  width: 100%;
+  padding-left: 0.2rem;
+  padding-top: 0.5rem;
+  overflow: hidden;
 }
 
 .timerButtons a{
-  font-size: 0.9rem;
-  margin-right: 2rem;
-}
-
-
-.presetTimerButtons {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100vw;
-}
-
-.presetTimerButtons a {
-  margin-right: 2rem;
-}
-=======
-.mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-password-sign-in{
-  box-shadow: none;
->>>>>>> daf17e56a754e9c03ce752abfba1f523799174a5
+  color: white;
+  background-color: #417ab8;
+  border-radius: 20px;
 }
