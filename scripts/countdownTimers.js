@@ -256,39 +256,30 @@ function startCountdown() {
     const originalMinutes = parseInt(minutesCountInput.value) || 0;
     const originalSeconds = parseInt(secondsCountInput.value) || 0;
 
+    const startButton = document.getElementById('startTimer');
+    const duringTimerButtons = document.querySelectorAll('.duringTimerButtons');
+
     let hours = originalHours;
     let minutes = originalMinutes;
     let seconds = originalSeconds;
 
-    if (hours < 0) {
-        hoursCountInput.value = "0";
-    } else if (hours > 99) {
-        hoursCountInput.value = "99";
-    }
-    
-    if (minutes < 0) {
-        minutesCountInput.value = "0";
-    } else if (minutes > 59) {
-        minutesCountInput.value = "59";
-    }
-    
-    if (seconds < 0) {
-        secondsCountInput.value = "0";
-    } else if (seconds > 59) {
-        secondsCountInput.value = "59";
-    }
-    
-    let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    timeRestriction();
 
+    let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    console.log(totalSeconds);
     if (totalSeconds <= 0) {
         alert("Invalid Countdown Time");
         return;
     }
 
+    startButton.style.display = 'none';
+    duringTimerButtons.forEach(button => {
+        button.style.display = 'block';
+    });
+
     hoursCountInput.disabled = true;
     minutesCountInput.disabled = true;
     secondsCountInput.disabled = true;
-    startTimer.disabled = true;
 
     const interval = setInterval(() => {
         if (totalSeconds <= 0) {
@@ -298,7 +289,12 @@ function startCountdown() {
             hoursCountInput.value = originalHours;
             minutesCountInput.value = originalMinutes;
             secondsCountInput.value = originalSeconds;
-            
+
+            startButton.style.display = 'block';
+            duringTimerButtons.forEach(button => {
+                button.style.display = 'none';
+            });
+
             resetInputsAndButtons();
             return;
         }
@@ -318,6 +314,5 @@ function startCountdown() {
         updateSecondNeighbors();
     }, 1000);
 }
-
 
 startTimer.addEventListener('click', startCountdown);

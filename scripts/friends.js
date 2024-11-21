@@ -62,7 +62,7 @@ firebase.auth().onAuthStateChanged(user => {
               // gets the sender's name from the document
               const senderName = senderDoc.data().name; // assumes a 'name' field exists
               // shows a toast saying there's a new request
-              showToast(`New friend request from ${senderName}`);
+              showToast(`New Friend Request From ${senderName}`);
             });
           }
         }
@@ -134,7 +134,7 @@ function acceptFriend(friendId) {
   });
 
   // shows a toast to confirm friend request accepted
-  showToast("Friend request accepted!");
+  showToast("Friend Request Accepted!");
 }
 
 // removes a friend from current friends
@@ -151,6 +151,6 @@ function removeFriend(friendId) {
   });
 
   // shows a toast to confirm friend removal
-  showToast("Friend removed!");
+  showToast("Friend Removed!");
 }
 

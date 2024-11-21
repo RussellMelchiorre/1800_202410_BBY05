@@ -273,6 +273,11 @@ function toggleActiveStatus() {
   }
 
   function startStudyCountdown(index) {
+    const addButton = document.getElementById('addTimerButton');
+    const presetTimer = document.getElementById('presetTimerContainer');
+    const cancelPreset = document.getElementById('cancelPreset');
+    const savePreset = document.getElementById('savePreset');
+    const savedTimerContainers = document.querySelectorAll('.presetTimer');
     const originalHours = parseInt(studyPresetHours[index].textContent.split(' : ')[0]);
     const originalMinutes = parseInt(studyPresetMinutes[index].textContent.split(' : ')[0]);
     const originalSeconds = parseInt(studyPresetSeconds[index].textContent);

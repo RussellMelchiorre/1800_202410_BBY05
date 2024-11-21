@@ -90,6 +90,15 @@ body {
   background-color: #f4f4f4;
 }
 
+.navbar {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.footer {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
 .custom-navbar,
 .nav-item .nav-link,
 .card-title,
@@ -337,6 +346,10 @@ border-radius: 20px;
   border-radius: 20px;
 }
 
+.cancelTimer .btn{
+  border-radius: 20px;
+}
+
 
 body::before {
   content: '';
@@ -358,7 +371,7 @@ body::before {
   justify-content: space-evenly;
   width: 100%;
   padding-left: 0.2rem;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   overflow: hidden;
 }
 
@@ -367,19 +380,13 @@ body::before {
   background-color: #417ab8;
   border-radius: 20px;
   font-size: 0.9rem;
-  margin-right: 2rem;
 }
 
 
-.presetTimerButtons {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100vw;
+.duringTimerButtons .btn {
+  border-radius: 20px;
 }
 
-.presetTimerButtons a {
-  margin-right: 2rem;
-}
 .mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-password-sign-in{
   box-shadow: none;
 }
