@@ -240,11 +240,16 @@ function inputButtons() {
 inputButtons();
 
 function resetInputsAndButtons() {
+    upHours.disabled = false;
+    downHours.disabled = false;
+    upMinutes.disabled = false;
+    downMinutes.disabled = false;
+    upSeconds.disabled = false;
+    downSeconds.disabled = false;
     hoursCountInput.disabled = false;
     minutesCountInput.disabled = false;
     secondsCountInput.disabled = false;
 
-    startTimer.disabled = false;
 
     updateHourNeighbors();
     updateMinuteNeighbors();
@@ -252,6 +257,13 @@ function resetInputsAndButtons() {
 }
 
 function startCountdown() {
+    const upHours = document.getElementById('upHours');
+    const downHours = document.getElementById('downHours');
+    const upMinutes = document.getElementById('upMinutes');
+    const downMinutes = document.getElementById('downMinutes');
+    const upSeconds = document.getElementById('upSeconds');
+    const downSeconds = document.getElementById('downSeconds');
+
     const originalHours = parseInt(hoursCountInput.value) || 0;
     const originalMinutes = parseInt(minutesCountInput.value) || 0;
     const originalSeconds = parseInt(secondsCountInput.value) || 0;
@@ -266,7 +278,7 @@ function startCountdown() {
     timeRestriction();
 
     let totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    console.log(totalSeconds);
+
     if (totalSeconds <= 0) {
         alert("Invalid Countdown Time");
         return;
@@ -274,17 +286,25 @@ function startCountdown() {
 
     startButton.style.display = 'none';
     duringTimerButtons.forEach(button => {
-        button.style.display = 'block';
+        button.style.display = 'flex';
     });
 
+    upHours.disabled = true;
+    downHours.disabled = true;
+    upMinutes.disabled = true;
+    downMinutes.disabled = true;
+    upSeconds.disabled = true;
+    downSeconds.disabled = true;
     hoursCountInput.disabled = true;
     minutesCountInput.disabled = true;
     secondsCountInput.disabled = true;
 
     const interval = setInterval(() => {
-        if (totalSeconds <= 0) {
+        if (totalSeconds <= 0 || cancelled === true) {
             clearInterval(interval);
+            if(totalSeconds <= 0) {
             alert("Time's up!");
+            }
 
             hoursCountInput.value = originalHours;
             minutesCountInput.value = originalMinutes;
@@ -296,10 +316,13 @@ function startCountdown() {
             });
 
             resetInputsAndButtons();
+            cancelled = false;
             return;
         }
 
+        if (!paused) {
         totalSeconds--;
+        }
 
         const currentHours = Math.floor(totalSeconds / 3600);
         const currentMinutes = Math.floor((totalSeconds % 3600) / 60);
@@ -316,3 +339,32 @@ function startCountdown() {
 }
 
 startTimer.addEventListener('click', startCountdown);
+
+var cancelled = false;
+
+function cancelCountdown() {
+    const startButton = document.getElementById('startTimer');
+    const duringTimerButtons = document.querySelectorAll('.duringTimerButtons');
+    startButton.style.display = 'block';
+    duringTimerButtons.forEach(button => {
+        button.style.display = 'none';
+    });
+    cancelled = true;
+}
+
+cancelTimer.addEventListener('click', cancelCountdown);
+
+var paused = false;
+
+function pauseCountdown() {
+    const pauseButton = document.getElementById('pauseTimer');
+    pauseButton.textContent = "Resume";
+    if (paused === true) {
+        pauseButton.textContent = "Pause";
+        paused = false;
+    } else {
+        paused = true;
+    }
+}
+
+pauseTimer.addEventListener('click', pauseCountdown);

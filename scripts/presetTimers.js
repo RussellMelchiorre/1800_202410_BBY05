@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged(user => {
             snapshot.docs.forEach((doc, index) => { //for each document in the timer collection run the code
               if (index < presetName.length) {
                 const timerData = doc.data();
-                presetName[index].textContent = timerData.presetName; //
+                presetName[index].textContent = timerData.presetName;
                 presetHours[index].textContent = formatLeadZero(timerData.hours) + " : ";
                 presetMinutes[index].textContent = formatLeadZero(timerData.minutes) + " : ";
                 presetSeconds[index].textContent = formatLeadZero(timerData.seconds);
@@ -188,8 +188,8 @@ function timerVisibility() {
 timerVisibility();
 
 function toggleActiveStatus() {
-  const toggleButton = document.querySelectorAll('.form-check-input');
-  const toggleStatuses = document.querySelectorAll('.form-check-label');
+  const toggleButton = document.querySelectorAll('.form-check-input.preset');
+  const toggleStatuses = document.querySelectorAll('.form-check-label.preset');
   const toggleStudyButton = document.querySelectorAll('.form-check-input.study');
   const toggleStudyStatuses = document.querySelectorAll('.form-check-label.study');
   const presetHours = document.querySelectorAll('.preset-hours');
@@ -198,18 +198,29 @@ function toggleActiveStatus() {
   const studyPresetHours = document.querySelectorAll('.study-preset-hours');
   const studyPresetMinutes = document.querySelectorAll('.study-preset-minutes');
   const studyPresetSeconds = document.querySelectorAll('.study-preset-seconds');
+  const pauseButtons = document.querySelectorAll('.pause-timer');
+  const pauseStudyButtons = document.querySelectorAll('.pause-study-timer');
+  const cancelButtons = document.querySelectorAll('.cancel-timer');
+  const cancelStudyButtons = document.querySelectorAll('.cancel-study-timer');
 
   toggleButton.forEach((toggleButton, index) => {
     const toggleStatus = toggleStatuses[index];
+    const pauseButton = pauseButtons[index];
+    const cancelButton = cancelButtons[index];
+
     if (toggleButton) {
       toggleButton.addEventListener('change', function () {
         if (toggleButton.checked) {
           toggleStatus.textContent = "Active";
           toggleButton.disabled = true;
+          pauseButton.style.display = 'block';
+          cancelButton.style.display = 'block';
           startCountdown(index);
         } else {
           toggleStatus.textContent = "Inactive";
           toggleButton.disabled = false;
+          pauseButton.style.display = 'none';
+          cancelButton.style.display = 'none';
         }
       });
     }
@@ -217,48 +228,68 @@ function toggleActiveStatus() {
 
   toggleStudyButton.forEach((toggleStudyButton, index) => {
     const toggleStudyStatus = toggleStudyStatuses[index];
+    const pauseStudyButton = pauseStudyButtons[index];
+    const cancelStudyButton = cancelStudyButtons[index];
+
     if (toggleStudyButton) {
       toggleStudyButton.addEventListener('change', function () {
         if (toggleStudyButton.checked) {
           toggleStudyStatus.textContent = "Active";
+          toggleStudyButton.disabled = true;
+          pauseStudyButton.style.display = 'block';
+          cancelStudyButton.style.display = 'block';
           startStudyCountdown(index);
         } else {
           toggleStudyStatus.textContent = "Inactive";
+          toggleStudyButton.disabled = false;
+          pauseStudyButton.style.display = 'none';
+          cancelStudyButton.style.display = 'none';
         }
       });
     }
   });
+
 
   function startCountdown(index) {
     const originalHours = parseInt(presetHours[index].textContent.split(' : ')[0]);
     const originalMinutes = parseInt(presetMinutes[index].textContent.split(' : ')[0]);
     const originalSeconds = parseInt(presetSeconds[index].textContent);
 
+    const cancelButtonIndex = document.querySelectorAll('.cancel-timer')[index];
+    const pauseButtonIndex = document.querySelectorAll('.pause-timer')[index];
+
     let hours = originalHours;
     let minutes = originalMinutes;
     let seconds = originalSeconds;
 
+    let paused = false;
+    let cancelled = false;
+
     let countdownInterval = setInterval(function () {
-      if (seconds > 0) {
-        seconds--;
-      } else if (minutes > 0) {
-        minutes--;
-        seconds = 59;
-      } else if (hours > 0) {
-        hours--;
-        minutes = 59;
-        seconds = 59;
+      if (!paused) {
+        if (seconds > 0) {
+          seconds--;
+        } else if (minutes > 0) {
+          minutes--;
+          seconds = 59;
+        } else if (hours > 0) {
+          hours--;
+          minutes = 59;
+          seconds = 59;
+        }
       }
 
       presetHours[index].textContent = formatLeadZero(hours) + " : ";
       presetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
       presetSeconds[index].textContent = formatLeadZero(seconds);
 
-      if (hours === 0 && minutes === 0 && seconds === 0) {
+      if (hours === 0 && minutes === 0 && seconds === 0 || cancelled === true) {
         clearInterval(countdownInterval);
 
         setTimeout(function () {
-          alert("Time's up!");
+          if (hours === 0 && minutes === 0 && seconds === 0) {
+            alert("Time's up!");
+          }
 
           presetHours[index].textContent = formatLeadZero(originalHours) + " : ";
           presetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
@@ -267,59 +298,115 @@ function toggleActiveStatus() {
           toggleButton[index].disabled = false;
           toggleButton[index].checked = false;
           toggleStatuses[index].textContent = "Inactive";
-        }, 500);
+          cancelButtonIndex.style.display = 'none';
+          pauseButtonIndex.style.display = 'none';
+          cancelled = false;
+        });
       }
     }, 1000);
+
+    function cancelTimer(index) {
+      cancelButtonIndex.addEventListener('click', function () {
+        cancelButtonIndex.style.display = 'none';
+        pauseButtonIndex.style.display = 'none';
+        cancelled = true;
+      });
+    }
+
+    cancelTimer(index);
+
+    function pauseTimer(index) {
+      pauseButtonIndex.addEventListener('click', function () {
+        paused = !paused;
+        if (paused) {
+          pauseButtonIndex.textContent = "Resume";
+        } else {
+          pauseButtonIndex.textContent = "Pause";
+        }
+      });
+    }
+
+    pauseTimer(index);
   }
 
-  function startStudyCountdown(index) {
-    const addButton = document.getElementById('addTimerButton');
-    const presetTimer = document.getElementById('presetTimerContainer');
-    const cancelPreset = document.getElementById('cancelPreset');
-    const savePreset = document.getElementById('savePreset');
-    const savedTimerContainers = document.querySelectorAll('.presetTimer');
-    const originalHours = parseInt(studyPresetHours[index].textContent.split(' : ')[0]);
-    const originalMinutes = parseInt(studyPresetMinutes[index].textContent.split(' : ')[0]);
-    const originalSeconds = parseInt(studyPresetSeconds[index].textContent);
+    function startStudyCountdown(index) {
+      const originalHours = parseInt(studyPresetHours[index].textContent.split(' : ')[0]);
+      const originalMinutes = parseInt(studyPresetMinutes[index].textContent.split(' : ')[0]);
+      const originalSeconds = parseInt(studyPresetSeconds[index].textContent);
 
-    let hours = originalHours;
-    let minutes = originalMinutes;
-    let seconds = originalSeconds;
+      const cancelStudyButtonIndex = document.querySelectorAll('.cancel-study-timer')[index];
+      const pauseStudyButtonIndex = document.querySelectorAll('.pause-study-timer')[index];
 
-    let countdownInterval = setInterval(function () {
-      if (seconds > 0) {
-        seconds--;
-      } else if (minutes > 0) {
-        minutes--;
-        seconds = 59;
-      } else if (hours > 0) {
-        hours--;
-        minutes = 59;
-        seconds = 59;
+      let hours = originalHours;
+      let minutes = originalMinutes;
+      let seconds = originalSeconds;
+
+      let paused = false;
+      let cancelled = false;
+
+      let countdownInterval = setInterval(function () {
+        if (!paused) {
+          if (seconds > 0) {
+            seconds--;
+          } else if (minutes > 0) {
+            minutes--;
+            seconds = 59;
+          } else if (hours > 0) {
+            hours--;
+            minutes = 59;
+            seconds = 59;
+          }
+        }
+
+        studyPresetHours[index].textContent = formatLeadZero(hours) + " : ";
+        studyPresetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
+        studyPresetSeconds[index].textContent = formatLeadZero(seconds);
+
+        if (hours === 0 && minutes === 0 && seconds === 0 || cancelled === true) {
+          clearInterval(countdownInterval);
+
+          setTimeout(function () {
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+              alert("Time's up!");
+            }
+
+            studyPresetHours[index].textContent = formatLeadZero(originalHours) + " : ";
+            studyPresetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
+            studyPresetSeconds[index].textContent = formatLeadZero(originalSeconds);
+
+            toggleStudyButton[index].disabled = false;
+            toggleStudyButton[index].checked = false;
+            toggleStudyStatuses[index].textContent = "Inactive";
+            cancelStudyButtonIndex.style.display = 'none';
+            pauseStudyButtonIndex.style.display = 'none';
+            cancelled = false;
+          });
+        }
+      }, 1000);
+
+      function pauseStudyTimer(index) {
+        pauseStudyButtonIndex.addEventListener('click', function () {
+          paused = !paused;
+          if (paused) {
+            pauseStudyButtonIndex.textContent = "Resume";
+          } else {
+            pauseStudyButtonIndex.textContent = "Pause";
+          }
+        });
       }
 
-      studyPresetHours[index].textContent = formatLeadZero(hours) + " : ";
-      studyPresetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
-      studyPresetSeconds[index].textContent = formatLeadZero(seconds);
+      pauseStudyTimer(index);
 
-      if (hours === 0 && minutes === 0 && seconds === 0) {
-        clearInterval(countdownInterval);
-
-        setTimeout(function () {
-          alert("Time's up!");
-
-          studyPresetHours[index].textContent = formatLeadZero(originalHours) + " : ";
-          studyPresetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
-          studyPresetSeconds[index].textContent = formatLeadZero(originalSeconds);
-
-          toggleStudyButton[index].disabled = false;
-          toggleStudyButton[index].checked = false;
-          toggleStudyStatuses[index].textContent = "Inactive";
-        }, 500);
+      function cancelStudyTimer(index) {
+        cancelStudyButtonIndex.addEventListener('click', function () {
+          cancelStudyButtonIndex.style.display = 'none';
+          pauseStudyButtonIndex.style.display = 'none';
+          cancelled = true;
+        });
       }
-    }, 1000);
+
+      cancelStudyTimer(index);
+    }
   }
 
-}
-
-toggleActiveStatus();
+  toggleActiveStatus();

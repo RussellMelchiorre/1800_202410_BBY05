@@ -58,42 +58,42 @@
   </ul>
 </div>
 
-  <div id="countdownTimerContainer" class="countdownTimer" style="display: block; margin-top: 2rem;">
-    <div class="text-center mt-3" style="width: 80%; margin: 0 auto;">
+  <div id="countdownTimerContainer" class="countdownTimer" style="display: block; margin-top: 1rem;">
+    <div class="text-center mt-3" style="width: 90%; margin: 0 auto;">
       <div class="row mb-4">
         <div class="col">
           <p>Hours</p>
-          <button id="upHours" style="font-size: 150%;">˄</button>
+          <button id="upHours" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
           <p id="prevHour">99</p>
           <input type="number" style="padding-top: 15%; padding-bottom: 15%; text-align: center; font-size: 150%;" id="hoursCount" class="form-control" 
           placeholder="0" min="0" max="99">
           <p id="nextHour" style="margin-top: 1rem;">1</p>
-          <button id="downHours" style="font-size: 150%;">˅</button>
+          <button id="downHours" style="font-size: 150%; width: 100%;">˅</button>
         </div>
         <div class="col">
           <p>Minutes</p>
-          <button id="upMinutes" style="font-size: 150%;">˄</button>
+          <button id="upMinutes" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
           <p id="prevMinute">59</p>
           <input type="number" style="padding-top: 15%; padding-bottom: 15%;  text-align: center; font-size: 150%;" id="minutesCount" class="form-control" 
           placeholder="0" min="0" max="59">
           <p id="nextMinute" style="margin-top: 1rem">1</p>
-          <button id="downMinutes" style="font-size: 150%;">˅</button>
+          <button id="downMinutes" style="font-size: 150%; width: 100%;">˅</button>
         </div>
         <div class="col">
           <p>Seconds</p>
-          <button id="upSeconds" style="font-size: 150%;">˄</button>
+          <button id="upSeconds" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
           <p id="prevSecond">59</p>
           <input type="number" style="padding-top: 15%; padding-bottom: 15%;  text-align: center; font-size: 150%;" id="secondsCount" class="form-control" 
           placeholder="0" min="0" max="59">
           <p id="nextSecond" style="margin-top: 1rem;">1</p>
-          <button id="downSeconds" style="font-size: 150%;">˅</button>
+          <button id="downSeconds" style="font-size: 150%; width: 100%;">˅</button>
         </div>
       </div>
-      <button id="startTimer" class="btn btn-primary mt-1" style="width: 40%; display: block; margin: 0 auto;">Start</button>
-      <div class="duringTimerButtons" style="display: none">
-        <button id="cancelTimer" class="btn btn-danger mt-1" style="width: 40%;">Cancel</button>
-        <button id="pauseTimer" class="btn btn mt-1" style="width: 40%; background-color: rgb(157, 157, 157); color: white;">Pause</button>
     </div>
+    <button id="startTimer" class="btn btn-primary mt-1" style="width: 40%; display: block; margin: 0 auto;">Start</button>
+      <div class="duringTimerButtons justify-content-center" style="width: 100%; display: none; margin: 0 auto; justify-content: space-between; gap: 1rem;">
+        <button id="cancelTimer" class="btn btn-danger mt-1" style="width: 30%;">Cancel</button>
+        <button id="pauseTimer" class="btn btn mt-1" style="width: 30%; background-color: rgb(157, 157, 157); color: white;">Pause</button>
     </div>
   </div>
 
