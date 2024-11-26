@@ -50,13 +50,13 @@
 
   <!--blank area for timers-->
 
-  <div class="timerButtons">
+  <div class="timerButtons" style="display: flex; justify-content: center; justify-content: space-evenly;">
     <a class="btn btn-custom" href="countdownTimers.html"
-      style="background-color: #417ab8; color: white; border: 1px solid black;" href="#">Timers</a>
+      style="background-color: #417ab8; color: white; border: 1px solid black;" href="#">Timer</a>
     <a class="btn btn-custom" style="background-color: #417ab8; color: white; border: 1px solid black;"
       href="#"><u><b>Presets</b></u></a>
     <a class="btn btn-custom" href="alarmTimers.html"
-      style="background-color: #417ab8; color: white; border: 1px solid black;" href="#">Alarms</a>
+      style="background-color: #417ab8; color: white; border: 1px solid black;" href="#">Alarm</a>
   </div>
 
   <div id="presetTimerContainer" class="preset-timer" style="display: none;">
@@ -91,7 +91,7 @@
   <div id="savedTimerContainer" class="presetTimer container mt-4" style="display: block;">
     <div class="card">
       <div class="card-header text-center">
-        <h4>Custom Timer Presets</h4>
+        <h4>Timer Presets</h4>
       </div>
       <div class="card-body">
         <button id="addTimerButton" class="btn btn-custom"
@@ -101,11 +101,11 @@
       </div>
       <div class="card-body" style="margin-top: -1rem;">
         <div id="timerPresets" class="list-group">
-          <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
             <div class="timeContainer">
               <span class="preset-name font-weight-bold">Blank Timer</span>
               <div class="row mt-2">
-                <div class="col">
+                <div class="col" style="margin-left: 0.25rem;">
                   <p class="preset-hours">00 : </p>
                   <p class="preset-minutes">00 : </p>
                   <p class="preset-seconds">00</p>
@@ -125,12 +125,12 @@
               style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
           </div>
         </div>
-        <div id="timerPresets" style="padding-top: 0.5rem;" class="list-group">
-          <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
             <div class="timeContainer">
               <span class="preset-name font-weight-bold">Blank Timer</span>
               <div class="row mt-2">
-                <div class="col">
+                <div class="col"style="margin-left: 0.25rem;"> 
                   <p class="preset-hours">00 : </p>
                   <p class="preset-minutes">00 : </p>
                   <p class="preset-seconds">00</p>
@@ -150,6 +150,81 @@
               style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
           </div>
         </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -160,12 +235,12 @@
         <h4>Study Timer Presets</h4>
       </div>
       <div class="card-body">
-        <div id="timerPresets" class="list-group">
+        <div id="timerPresets" style="margin-top: 0.5rem;" class="list-group">
           <div class="list-group-item d-flex justify-content-between align-items-center">
             <div class="timeContainer">
               <span class="study-preset-name font-weight-bold">Study | Pomodoro</span>
               <div class="row mt-2">
-                <div class="col text-center">
+                <div class="col text-center" style="margin-left: 0.25rem;">
                   <p class="study-preset-hours">00 : </p>
                   <p class="study-preset-minutes">25 : </p>
                   <p class="study-preset-seconds">00</p>
@@ -185,15 +260,15 @@
               style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
           </div>
         </div>
-        <div id="timerPresets" style="padding-top: 0.5rem;" class="list-group">
+        <div id="timerPresets" style="margin-top: 0.5rem;" class="list-group">
           <div class="list-group-item d-flex justify-content-between align-items-center">
             <div class="timeContainer">
               <span class="study-preset-name font-weight-bold">Break | Pomodoro</span>
               <div class="row mt-2">
-                <div class="col text-center">
+                <div class="col text-center" style="margin-left: 0.25rem;">
                   <p class="study-preset-hours">00 : </p>
-                  <p class="study-preset-minutes">00 : </p>
-                  <p class="study-preset-seconds">05</p>
+                  <p class="study-preset-minutes">05 : </p>
+                  <p class="study-preset-seconds">00</p>
                 </div>
               </div>
             </div>

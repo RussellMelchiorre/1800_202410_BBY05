@@ -16,6 +16,14 @@ const downHours = document.getElementById('downHours');
 const downMinutes = document.getElementById('downMinutes');
 const downSeconds = document.getElementById('downSeconds');
 
+function formatLeadZero(time) {
+    if (time < 10) {
+      return "0" + time;
+    } else {
+      return time;
+    }
+  }
+
 function timeRestriction() {
     const hoursCountInput = document.getElementById('hoursCount');
     const minutesCountInput = document.getElementById('minutesCount');
@@ -28,8 +36,9 @@ function timeRestriction() {
                 this.value = "99";
             }
             if (this.value < 0) {
-                this.value = "0";
+                this.value = "00";
             }
+            updateHourNeighbors();
         });
     }
 
@@ -40,8 +49,9 @@ function timeRestriction() {
                 this.value = "59";
             }
             if (this.value < 0) {
-                this.value = "0";
+                this.value = "00";
             }
+            updateMinuteNeighbors();
         });
     }
 
@@ -52,103 +62,34 @@ function timeRestriction() {
                 this.value = "59";
             }
             if (this.value < 0) {
-                this.value = "0";
+                this.value = "00";
             }
+            updateSecondNeighbors();
         });
     }
 }
 
 timeRestriction();
 
-function viewNextInput() {
-    if (hoursCountInput) {
-        hoursCountInput.addEventListener('input', function () {
-            const currentValue = parseInt(this.value, 10);
-
-            if (isNaN(currentValue)) {
-                prevHour.textContent = "99";
-                nextHour.textContent = "1";
-                return;
-            }
-            if (currentValue === 0) {
-                prevHour.textContent = "99";
-            } else {
-                prevHour.textContent = currentValue - 1;
-            }
-            if (currentValue === 99) {
-                nextHour.textContent = "0";
-            } else {
-                nextHour.textContent = currentValue + 1;
-            }
-        });
-    }
-
-    if (minutesCountInput) {
-        minutesCountInput.addEventListener('input', function () {
-            const currentValue = parseInt(this.value, 10);
-
-            if (isNaN(currentValue)) {
-                prevMinute.textContent = "59";
-                nextMinute.textContent = "1";
-                return;
-            }
-            if (currentValue === 0) {
-                prevMinute.textContent = "59";
-            } else {
-                prevMinute.textContent = currentValue - 1;
-            }
-            if (currentValue === 59) {
-                nextMinute.textContent = "0";
-            } else {
-                nextMinute.textContent = currentValue + 1;
-            }
-        });
-    }
-
-    if (secondsCountInput) {
-        secondsCountInput.addEventListener('input', function () {
-            const currentValue = parseInt(this.value, 10);
-
-            if (isNaN(currentValue)) {
-                prevSecond.textContent = "59";
-                nextSecond.textContent = "1";
-                return;
-            }
-            if (currentValue === 0) {
-                prevSecond.textContent = "59";
-            } else {
-                prevSecond.textContent = currentValue - 1;
-            }
-            if (currentValue === 59) {
-                nextSecond.textContent = "0";
-            } else {
-                nextSecond.textContent = currentValue + 1;
-            }
-        });
-    }
-}
-
-viewNextInput();
-
 function updateHourNeighbors() {
     const currentValue = parseInt(hoursCountInput.value, 10);
 
     if (isNaN(currentValue)) {
         prevHour.textContent = "99";
-        nextHour.textContent = "1";
+        nextHour.textContent = "01";
         return;
     }
 
     if (currentValue === 0) {
         prevHour.textContent = "99";
     } else {
-        prevHour.textContent = currentValue - 1;
+        prevHour.textContent = formatLeadZero(currentValue - 1);
     }
 
     if (currentValue === 99) {
-        nextHour.textContent = "0";
+        nextHour.textContent = "00";
     } else {
-        nextHour.textContent = currentValue + 1;
+        nextHour.textContent = formatLeadZero(currentValue + 1);
     }
 }
 
@@ -157,20 +98,20 @@ function updateMinuteNeighbors() {
 
     if (isNaN(currentValue)) {
         prevMinute.textContent = "59";
-        nextMinute.textContent = "1";
+        nextMinute.textContent = "01";
         return;
     }
 
     if (currentValue === 0) {
         prevMinute.textContent = "59";
     } else {
-        prevMinute.textContent = currentValue - 1;
+        prevMinute.textContent = formatLeadZero(currentValue - 1);
     }
 
     if (currentValue === 59) {
-        nextMinute.textContent = "0";
+        nextMinute.textContent = "00";
     } else {
-        nextMinute.textContent = currentValue + 1;
+        nextMinute.textContent = formatLeadZero(currentValue + 1);
     }
 }
 
@@ -179,20 +120,20 @@ function updateSecondNeighbors() {
 
     if (isNaN(currentValue)) {
         prevSecond.textContent = "59";
-        nextSecond.textContent = "1";
+        nextSecond.textContent = "01";
         return;
     }
 
     if (currentValue === 0) {
         prevSecond.textContent = "59";
     } else {
-        prevSecond.textContent = currentValue - 1;
+        prevSecond.textContent = formatLeadZero(currentValue - 1);
     }
 
     if (currentValue === 59) {
-        nextSecond.textContent = "0";
+        nextSecond.textContent = "00";
     } else {
-        nextSecond.textContent = currentValue + 1;
+        nextSecond.textContent = formatLeadZero(currentValue + 1);
     }
 }
 

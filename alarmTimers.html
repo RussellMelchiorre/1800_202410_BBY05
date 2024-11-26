@@ -49,15 +49,200 @@
 
 
   <!--blank area for timers-->
-  <div class="timerButtons">
-    <a class="btn btn-custom" href="countdownTimers.html" 
-    style="background-color: #417ab8; color: white; border: 1px solid black;"href="#">Timers</a>
-    <a class="btn btn-custom" href="presetTimers.html" style="background-color: #417ab8; color: white; border: 1px solid black;">Presets</a>
-    <a class="btn btn-custom" href="#" 
-    style="background-color: #417ab8; color: white; border: 1px solid black;"href="#"><u><b>Alarms</b></u></a>
-  </ul>
-</div>
 
+  <div class="timerButtons" style="display: flex; justify-content: center; justify-content: space-evenly;">
+    <a class="btn btn-custom" href="countdownTimers.html"
+      style="background-color: #417ab8; color: white; border: 1px solid black;" href="countdownTimers.html">Timer</a>
+    <a class="btn btn-custom" style="background-color: #417ab8; color: white; border: 1px solid black;"
+      href="presetTimers.html">Presets</a>
+    <a class="btn btn-custom" href="alarmTimers.html"
+      style="background-color: #417ab8; color: white; border: 1px solid black;" href="#"><u><b>Alarm</b></u></a>
+  </div>
+
+  <div id="presetTimerContainer" class="preset-timer"
+    style="display: none; width: 100%; margin: 0 auto;">
+    <h1 class="text-center" style="font-size: 200%; padding-top: 2rem; padding-bottom: 1rem;">Create an Alarm</h1>
+    <div class="text-center mt-3" style="width: 90%; margin: 0 auto;">
+      <div class="row mb-4">
+        <div class="col">
+          <button id="upHours" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
+          <p id="prevHour">11</p>
+          <input type="number" style="padding-top: 5%; padding-bottom: 5%; text-align: center; font-size: 150%;"
+            id="hoursCount" class="form-control" placeholder="12">
+          <p id="nextHour" style="margin-top: 1rem;">1</p>
+          <button id="downHours" style="font-size: 150%; width: 100%;">˅</button>
+        </div>
+        <div class="col">
+          <button id="upMinutes" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
+          <p id="prevMinute">59</p>
+          <input type="number" style="padding-top: 5%; padding-bottom: 5%;  text-align: center; font-size: 150%;"
+            id="minutesCount" class="form-control" placeholder="00">
+          <p id="nextMinute" style="margin-top: 1rem">01</p>
+          <button id="downMinutes" style="font-size: 150%; width: 100%;">˅</button>
+        </div>
+        <div class="col">
+          <button id="upSeconds" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
+          <p id="prevSecond">P.M.</p>
+          <input type="text" style="padding-top: 5%; padding-bottom: 5%;  text-align: center; font-size: 150%;"
+            id="secondsCount" class="form-control" placeholder="A.M." readonly>
+          <p id="nextSecond" style="margin-top: 1rem">P.M.</p>
+          <button id="downSeconds" style="font-size: 150%; width: 100%;">˅</button>
+        </div>
+      </div>
+    </div>
+    <input type="text" id="presetName" class="form-control" placeholder="Alarm Name"
+      style="text-align:Center; padding-top: 1%; padding-bottom: 1%; font-size: 100%; width: 70%; margin: 0 auto;"
+      maxlength="18">
+      <div class="createTimerButtons" style="display: flex; width: 100%; justify-content: center;">
+        <button id="savePreset" class="btn btn-primary mt-1" style="width: 25%; padding-top: 0.5%; padding-bottom: 0.5%; margin-right: 0.5%;">Save</button>
+        <button id="cancelPreset" class="btn btn-danger mt-1" style="width: 25%; padding-top: 0.5%; padding-bottom: 0.5%; padding-bottom: 0.5%;">Cancel</button>
+      </div>
+      
+  </div>
+
+  <div id="savedTimerContainer" class="presetTimer container mt-4" style="display: block;">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4>Alarms</h4>
+      </div>
+      <div class="card-body">
+        <button id="addTimerButton" class="btn btn-custom"
+          style="background:white; border: 1px solid rgb(174, 174, 174); margin-left: 5%; margin-right: 0; width: 100%;">
+          Create Alarm
+        </button>
+      </div>
+      <div class="card-body" style="margin-top: -1rem;">
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
+            <button class="cancel-timer btn btn-danger mt-1"
+              style="width: 50%; color: white; display:none;">Cancel</button>
+            <button class="pause-timer btn btn mt-1"
+              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- toasts for notifs-->
+  <div id="basicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body">
+      <span id="toast-message"></span>
+    </div>
+  </div>
   <!-- The body of your page goes here -->
 
   <!-- Our own navbar goes here -->
@@ -72,6 +257,7 @@
   <script src="./scripts/firebaseAPI_TEAM05.js"></script>
   <script src="./scripts/skeleton.js"></script>
   <script src="./scripts/main.js"></script>
+  <script src="./scripts/alarmTimers.js"></script>
   <script src="./scripts/friends.js"></script>
 
 </body>

@@ -389,3 +389,15 @@ body::before {
 .mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-password-sign-in{
   box-shadow: none;
 }
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
