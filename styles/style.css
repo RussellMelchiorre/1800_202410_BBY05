@@ -287,8 +287,8 @@ border-radius: 20px;
 }
 
 .event-dot {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   background-color: #989898;
   border-radius: 50%;
   transform: translateX(-50%);
