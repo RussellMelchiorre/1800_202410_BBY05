@@ -25,10 +25,36 @@ getNameFromAuth(); //run the function
 
 
 // displays generic toast message
-function showToast(message) {
+ function showToast(message) {
+  // Display the toast message
   document.getElementById("toast-message").textContent = message;
   new bootstrap.Toast(document.getElementById("basicToast")).show();
+  logAlert(message); 
 }
+
+
+// Write alert to Firestore
+function logAlert(message) {
+  // Ensure the user is authenticated
+  const user = firebase.auth().currentUser;
+  const userId = user.uid; 
+  // Reference to the alerts collection for the correct user
+  const alertsRef = firebase.firestore().collection("users").doc(userId).collection("alerts");
+
+  // Add the alert to Firestore
+  alertsRef.add({
+    message: message,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    console.log("Alert logged successfully");
+  })
+  .catch((error) => {
+    console.error("Error logging alert to Firestore: ", error);
+  });
+}
+
+
 
 var timerStart;
 
