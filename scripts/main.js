@@ -224,42 +224,103 @@ function checkIfEventOnDate(date, cell) {
 ///////////////////////////////////////////////////////////
 //checks if calendar exists before calling 
 if (CalenderExists){
-function loadUpcomingEvents() {
-  const db = firebase.firestore();
-  const user = firebase.auth().currentUser;
-
-  if (user) {
-    const eventListElement = document.getElementById('eventList');
-    eventListElement.innerHTML = '';
-
-
-    db.collection("users").doc(user.uid).collection("events")
+  
+  function loadUpcomingEvents() {
+    const db = firebase.firestore();
+    const user = firebase.auth().currentUser;
+    
+    if (user) {
+      const eventListElement = document.getElementById('eventList');
+      eventListElement.innerHTML = '';
+      
+      db.collection("users")
+      .doc(user.uid)
+      .collection("events")
       .orderBy("start_date")
       .limit(3)
       .get()
       .then(snapshot => {
-        snapshot.forEach(doc => {
-          const eventData = doc.data();
-          const listItem = document.createElement('li');
-          listItem.classList.add('list-group-item');
-          listItem.innerHTML = `
+        if (!snapshot.empty) {
+          snapshot.forEach(doc => {
+            const eventData = doc.data();
+            const eventId = doc.id;
+            const listItem = document.createElement('li');
+            listItem.classList.add('list-group-item');
+            
+            listItem.innerHTML = `
             <strong>${eventData.title}</strong><br>
             ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
             ${eventData.location}<br>
-            Repeat: ${eventData.repeat}
-          `;
-          eventListElement.appendChild(listItem);
-        });
+            Repeat: ${eventData.repeat || "none"}<br>
+            <button class="btn btn-danger btn-sm delete-btn" data-id="${eventId}">Delete</button>
+            `;
+            
+            eventListElement.appendChild(listItem);
+          });
+          
+          addDeleteButtonListener();
+        }
+        
+        else {
+          console.log ("No event found.");
+          eventListElement.innerHTML = `<li class="list-group-item">No upcoming events.</li>`;
+        }
       })
       .catch(error => {
         console.error("Error fetching events: ", error);
       });
-  } else {
-    console.log("User is not signed in.");
+    }
+    
+    else {
+      console.log("User is not signed in.");
+    }
   }
 }
-}
 ///////////////////////////////////////////////////////////
+
+
+function addDeleteButtonListener() {
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+
+  deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const eventId = this.getAttribute("data-id");
+      if (confirm("Are you sure you want to delete this event?")) {
+        deleteEvent(eventId);
+      }
+    });
+  });
+}
+////////////////////////////////////////////////////////////
+
+function deleteEvent(eventId) {
+  const db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+
+  if (user) {
+    db.collection("users")
+      .doc(user.uid)
+      .collection("events")
+      .doc(eventId)
+      .delete()
+      .then(() => {
+        console.log("Event successfully deleted!");
+        alert("Event deleted successfully!");
+
+
+        loadUpcomingEvents();
+      })
+      .catch(error => {
+        console.error("Error deleting event: ", error);
+        alert("Failed to delete event: " + error.message);
+      });
+  } else {
+    alert("User is not signed in.");
+  }
+}
+
+
+
 //checks if calendar exists before calling 
 if (CalenderExists){
 
