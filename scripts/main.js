@@ -217,7 +217,37 @@ function checkIfEventOnDate(date, cell) {
     .catch(error => {
       console.error("Error fetching events: ", error);
     });
-  }
+
+    
+    db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
+    .then(friendStatusDoc => {
+      const currentFriends = friendStatusDoc.data()?.currentFriends || [];
+
+      currentFriends.forEach(friendId => {
+        db.collection("users").doc(friendId).collection("events")
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              const eventData = doc.data();
+              const eventStartDateStr = eventData.start_date;
+              const eventStartDate = new Date(eventStartDateStr);
+
+              if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
+                console.log(`Found friend's event for date ${date}:`, eventData);
+                
+                const friendEventDot = document.createElement('div');
+                friendEventDot.classList.add('friend-event-dot');
+                cell.classList.add('highlight-friend-event');
+                cell.appendChild(friendEventDot);
+              }
+            });
+          });
+      });
+    })
+    .catch(error => {
+      console.error("Error fetching friend events: ", error);
+    });
+}
 ///////////////////////////////////////////////////////////
 
 

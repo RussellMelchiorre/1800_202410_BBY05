@@ -295,6 +295,15 @@ border-radius: 20px;
   z-index: 1;
 }
 
+.friend-event-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #5d7db7;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
 #newEventButton {
   background-color: #417ab8;
   border-radius: 20px;
