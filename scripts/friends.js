@@ -75,7 +75,6 @@ firebase.auth().onAuthStateChanged(user => {
               });
           });
         } else {
-          console.log("test3qwe4")
         }
       });
   }
@@ -147,7 +146,9 @@ function acceptFriend(friendId) {
   });
 
   // shows a toast to confirm friend request accepted
-  showToast("Friend Request Accepted!");
+  db.collection("users").doc(friendId).get().then(senderDoc => {
+    showToast(`Friend Request from ${senderDoc.data().name}` + " Accepted!");
+  });
 }
 
 // removes a friend from current friends
@@ -164,7 +165,9 @@ function removeFriend(friendId) {
   });
 
   // shows a toast to confirm friend removal
-  showToast("Friend Removed!");
+  db.collection("users").doc(friendId).get().then(senderDoc => {
+    showToast(`${senderDoc.data().name}` + " Removed As A Friend");
+  });
 }
 
 //log previous friend requests

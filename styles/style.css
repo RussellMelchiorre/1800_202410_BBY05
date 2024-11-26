@@ -48,7 +48,7 @@ body {
   background-color: rgb(255, 255, 255, 0.9);
   padding: 0.2vw;
   border-radius: 5px;
-  font-size: 2vw;
+  font-size: 4vw;
   width: 45vw;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -388,4 +388,39 @@ body::before {
 
 .mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-password-sign-in{
   box-shadow: none;
+}
+
+#notifs {
+  font-size: 8vw;
+  margin-top: 5px;
+  margin-right: 4vw;
+  color: #000;
+}
+
+#notifslist {
+  text-align: center;
+  font-size: 2vw;
+}
+
+#notifslist h5 {
+  font-size: 4vw;
+}
+
+.listitem {
+  background-color: #417ab8;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 1vw;
+  font-size: 4vw;
+  width: 30vw; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
+}
+
+#text {
+  font-size: 6vw;
+  margin-right: 2vw; 
+  text-align: left; 
 }

@@ -26,7 +26,7 @@ getNameFromAuth(); //run the function
 
 // displays generic toast message
  function showToast(message) {
-  // Display the toast message
+  // Display the toast message 
   document.getElementById("toast-message").textContent = message;
   new bootstrap.Toast(document.getElementById("basicToast")).show();
   logAlert(message); 
@@ -314,4 +314,44 @@ function loadUpcomingFriendEvents() {
     console.log("User is not signed in.");
   }
 }
+}
+
+
+const notifsExist = document.getElementById('notifslist');
+
+if (notifsExist){
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    const currentUserId = user.uid;
+
+    const alertsRef = db.collection("users")
+                         .doc(currentUserId)
+                         .collection("alerts");
+
+    alertsRef.orderBy("timestamp", "desc").onSnapshot(snapshot => {
+      const alertsList = document.getElementById("alertsList");
+      alertsList.innerHTML = ''; 
+      snapshot.forEach(doc => {
+        const alertData = doc.data();
+        const alertMessage = alertData.message; 
+        const alertTime = alertData.timestamp;  
+
+        const formattedTime = new Date(alertTime.seconds * 1000).toLocaleString();
+
+        const alertItem = document.createElement('li');
+        alertItem.classList.add('list-group-item');
+        alertItem.classList.add('d-flex');
+        alertItem.classList.add('justify-content-between');
+        
+        alertItem.innerHTML = `
+          <span id = "text" >${alertMessage}</span>
+          <span class="listitem">${formattedTime}</span>
+        `;
+
+        alertsList.appendChild(alertItem);
+      });
+    });
+  }
+});
+
 }
