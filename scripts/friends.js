@@ -3,72 +3,84 @@
 const FriendsExists = document.getElementById('addFriendButton');
 
 if (FriendsExists){
-document.getElementById("addFriendButton").addEventListener("click", function () {
-  //takes the email from the form
-  const friendEmail = document.getElementById("friendEmailInput").value;
-  //saves your user ID
-  const currentUserId = firebase.auth().currentUser.uid;
-
-  // checks that theres actually an email or something else in the form
-  if (friendEmail) {
-
-    //looks in the users doc for a matching email
-    db.collection("users").where("email", "==", friendEmail).get().then((querySnapshot) => {
-      //checks if the snapshot got anything
-      if (!querySnapshot.empty) {
-        //if so then takes the first result of that query at index 0 cause there should only ever be one ID per user
-        const friendId = querySnapshot.docs[0].id;
-
-        //adds the user who sent the request to the pending friends array of the targeted user
-        db.collection("users").doc(friendId).collection("friends").doc("friendStatus").set({
-          pendingFriends: firebase.firestore.FieldValue.arrayUnion(currentUserId)
-          // merge so existing users arent erased 
-        }, { merge: true });
-
-        // shows a conformation toast
-        showToast(`Request to ${friendEmail} sent!`);
-      } else {
-        //shows an error toast
-        showToast("User with that email not found.");
-      }
-    });
-  }
-});
+  document.getElementById("addFriendButton").addEventListener("click", function () {
+    const friendEmail = document.getElementById("friendEmailInput").value;
+    const currentUserId = firebase.auth().currentUser.uid;
+  
+    if (friendEmail) {
+      db.collection("users").where("email", "==", friendEmail).get().then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          const friendId = querySnapshot.docs[0].id;
+  
+          // Get the current pending friends list and current friends list to check if the user is already in it
+          db.collection("users").doc(friendId).collection("friends").doc("friendStatus").get().then((doc) => {
+            const data = doc.exists ? doc.data() : {};
+            const currentPendingFriends = data.pendingFriends || [];
+            const currentFriends = data.currentFriends || [];
+  
+            // Check if you are already friends with the person
+            if (currentFriends.includes(currentUserId)) {
+              showToast(`You are already friends with ${friendEmail}`);
+            } 
+            // Check if the friend request is already pending
+            else if (currentPendingFriends.includes(currentUserId)) {
+              showToast(`You already have a pending request with ${friendEmail}.`);
+            } 
+            // If neither, send the friend request
+            else {
+              db.collection("users").doc(friendId).collection("friends").doc("friendStatus").set({
+                pendingFriends: firebase.firestore.FieldValue.arrayUnion(currentUserId)
+              }, { merge: true });
+  
+              // Show confirmation toast
+              showToast(`Request to ${friendEmail} sent!`);
+            }
+          });
+  
+        } else {
+          showToast("User with that email not found.");
+        }
+      });
+    }
+  });
+  
+  
 }
-// listens for user login or logout
-firebase.auth().onAuthStateChanged(user => {
-  // checks if user is logged in
-  if (user) {
-    // saves the current user ID
-    const currentUserId = user.uid;
 
-    // sets up real-time listener for pending friend requests
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    const currentUserId = user.uid;
+    const db = firebase.firestore();
+   
     db.collection("users").doc(currentUserId).collection("friends").doc("friendStatus")
       .onSnapshot(doc => {
-        // checks if the document exists
         if (doc.exists) {
-          // gets the data from the document
-          const data = doc.data();
-          // gets the list of pending friends
-          const pendingFriends = data.pendingFriends || [];
+          const currentPendingFriends = doc.data().pendingFriends || [];
 
-          // if there are any pending requests
-          if (pendingFriends.length > 0) {
-            // gets the last person who sent a request
-            const senderId = pendingFriends[pendingFriends.length - 1];
-
-            // fetches the sender's name from their document
-            db.collection("users").doc(senderId).get().then(senderDoc => {
-              // gets the sender's name from the document
-              const senderName = senderDoc.data().name; // assumes a 'name' field exists
-              // shows a toast saying there's a new request
-              showToast(`New Friend Request From ${senderName}`);
-            });
-          }
+          currentPendingFriends.forEach(friendId => {
+            // Check if the friend request has already been logged in pastFriendRequests
+            db.collection("users").doc(currentUserId).collection("friends")
+              .where("friendID", "==", friendId)
+              .get()
+              .then(snapshot => {
+                if (snapshot.empty) {
+                  // Log and display the new request
+                  console.log("test34")
+                  logFriendRequest(friendId);
+                  db.collection("users").doc(friendId).get().then(senderDoc => {
+                    showToast(`New Friend Request from ${senderDoc.data().name}`);
+                  });
+                }
+              });
+          });
+        } else {
         }
       });
   }
 });
+
+
 
 
 const FriendsListExists = document.getElementById('addFriendButton');
@@ -134,7 +146,9 @@ function acceptFriend(friendId) {
   });
 
   // shows a toast to confirm friend request accepted
-  showToast("Friend Request Accepted!");
+  db.collection("users").doc(friendId).get().then(senderDoc => {
+    showToast(`Friend Request from ${senderDoc.data().name}` + " Accepted!");
+  });
 }
 
 // removes a friend from current friends
@@ -151,6 +165,28 @@ function removeFriend(friendId) {
   });
 
   // shows a toast to confirm friend removal
-  showToast("Friend Removed!");
+  db.collection("users").doc(friendId).get().then(senderDoc => {
+    showToast(`${senderDoc.data().name}` + " Removed As A Friend");
+  });
 }
 
+//log previous friend requests
+function logFriendRequest(friendID) {
+  // Ensure the user is authenticated
+  const user = firebase.auth().currentUser;
+  const userId = user.uid; 
+  // Reference to the alerts collection for the correct user
+  const friendInfoRef = db.collection("users").doc(userId).collection("friends");
+
+  // Add the alert to Firestore
+  friendInfoRef.add({
+    friendID: friendID,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    console.log("Request logged successfully");
+  })
+  .catch((error) => {
+    console.error("Request logging alert to Firestore: ", error);
+  });
+}
