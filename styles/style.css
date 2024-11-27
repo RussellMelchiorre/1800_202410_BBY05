@@ -441,8 +441,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 #text {
   font-size: 6vw;
-  margin-right: 2vw; 
+  margin-right: 4vw; 
   text-align: left; 
+  max-width: 60%;
 }
 
 .selected-cell {

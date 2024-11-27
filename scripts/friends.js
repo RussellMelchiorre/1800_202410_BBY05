@@ -65,8 +65,7 @@ firebase.auth().onAuthStateChanged(user => {
               .get()
               .then(snapshot => {
                 if (snapshot.empty) {
-                  // Log and display the new request
-                  console.log("test34")
+                  // the request is new so log and display it 
                   logFriendRequest(friendId);
                   db.collection("users").doc(friendId).get().then(senderDoc => {
                     showToast(`New Friend Request from ${senderDoc.data().name}`);
@@ -172,10 +171,9 @@ function removeFriend(friendId) {
 
 //log previous friend requests
 function logFriendRequest(friendID) {
-  // Ensure the user is authenticated
   const user = firebase.auth().currentUser;
   const userId = user.uid; 
-  // Reference to the alerts collection for the correct user
+// the past frends alerts collection
   const friendInfoRef = db.collection("users").doc(userId).collection("friends");
 
   // Add the alert to Firestore

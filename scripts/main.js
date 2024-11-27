@@ -513,7 +513,7 @@ firebase.auth().onAuthStateChanged(user => {
 
     const alertsRef = db.collection("users")
                          .doc(currentUserId)
-                         .collection("alerts");
+                         .collection("alerts").limit(10);
 
     alertsRef.orderBy("timestamp", "desc").onSnapshot(snapshot => {
       const alertsList = document.getElementById("alertsList");
