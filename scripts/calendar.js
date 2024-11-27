@@ -1,50 +1,61 @@
+// run after the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
+
+    // get the new event form element
     const saveEventForm = document.getElementById('newEventForm');
-    
+
+    // add a submit event listener to the form
     saveEventForm.addEventListener('submit', function (event) {
-        event.preventDefault();
+        event.preventDefault(); // prevent the default form submission behavior
+
+        // get the values from the form inputs
         const eventTitle = document.getElementById('eventTitle').value;
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
         const repeat = document.getElementById('repeat').value;
         const location = document.getElementById('location').value;
 
+        // call the function to save the event to Firestore with the input values
         saveEventToFirestore(eventTitle, startDate, endDate, repeat, location);
     });
     
+    // function to save the event to Firesotre
     function saveEventToFirestore(title, startDate, endDate, repeat, location) {
         const db = firebase.firestore();
         const user = firebase.auth().currentUser;
-
+        
+        // only proceed if the user is logged in
         if (user) {
-            let eventStartDate = new Date(startDate);
-            let eventEndDate = new Date(endDate);
+            let eventStartDate = new Date(startDate); // convert start date to date object
+            let eventEndDate = new Date(endDate); // convert end date to date obgject
             const promises = [];
-
-            // Repeat event handling
+            
+            // handle repreated evnets
             if (repeat !== "none") {
-                const repeatCount = 10;
+                const repeatCount = 10; // set the maximum number of repetitions
+                
+                // create repeated events based on the repeat count
                 for (let i = 0; i < repeatCount; i++) {
-                    let repeatedStartDate = new Date(eventStartDate);
-                    let repeatedEndDate = new Date(eventEndDate);
+                    let repeatedStartDate = new Date(eventStartDate); // create a new start date for the repetition
+                    let repeatedEndDate = new Date(eventEndDate); // create a new end date for the repetition
                     
-                   
+                    // modifiy the date based on the repeat frequency
                     switch (repeat) {
-                        case "daily":
+                        case "daily": // repeat daily
                             repeatedStartDate.setDate(repeatedStartDate.getDate() + i);
                             repeatedEndDate.setDate(repeatedEndDate.getDate() + i);
                             break;
-                        case "weekly":
+                        case "weekly": // repeat weekly
                             repeatedStartDate.setDate(repeatedStartDate.getDate() + (i * 7));
                             repeatedEndDate.setDate(repeatedEndDate.getDate() + (i * 7));
                             break;
-                        case "monthly":
+                        case "monthly": // repeat montly
                             repeatedStartDate.setMonth(repeatedStartDate.getMonth() + i);
                             repeatedEndDate.setMonth(repeatedEndDate.getMonth() + i);
                             break;
                     }
-
                     
+                    // create a promise to add the repeated event to Firesotre
                     const promise = db.collection("users").doc(user.uid).collection("events").add({
                         title: title,
                         start_date: repeatedStartDate.toISOString(),
@@ -53,10 +64,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         location: location,
                     });
 
+                    // add the promise to the array
                     promises.push(promise);
                 }
 
-                
+                // after all repeated events have been added
                 Promise.all(promises)
                     .then(() => {
                         console.log("All events successfully added to Firestore!");
@@ -69,8 +81,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         alert("Error adding event: " + error.message);
                     });
 
-            } else {
-               
+            }
+            
+            // if not a repeating evnet, add a single evnet
+            else {
                 db.collection("users").doc(user.uid).collection("events").add({
                     title: title,
                     start_date: eventStartDate.toISOString(),
@@ -89,7 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("Error adding event: " + error.message);
                 });
             }
-        } else {
+        }
+        
+        else {
             alert("Please sign in first!");
         }
     }

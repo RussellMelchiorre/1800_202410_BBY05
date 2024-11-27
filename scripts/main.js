@@ -83,177 +83,187 @@ function trackToastTime() {
 
 trackToastTime();
 
-///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+// checks if the claendar element exisits before proceeding
 const CalenderExists = document.getElementById('cal');
 
 document.addEventListener("DOMContentLoaded", function() {
-
+  
+  // Firebase authentication state chane listener
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log('User signed in:', user.uid);
       if(CalenderExists){
-      updateCalendar();
-      loadUpcomingEvents();
-      loadUpcomingFriendEvents();
+      updateCalendar(); // update the calendar if the user is signed in
+      loadUpcomingEvents(); // load the user's upcoming evnets
+      loadUpcomingFriendEvents(); // load the user's upcoming friend events
       }
     }
+    
     else {
       console.log("No user signed in.");
     }
   });
 });
-///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////
-//calendar
-
-//checks if calendar exists before calling 
+///////////////////////////////////////////////////////////////////////////
+//checks if the calendar element exists before calling updateCalendar
 if (CalenderExists){
-
-function updateCalendar() {
-  const now = new Date();
-  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
-
-  const firstDayOfWeek = firstDayOfMonth.getDay();
-  const lastDate = lastDayOfMonth.getDate();
-
-  let calendarDates = [];
-
-
-  for (let i = 0; i < firstDayOfWeek; i++) {
-    calendarDates.push('');
-  }
-
-
-  for (let i = 1; i <= lastDate; i++) {
-    calendarDates.push(i);
-  }
-
-
-  while (calendarDates.length % 7 !== 0) {
-    calendarDates.push('');
-  }
-
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June', 
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  const currentMonthName = monthNames[now.getMonth()];
-
-  const monthElement = document.getElementById('currentMonth');
-  if (monthElement) {
-    monthElement.innerText = `${currentMonthName} ${now.getFullYear()}`;
-  }
-
-  const tableBody = document.querySelector('tbody');
-  tableBody.innerHTML = '';
-
-  let row = document.createElement('tr');
-  calendarDates.forEach((date, index) => {
-    if (index % 7 === 0 && index !== 0) {
-      tableBody.appendChild(row);
-      row = document.createElement('tr');
+  
+  // calendar
+  function updateCalendar() {
+    const now = new Date(); // get the currnet date
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // firest day f the current month
+    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0); // last day of the current month
+    const firstDayOfWeek = firstDayOfMonth.getDay(); // get the weekday of the first day of the month
+    const lastDate = lastDayOfMonth.getDate(); // get the last date of the month
+    
+    let calendarDates = [];
+    
+    // fill in empty slots for days before the first day of the month
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      calendarDates.push('');
     }
-    const cell = document.createElement('td');
-    if (date) {
-      cell.innerHTML = `<p>${date}</p>`;
-
-      if (date === now.getDate()) {
-        cell.classList.add('highlight-today');
+    
+    // fill in the actual dates of the month
+    for (let i = 1; i <= lastDate; i++) {
+      calendarDates.push(i);
+    }
+    
+    // fill in empty slots to make the calendar fit perfectly (7 days per row)
+    while (calendarDates.length % 7 !== 0) {
+      calendarDates.push('');
+    }
+    
+    // array of month names for display
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const currentMonthName = monthNames[now.getMonth()]; // get the current name
+    
+    // upcate the displayed month name
+    const monthElement = document.getElementById('currentMonth');
+    if (monthElement) {
+      monthElement.innerText = `${currentMonthName} ${now.getFullYear()}`;
+    }
+    
+    const tableBody = document.querySelector('tbody');
+    tableBody.innerHTML = '';
+    
+    let row = document.createElement('tr');
+    calendarDates.forEach((date, index) => {
+      // start a new row every 7 days
+      if (index % 7 === 0 && index !== 0) {
+        tableBody.appendChild(row);
+        row = document.createElement('tr');
       }
-
-      checkIfEventOnDate(date, cell);
-      cell.addEventListener("click", () => showEventDetails(date, cell));
-    }
-    row.appendChild(cell);
-  });
-  tableBody.appendChild(row);
+      
+      const cell = document.createElement('td');
+      if (date) {
+        cell.innerHTML = `<p>${date}</p>`; // display the date
+        
+        // highlight today's date
+        if (date === now.getDate()) {
+          cell.classList.add('highlight-today');
+        }
+        
+        // check if there are evnets on this date
+        checkIfEventOnDate(date, cell);
+        cell.addEventListener("click", () => showEventDetails(date, cell)); // show event details when clicked
+      }
+      row.appendChild(cell);
+    });
+    tableBody.appendChild(row);
+  }
 }
-}
-///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+// function to check if there are evnets on a specific date
 function checkIfEventOnDate(date, cell) {
-  const user = firebase.auth().currentUser;
-
+  const user = firebase.auth().currentUser; // get the current logged-in user
+  
   if (!user) {
     console.log("No user is signed in.");
     return;
   }
-
-    console.log(`Checking events for date: ${date}`);
-
-    const db = firebase.firestore();
-    const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0);
-    const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
-
-    console.log(`Looking for events from ${eventDateStart} to ${eventDateEnd}`); 
-
-    db.collection("users").doc(user.uid).collection("events")
-    .get()
-    .then(snapshot => {
-      if (!snapshot.empty) {
+  
+  console.log(`Checking events for date: ${date}`);
+  
+  const db = firebase.firestore(); // get Firesotre instance
+  // start of the day
+  const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0);
+  // end of the day
+  const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
+  
+  console.log(`Looking for events from ${eventDateStart} to ${eventDateEnd}`);
+  
+  // query the Firesotre collection for events on the specified date
+  db.collection("users").doc(user.uid).collection("events")
+  .get()
+  .then(snapshot => {
+    if (!snapshot.empty) {
+      snapshot.docs.forEach(doc => {
+        const eventData = doc.data();
+        const eventStartDateStr = eventData.start_date;
+        const eventStartDate = new Date(eventStartDateStr);
+          
+        // if an event exists within the date range, display a dot on the calendar
+        if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
+          console.log(`Found event for date ${date}:`, eventData);
+            
+          const eventDot = document.createElement('div');
+          eventDot.classList.add('event-dot');
+          cell.classList.add('highlight-event');
+          cell.appendChild(eventDot);
+        }
+      });
+    }
+    
+    else {
+      console.log(`No events found for date ${date}`);
+    }
+  })
+  .catch(error => {
+    console.error("Error fetching events: ", error);
+  });
+    
+  // query the user's firend's event  
+  db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
+  .then(friendStatusDoc => {
+    const currentFriends = friendStatusDoc.data()?.currentFriends || [];
+    
+    currentFriends.forEach(friendId => {
+      db.collection("users").doc(friendId).collection("events")
+      .get()
+      .then(snapshot => {
         snapshot.docs.forEach(doc => {
           const eventData = doc.data();
           const eventStartDateStr = eventData.start_date;
           const eventStartDate = new Date(eventStartDateStr);
-
+          
+          // display firend's events on the claendar
           if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
-            console.log(`Found event for date ${date}:`, eventData);
+            console.log(`Found friend's event for date ${date}:`, eventData);
             
-            const eventDot = document.createElement('div');
-            eventDot.classList.add('event-dot');
-            cell.classList.add('highlight-event');
-            cell.appendChild(eventDot);
+            const friendEventDot = document.createElement('div');
+            friendEventDot.classList.add('friend-event-dot');
+            cell.classList.add('highlight-friend-event');
+            cell.appendChild(friendEventDot);
           }
         });
-      }
-      else {
-        console.log(`No events found for date ${date}`);
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching events: ", error);
-    });
-
-
-    db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
-    .then(friendStatusDoc => {
-      const currentFriends = friendStatusDoc.data()?.currentFriends || [];
-
-      currentFriends.forEach(friendId => {
-        db.collection("users").doc(friendId).collection("events")
-          .get()
-          .then(snapshot => {
-            snapshot.docs.forEach(doc => {
-              const eventData = doc.data();
-              const eventStartDateStr = eventData.start_date;
-              const eventStartDate = new Date(eventStartDateStr);
-
-              if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
-                console.log(`Found friend's event for date ${date}:`, eventData);
-                
-                const friendEventDot = document.createElement('div');
-                friendEventDot.classList.add('friend-event-dot');
-                cell.classList.add('highlight-friend-event');
-                cell.appendChild(friendEventDot);
-              }
-            });
-          });
       });
-    })
-    .catch(error => {
-      console.error("Error fetching friend events: ", error);
     });
+  })
+  .catch(error => {
+    onsole.error("Error fetching friend events: ", error);
+  });
 }
-///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////
-//checks if calendar exists before calling 
+///////////////////////////////////////////////////////////////////////////
+// function to load the user's upcoming events
 if (CalenderExists){
   
   function loadUpcomingEvents() {
@@ -262,7 +272,7 @@ if (CalenderExists){
     
     if (user) {
       const eventListElement = document.getElementById('eventList');
-      eventListElement.innerHTML = '';
+      eventListElement.innerHTML = ''; // clear the event list
       
       db.collection("users")
       .doc(user.uid)
@@ -289,9 +299,9 @@ if (CalenderExists){
             eventListElement.appendChild(listItem);
           });
           
+          // add evnet listner to delete buttons
           addDeleteButtonListener();
         }
-        
         else {
           console.log ("No event found.");
           eventListElement.innerHTML = `<li class="list-group-item">No upcoming events.</li>`;
@@ -301,23 +311,25 @@ if (CalenderExists){
         console.error("Error fetching events: ", error);
       });
     }
-    
     else {
       console.log("User is not signed in.");
     }
   }
 }
-///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
+// fuction to show the detailed info on the calendar
 function showEventDetails(date, cell) {
   const existingDetails = cell.querySelector(".event-details");
-
+  
   if (existingDetails && existingDetails.classList.contains("active")) {
     existingDetails.remove();
     cell.classList.remove("selected-cell");
     return;
   }
 
+  // remove active evnet details and selected cell styling
   document.querySelectorAll(".event-details.active").forEach(detail => {
     detail.remove();
   });
@@ -329,13 +341,16 @@ function showEventDetails(date, cell) {
   detailsDiv.classList.add("event-details");
   detailsDiv.classList.add("active");
 
+  // load events for the selected date
   loadEventsForDate(date, detailsDiv);
   cell.appendChild(detailsDiv);
 
   cell.classList.add("selected-cell");
 }
+///////////////////////////////////////////////////////////////////////////
 
-
+///////////////////////////////////////////////////////////////////////////
+// load events for a specific date
 function loadEventsForDate(date, detailsDiv) {
   const user = firebase.auth().currentUser;
 
@@ -350,78 +365,85 @@ function loadEventsForDate(date, detailsDiv) {
   const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
 
   db.collection("users").doc(user.uid).collection("events")
-    .where("start_date", ">=", eventDateStart.toISOString())
-    .where("start_date", "<=", eventDateEnd.toISOString())
-    .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        detailsDiv.textContent = "No events for this date.";
-      } else {
-        const eventList = document.createElement("ul");
-        eventList.classList.add("list-group");
-
-        snapshot.docs.forEach(doc => {
-          const eventData = doc.data();
-          const listItem = document.createElement("li");
-          listItem.classList.add("list-group-item");
-          listItem.innerHTML = `
-            <strong>${eventData.title}</strong><br>
-            ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
-            Location: ${eventData.location || "N/A"}<br>
-            Repeat: ${eventData.repeat || "None"}
-          `;
-          eventList.appendChild(listItem);
-        });
-
-        detailsDiv.appendChild(eventList);
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching events: ", error);
-      detailsDiv.textContent = "Failed to load events.";
-    });
+  .where("start_date", ">=", eventDateStart.toISOString())
+  .where("start_date", "<=", eventDateEnd.toISOString())
+  .get()
+  .then(snapshot => {
+    if (snapshot.empty) {
+      detailsDiv.textContent = "No events for this date.";
+    }
+    else {
+      const eventList = document.createElement("ul");
+      eventList.classList.add("list-group");
+      
+      snapshot.docs.forEach(doc => {
+        const eventData = doc.data();
+        const listItem = document.createElement("li");
+        listItem.classList.add("list-group-item");
+        listItem.innerHTML = `
+        <strong>${eventData.title}</strong><br>
+        ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
+        Location: ${eventData.location || "N/A"}<br>
+        Repeat: ${eventData.repeat || "None"}
+        `;
+        
+        eventList.appendChild(listItem);
+      });
+      detailsDiv.appendChild(eventList);
+    }
+  })
+  .catch(error => {
+    console.error("Error fetching events: ", error);
+    detailsDiv.textContent = "Failed to load events.";
+  });
 }
+///////////////////////////////////////////////////////////////////////////
 
-
+///////////////////////////////////////////////////////////////////////////
+// add event listener for delete buttons to remove evnets
 function addDeleteButtonListener() {
   const deleteButtons = document.querySelectorAll(".delete-btn");
-
+  
   deleteButtons.forEach(button => {
     button.addEventListener("click", function () {
       const eventId = this.getAttribute("data-id");
       if (confirm("Are you sure you want to delete this event?")) {
-        deleteEvent(eventId);
+        deleteEvent(eventId); // call the function to delete the evnet
       }
     });
   });
 }
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
+// delete an event from Firesotre
 function deleteEvent(eventId) {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
 
   if (user) {
     db.collection("users")
-      .doc(user.uid)
-      .collection("events")
-      .doc(eventId)
-      .delete()
-      .then(() => {
-        console.log("Event successfully deleted!");
-        alert("Event deleted successfully!");
-
-
-        loadUpcomingEvents();
-      })
-      .catch(error => {
-        console.error("Error deleting event: ", error);
-        alert("Failed to delete event: " + error.message);
-      });
-  } else {
+    .doc(user.uid)
+    .collection("events")
+    .doc(eventId)
+    .delete()
+    .then(() => {
+      console.log("Event successfully deleted!");
+      alert("Event deleted successfully!");
+      
+      // reload the upcoming evnets
+      loadUpcomingEvents();
+    })
+    .catch(error => {
+      console.error("Error deleting event: ", error);
+      alert("Failed to delete event: " + error.message);
+    });
+  }
+  else {
     alert("User is not signed in.");
   }
 }
+///////////////////////////////////////////////////////////////////////////
 
 
 
