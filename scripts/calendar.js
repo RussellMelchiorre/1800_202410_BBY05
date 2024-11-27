@@ -29,27 +29,25 @@ document.addEventListener("DOMContentLoaded", function () {
             let eventStartDate = new Date(startDate); // convert start date to date object
             let eventEndDate = new Date(endDate); // convert end date to date obgject
             const promises = [];
-            
-            // handle repreated evnets
-            if (repeat !== "none") {
-                const repeatCount = 10; // set the maximum number of repetitions
-                
-                // create repeated events based on the repeat count
+
+            // Repeat event handling
+            if (repeat !== "None") {
+                const repeatCount = 10;
                 for (let i = 0; i < repeatCount; i++) {
                     let repeatedStartDate = new Date(eventStartDate); // create a new start date for the repetition
                     let repeatedEndDate = new Date(eventEndDate); // create a new end date for the repetition
                     
                     // modifiy the date based on the repeat frequency
                     switch (repeat) {
-                        case "daily": // repeat daily
+                        case "Daily":
                             repeatedStartDate.setDate(repeatedStartDate.getDate() + i);
                             repeatedEndDate.setDate(repeatedEndDate.getDate() + i);
                             break;
-                        case "weekly": // repeat weekly
+                        case "Weekly":
                             repeatedStartDate.setDate(repeatedStartDate.getDate() + (i * 7));
                             repeatedEndDate.setDate(repeatedEndDate.getDate() + (i * 7));
                             break;
-                        case "monthly": // repeat montly
+                        case "Monthly":
                             repeatedStartDate.setMonth(repeatedStartDate.getMonth() + i);
                             repeatedEndDate.setMonth(repeatedEndDate.getMonth() + i);
                             break;

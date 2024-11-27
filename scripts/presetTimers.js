@@ -290,7 +290,7 @@ function toggleActiveStatus() {
 
         setTimeout(function () {
           if (hours === 0 && minutes === 0 && seconds === 0) {
-            alert("Time's up!");
+            showToast("Time's up!");
           }
 
           presetHours[index].textContent = formatLeadZero(originalHours) + " : ";

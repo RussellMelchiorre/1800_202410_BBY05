@@ -244,7 +244,7 @@ function startCountdown() {
         if (totalSeconds <= 0 || cancelled === true) {
             clearInterval(interval);
             if(totalSeconds <= 0) {
-            alert("Time's up!");
+            showToast("Time's up!");
             }
 
             hoursCountInput.value = originalHours;

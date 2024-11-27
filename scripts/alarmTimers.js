@@ -293,12 +293,12 @@ function timeRestriction() {
 
     if (hoursCountInput) {
         hoursCountInput.addEventListener('input', function () {
-            //if user enters value over 99 hours or below 0 hours it is automatically set to corresponding value
+            //if user enters value over hour of 12 or below hour 1 it is automatically set to corresponding value
             if (this.value > 12) {
                 this.value = "12";
             }
-            if (this.value < 0) {
-                this.value = "00";
+            if (this.value < 1) {
+                this.value = "01";
             }
             updateHourNeighbors();
         });
@@ -306,7 +306,7 @@ function timeRestriction() {
 
     if (minutesCountInput) {
         minutesCountInput.addEventListener('input', function () {
-            //if user enters value over 59 minutes or below 0 minutes it is automatically set to corresponding value
+            //if user enters value over minute 59 or below minute 0 it is automatically set to corresponding value
             if (this.value > 59) {
                 this.value = "59";
             }

@@ -29,7 +29,8 @@ getNameFromAuth(); //run the function
   // Display the toast message 
   document.getElementById("toast-message").textContent = message;
   new bootstrap.Toast(document.getElementById("basicToast")).show();
-  logAlert(message); 
+  logAlert(message);
+   
 }
 
 
