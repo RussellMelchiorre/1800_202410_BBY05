@@ -165,6 +165,7 @@ function updateCalendar() {
       }
 
       checkIfEventOnDate(date, cell);
+      cell.addEventListener("click", () => showEventDetails(date, cell));
     }
     row.appendChild(cell);
   });
@@ -218,7 +219,7 @@ function checkIfEventOnDate(date, cell) {
       console.error("Error fetching events: ", error);
     });
 
-    
+
     db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
     .then(friendStatusDoc => {
       const currentFriends = friendStatusDoc.data()?.currentFriends || [];
@@ -307,6 +308,79 @@ if (CalenderExists){
   }
 }
 ///////////////////////////////////////////////////////////
+
+function showEventDetails(date, cell) {
+  const existingDetails = cell.querySelector(".event-details");
+
+  if (existingDetails && existingDetails.classList.contains("active")) {
+    existingDetails.remove();
+    cell.classList.remove("selected-cell");
+    return;
+  }
+
+  document.querySelectorAll(".event-details.active").forEach(detail => {
+    detail.remove();
+  });
+  document.querySelectorAll(".selected-cell").forEach(selected => {
+    selected.classList.remove("selected-cell");
+  });
+
+  const detailsDiv = document.createElement("div");
+  detailsDiv.classList.add("event-details");
+  detailsDiv.classList.add("active");
+
+  loadEventsForDate(date, detailsDiv);
+  cell.appendChild(detailsDiv);
+
+  cell.classList.add("selected-cell");
+}
+
+
+function loadEventsForDate(date, detailsDiv) {
+  const user = firebase.auth().currentUser;
+
+  if (!user) {
+    console.log("No user is signed in.");
+    detailsDiv.textContent = "Sign in to see events.";
+    return;
+  }
+
+  const db = firebase.firestore();
+  const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0);
+  const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
+
+  db.collection("users").doc(user.uid).collection("events")
+    .where("start_date", ">=", eventDateStart.toISOString())
+    .where("start_date", "<=", eventDateEnd.toISOString())
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        detailsDiv.textContent = "No events for this date.";
+      } else {
+        const eventList = document.createElement("ul");
+        eventList.classList.add("list-group");
+
+        snapshot.docs.forEach(doc => {
+          const eventData = doc.data();
+          const listItem = document.createElement("li");
+          listItem.classList.add("list-group-item");
+          listItem.innerHTML = `
+            <strong>${eventData.title}</strong><br>
+            ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
+            Location: ${eventData.location || "N/A"}<br>
+            Repeat: ${eventData.repeat || "None"}
+          `;
+          eventList.appendChild(listItem);
+        });
+
+        detailsDiv.appendChild(eventList);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching events: ", error);
+      detailsDiv.textContent = "Failed to load events.";
+    });
+}
 
 
 function addDeleteButtonListener() {
