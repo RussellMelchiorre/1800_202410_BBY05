@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const promises = [];
 
             // Repeat event handling
-            if (repeat !== "none") {
+            if (repeat !== "None") {
                 const repeatCount = 10;
                 for (let i = 0; i < repeatCount; i++) {
                     let repeatedStartDate = new Date(eventStartDate);
@@ -30,15 +30,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                    
                     switch (repeat) {
-                        case "daily":
+                        case "Daily":
                             repeatedStartDate.setDate(repeatedStartDate.getDate() + i);
                             repeatedEndDate.setDate(repeatedEndDate.getDate() + i);
                             break;
-                        case "weekly":
+                        case "Weekly":
                             repeatedStartDate.setDate(repeatedStartDate.getDate() + (i * 7));
                             repeatedEndDate.setDate(repeatedEndDate.getDate() + (i * 7));
                             break;
-                        case "monthly":
+                        case "Monthly":
                             repeatedStartDate.setMonth(repeatedStartDate.getMonth() + i);
                             repeatedEndDate.setMonth(repeatedEndDate.getMonth() + i);
                             break;
