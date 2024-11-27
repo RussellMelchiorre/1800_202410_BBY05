@@ -48,20 +48,51 @@ body {
   background-color: rgb(255, 255, 255, 0.9);
   padding: 0.2vw;
   border-radius: 5px;
-  font-size: 4vw;
+  font-size: 2vw;
   width: 45vw;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+
+@media only screen and (max-width: 400px) {
+
+  .toast #name-goes-here {
+    font-size: 4vw;
+    color: #000000;
+  }
+
+  .toast #time-goes-here {
+    font-size: 3vw;
+    color: #000000;
+   padding-left: 5vw;
+  }
+.toast{
+  font-size: 4vw;
+  width: auto;
+}
+
+}
+
 
 .toast-header {
   background-color: rgb(255, 255, 255, 0.9);
 }
 
-.toast #name-goes-here,
-#time-goes-here {
+
+
+
+@media only screen and (min-width: 401px) {
+
+  .toast #name-goes-here {
   font-size: 2vw;
-  color: #000000 !important;
+  color: #000000;
 }
+.toast #time-goes-here {
+  font-size: 2vw;
+  color: #000000;
+}
+}
+
 
 #profilePhoto {
   background-color: #417ab8;
