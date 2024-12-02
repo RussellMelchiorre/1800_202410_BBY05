@@ -72,11 +72,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log("All events successfully added to Firestore!");
                         showToast("Events successfully added!");
                         saveEventForm.reset(); 
-                        window.location.href = "main.html"; 
+                        setTimeout(() => {
+                            window.location.href = "main.html";
+                          }, 1500);
                     })
                     .catch((error) => {
                         console.error("Error adding events: ", error);
-                        alert("Error adding event: " + error.message);
+                        showToast("Error adding event: " + error.message);
                     });
 
             }
@@ -103,13 +105,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch((error) => {
                     console.error("Error adding event: ", error);
-                    alert("Error adding event: " + error.message);
+                    showToast("Error adding event: " + error.message);
                 });
             }
         }
         
         else {
-            alert("Please sign in first!");
+            showToast("Please sign in first!");
         }
     }
 });
