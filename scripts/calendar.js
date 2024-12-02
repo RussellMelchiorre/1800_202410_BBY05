@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Promise.all(promises)
                     .then(() => {
                         console.log("All events successfully added to Firestore!");
-                        alert("Events successfully added!");
+                        showToast("Events successfully added!");
                         saveEventForm.reset(); 
                         window.location.href = "main.html"; 
                     })
@@ -91,10 +91,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     location: location,
                 })
                 .then(() => {
-                    console.log("Event successfully added to Firestore!");
-                    alert("Event successfully added!");
+                    console.log("Event successfully added to Firestore!")
+                    showToast("Event successfully added!");
+                    logAlert("Event successfully added for " + eventStartDate)
                     saveEventForm.reset(); 
-                    window.location.href = "main.html";
+
+                    //slight pause before redirect to ensure conformation is shown
+                    setTimeout(() => {
+                        window.location.href = "main.html";
+                      }, 1500);
                 })
                 .catch((error) => {
                     console.error("Error adding event: ", error);

@@ -48,9 +48,10 @@ body {
   background-color: rgb(255, 255, 255, 0.9);
   padding: 0.2vw;
   border-radius: 5px;
-  font-size: 2vw;
-  width: 45vw;
+  font-size: 4vw;
+  width: auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
 }
 
 
@@ -84,7 +85,7 @@ body {
 @media only screen and (min-width: 401px) {
 
   .toast #name-goes-here {
-  font-size: 2vw;
+  font-size: 4vw;
   color: #000000;
 }
 .toast #time-goes-here {
