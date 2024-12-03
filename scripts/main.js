@@ -401,18 +401,25 @@ function loadEventsForDate(date, detailsDiv) {
 ///////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-// add event listener for delete buttons to remove evnets
+//functions for selecting events to delete.
 function addDeleteButtonListener() {
   const deleteButtons = document.querySelectorAll(".delete-btn");
-  
+
   deleteButtons.forEach(button => {
     button.addEventListener("click", function () {
       const eventId = this.getAttribute("data-id");
-      if (confirm("Are you sure you want to delete this event?")) {
-        deleteEvent(eventId); // call the function to delete the evnet
-      }
+      document.querySelector("#confirmation-modal").style.display = "block";
+      document.querySelector("#confirm-delete").onclick = () => {
+        deleteEvent(eventId);
+        closeModal();
+      };
     });
   });
+}
+
+//closes delete conformation popup.
+function closeModal() {
+  document.querySelector("#confirmation-modal").style.display = "none";
 }
 ///////////////////////////////////////////////////////////////////////////
 
@@ -421,8 +428,20 @@ function addDeleteButtonListener() {
 function deleteEvent(eventId) {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
+  const userID = user.uid;
+  let eventData = ""
+  let title = ""
+  let StartDate = ""
 
   if (user) {
+    const eventsRef = db.collection("users").doc(userID).collection("events");
+    eventsRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+         eventData = doc.data();
+         title = eventData.title;
+         startDate = eventData.start_date;
+      })
+    })
     db.collection("users")
     .doc(user.uid)
     .collection("events")
@@ -430,18 +449,17 @@ function deleteEvent(eventId) {
     .delete()
     .then(() => {
       console.log("Event successfully deleted!");
-      alert("Event deleted successfully!");
-      
+      showToast(`Event ${title} on ${startDate} deleted`);
       // reload the upcoming evnets
       loadUpcomingEvents();
     })
     .catch(error => {
       console.error("Error deleting event: ", error);
-      alert("Failed to delete event: " + error.message);
+      showToast("Failed to delete event: " + error.message);
     });
   }
   else {
-    alert("User is not signed in.");
+    showToast("User is not signed in.");
   }
 }
 ///////////////////////////////////////////////////////////////////////////

@@ -49,19 +49,51 @@ body {
   padding: 0.2vw;
   border-radius: 5px;
   font-size: 4vw;
-  width: 45vw;
+  width: auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
 }
+
+
+@media only screen and (max-width: 400px) {
+
+  .toast #name-goes-here {
+    font-size: 4vw;
+    color: #000000;
+  }
+
+  .toast #time-goes-here {
+    font-size: 3vw;
+    color: #000000;
+   padding-left: 5vw;
+  }
+.toast{
+  font-size: 4vw;
+  width: auto;
+}
+
+}
+
 
 .toast-header {
   background-color: rgb(255, 255, 255, 0.9);
 }
 
-.toast #name-goes-here,
-#time-goes-here {
-  font-size: 2vw;
-  color: #000000 !important;
+
+
+
+@media only screen and (min-width: 401px) {
+
+  .toast #name-goes-here {
+  font-size: 4vw;
+  color: #000000;
 }
+.toast #time-goes-here {
+  font-size: 2vw;
+  color: #000000;
+}
+}
+
 
 #profilePhoto {
   background-color: #417ab8;
@@ -465,4 +497,47 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .event-details.active {
   display: block;
+}
+
+/* Modal overlay for background dim */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+/* Modal card styling */
+.modal-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal actions container */
+.modal-actions {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+}
+
+.modal-actions .btn-custom {
+  border-radius: 20px;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #417ab8;;
 }

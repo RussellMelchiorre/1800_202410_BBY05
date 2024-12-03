@@ -107,6 +107,20 @@
     </ul>
   </div>
 
+  <!--delete conformation modal-->
+  <div id="confirmation-modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-card index-card">
+      <p class="card-title">Are you sure you want to delete this event?</p>
+      <div class="modal-actions">
+        <button id="confirm-delete" class="btn-custom">Yes</button>
+        <button class="btn-custom" onclick="closeModal()">No</button>
+      </div>
+    </div>
+  </div>
+  
+
+  
   <div class="container mt-4" style="padding-bottom: 40%;">
     <h3>Friends' Upcoming Events</h3>
     <ul id="friendsEventList" class="list-group">

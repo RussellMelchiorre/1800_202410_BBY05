@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>RoutineSync : Schedule</title>
+  <title>Profile Page</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!------------------------>
@@ -41,52 +41,27 @@
 
 </head>
 
-
 <body>
   <!------------------------------>
   <!-- Your HTML Layout go here -->
   <!------------------------------>
 
 
-  <!-- The body of your page goes here -->
-  <div class="container mt-5">
-    <h2>Add New Event</h2>
-    <form id="newEventForm">
-      <div class="mb-3">
-        <label for="eventTitle" class="form-label">Event Title</label>
-        <input type="text" class="form-control" id="eventTitle" name="title" required>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card index-card">
+      <div class="card-body">
+        <h3 class="card-title text-center">Sorry</h3>
+        <p class="card-text text-center">This page is still under construction, check back soon.</p>
+        <div id="firebaseui-auth-container"></div>
+        <div class="start-button text-center">
+          <a href="index.html" class="btn btn-custom" role="button">Back</a>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="startDate" class="form-label">Start Date</label>
-        <input type="datetime-local" class="form-control" id="startDate" name="start_date" required>
-      </div>
-      <div class="mb-3">
-        <label for="endDate" class="form-label">End Date</label>
-        <input type="datetime-local" class="form-control" id="endDate" name="end_date" required>
-      </div>
-      <div class="mb-3">
-        <label for="repeat" class="form-label">Repeat</label>
-        <select class="form-select" id="repeat" name="repeat">
-          <option value="None">No Repeat</option>
-          <option value="Daily">Daily</option>
-          <option value="Weekly">Weekly</option>
-          <option value="Monthly">Monthly</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input type="text" class="form-control" id="location" name="location">
-      </div>
-      <button type="submit" href="main.html" class="btn btn-primary">Save Event</button>
-      <a href="main.html" class="btn btn-secondary ms-2">Go Back</a>
-    </form>
+    </div>
   </div>
 
 
-  <!-- Our own navbar goes here -->
-  <nav id="navbarPlaceholder"></nav>
-  <!-- Our own footer goes here-->
-  <nav id="footerPlaceholder"></nav>
+
 
     <!-- toasts for notifs-->
     <div id="basicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -94,7 +69,14 @@
         <span id="toast-message"></span>
       </div>
     </div>
-    
+
+  </div>
+
+  <!-- Our own navbar goes here -->
+  <nav id="navbarPlaceholder"></nav>
+  <!-- Our own footer goes here-->
+  <nav id="footerPlaceholder"></nav>
+
   <!---------------------------------------------->
   <!-- Your own JavaScript functions go here    -->
   <!---------------------------------------------->
@@ -102,7 +84,7 @@
   <script src="./scripts/skeleton.js"></script>
   <script src="./scripts/main.js"></script>
   <script src="./scripts/script.js"></script>
-  <script src="./scripts/calendar.js"></script>
+  <script src="./scripts/friends.js"></script>
 
 </body>
 
