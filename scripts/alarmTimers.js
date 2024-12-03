@@ -20,22 +20,22 @@ firebase.auth().onAuthStateChanged(user => {
     const timerCollection = firebase.firestore().collection("users").doc(currentUserId).collection("alarms");
 
     timerCollection.get()
-    .then(snapshot => {
-      if (snapshot.size >= 10) { //if there are more than or equal to 10 alarms disable timer
-        if (addButton) {
-          addButton.disabled = true;
-          addButton.textContent = "(Capacity of 10 Alarms Reached)";
+      .then(snapshot => {
+        if (snapshot.size >= 10) { //if there are more than or equal to 10 alarms disable timer
+          if (addButton) {
+            addButton.disabled = true;
+            addButton.textContent = "(Capacity of 10 Alarms Reached)";
+          }
+        } else {
+          if (addButton) {
+            addButton.disabled = false;
+            addButton.textContent = "Create Alarm";
+          }
         }
-      } else {
-        if (addButton) {
-          addButton.disabled = false;
-          addButton.textContent = "Create Alarm";
-        }
-      }
-    })
-    .catch(error => {
-      console.error("Error checking alarms count:", error);
-    });
+      })
+      .catch(error => {
+        console.error("Error checking alarms count:", error);
+      });
 
     timerCollection
       .orderBy("timerValue", "asc") // Order timers by time (ascending)
@@ -70,7 +70,7 @@ firebase.auth().onAuthStateChanged(user => {
           const deleteButtons = document.querySelectorAll('.delete-timer');
           deleteButtons.forEach(button => {
             button.addEventListener('click', function () {
-            const timerId = button.getAttribute('data-id'); // Get the ID from the data-id attribute
+              const timerId = button.getAttribute('data-id'); // Get the ID from the data-id attribute
 
               if (timerId) {
                 deleteTimerFromFirestore(timerId); //Deletes the timer based off corresponding delete button
@@ -131,9 +131,9 @@ document.getElementById("savePreset").addEventListener("click", function () {
     if (amPm === "P.M." && hours !== 12) {
       timerValue += 12 * 60; //Add 12 hours for PM if it's not 12
     } else if (amPm === "A.M." && hours === 12) {
-      timerValue = 0 + minutes; 
+      timerValue = 0 + minutes;
     }
-    
+
 
     const timerPreset = {
       presetName: presetName || "Unnamed Timer",
@@ -278,19 +278,19 @@ function toggleActiveStatus() {
     });
   });
 
-function toggleDeleteButtons() {
-  var deleteButtons = document.querySelectorAll('.delete-timer');
+  function toggleDeleteButtons() {
+    var deleteButtons = document.querySelectorAll('.delete-timer');
 
-  deleteButtons.forEach(function(button) {
+    deleteButtons.forEach(function (button) {
       if (button.style.display === 'none' || button.style.display === '') {
-          button.style.display = 'block';
+        button.style.display = 'block';
       } else {
-          button.style.display = 'none';
+        button.style.display = 'none';
       }
-  });
-}
+    });
+  }
 
-document.getElementById('manageAlarmsButton').addEventListener('click', toggleDeleteButtons);
+  document.getElementById('manageAlarmsButton').addEventListener('click', toggleDeleteButtons);
 
 
   function startAlarmCheck(index) {
@@ -319,7 +319,7 @@ document.getElementById('manageAlarmsButton').addEventListener('click', toggleDe
         toggleButtons[index].checked = false;
         toggleStatuses[index].textContent = "Inactive";
       }
-    }, 1000); 
+    }, 1000);
   }
 
   function getPresetTime(index) {
@@ -353,89 +353,89 @@ const downMinutes = document.getElementById('downMinutes');
 const downSeconds = document.getElementById('downSeconds');
 
 function formatLeadZero(time) {
-    if (time < 10) {
-      return "0" + time;
-    } else {
-      return time;
-    }
+  if (time < 10) {
+    return "0" + time;
+  } else {
+    return time;
   }
+}
 
 function timeRestriction() {
-    const hoursCountInput = document.getElementById('hoursCount');
-    const minutesCountInput = document.getElementById('minutesCount');
-    const secondsCountInput = document.getElementById('secondsCount');
+  const hoursCountInput = document.getElementById('hoursCount');
+  const minutesCountInput = document.getElementById('minutesCount');
+  const secondsCountInput = document.getElementById('secondsCount');
 
-    if (hoursCountInput) {
-        hoursCountInput.addEventListener('input', function () {
-            //if user enters value over hour of 12 or below hour 1 it is automatically set to corresponding value
-            if (this.value > 12) {
-                this.value = "12";
-            }
-            if (this.value < 1) {
-                this.value = "01";
-            }
-            updateHourNeighbors();
-        });
-    }
+  if (hoursCountInput) {
+    hoursCountInput.addEventListener('input', function () {
+      //if user enters value over hour of 12 or below hour 1 it is automatically set to corresponding value
+      if (this.value > 12) {
+        this.value = "12";
+      }
+      if (this.value < 1) {
+        this.value = "01";
+      }
+      updateHourNeighbors();
+    });
+  }
 
-    if (minutesCountInput) {
-        minutesCountInput.addEventListener('input', function () {
-            //if user enters value over minute 59 or below minute 0 it is automatically set to corresponding value
-            if (this.value > 59) {
-                this.value = "59";
-            }
-            if (this.value < 0) {
-                this.value = "00";
-            }
-            updateMinuteNeighbors();
-        });
-    }
+  if (minutesCountInput) {
+    minutesCountInput.addEventListener('input', function () {
+      //if user enters value over minute 59 or below minute 0 it is automatically set to corresponding value
+      if (this.value > 59) {
+        this.value = "59";
+      }
+      if (this.value < 0) {
+        this.value = "00";
+      }
+      updateMinuteNeighbors();
+    });
+  }
 }
 
 timeRestriction();
 
 function updateHourNeighbors() {
-    const currentValue = parseInt(hoursCountInput.value, 10);
+  const currentValue = parseInt(hoursCountInput.value, 10);
 
-    if (isNaN(currentValue)) {
-        prevHour.textContent = "11";
-        nextHour.textContent = "01";
-        return;
-    }
+  if (isNaN(currentValue)) {
+    prevHour.textContent = "11";
+    nextHour.textContent = "01";
+    return;
+  }
 
-    if (currentValue === 1) {
-        prevHour.textContent = "12";
-    } else {
-        prevHour.textContent = formatLeadZero(currentValue - 1);
-    }
+  if (currentValue === 1) {
+    prevHour.textContent = "12";
+  } else {
+    prevHour.textContent = formatLeadZero(currentValue - 1);
+  }
 
-    if (currentValue === 12) {
-        nextHour.textContent = "01";
-    } else {
-        nextHour.textContent = formatLeadZero(currentValue + 1);
-    }
+  if (currentValue === 12) {
+    nextHour.textContent = "01";
+  } else {
+    nextHour.textContent = formatLeadZero(currentValue + 1);
+  }
 }
 
 function updateMinuteNeighbors() {
-    const currentValue = parseInt(minutesCountInput.value, 10);
+  const currentValue = parseInt(minutesCountInput.value, 10);
 
-    if (isNaN(currentValue)) {
-        prevMinute.textContent = "59";
-        nextMinute.textContent = "01";
-        return;
-    }
+  if (isNaN(currentValue)) {
+    prevMinute.textContent = "59";
+    nextMinute.textContent = "01";
+    return;
+  }
 
-    if (currentValue === 0) {
-        prevMinute.textContent = "59";
-    } else {
-        prevMinute.textContent = formatLeadZero(currentValue - 1);
-    }
+  if (currentValue === 0) {
+    prevMinute.textContent = "59";
+  } else {
+    prevMinute.textContent = formatLeadZero(currentValue - 1);
+  }
 
-    if (currentValue === 59) {
-        nextMinute.textContent = "00";
-    } else {
-        nextMinute.textContent = formatLeadZero(currentValue + 1);
-    }
+  if (currentValue === 59) {
+    nextMinute.textContent = "00";
+  } else {
+    nextMinute.textContent = formatLeadZero(currentValue + 1);
+  }
 }
 
 function updateSecondNeighbors() {
