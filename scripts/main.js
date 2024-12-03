@@ -152,6 +152,10 @@ if (CalenderExists){
     const tableBody = document.querySelector('tbody');
     tableBody.innerHTML = '';
     
+      // Clear all existing event dots
+  const allEventDots = document.querySelectorAll('.event-dot');
+  allEventDots.forEach(dot => dot.remove());
+
     let row = document.createElement('tr');
     calendarDates.forEach((date, index) => {
       // start a new row every 7 days
@@ -426,41 +430,44 @@ function closeModal() {
 ///////////////////////////////////////////////////////////////////////////
 // delete an event from Firesotre
 function deleteEvent(eventId) {
+  updateCalendar();
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
   const userID = user.uid;
-  let eventData = ""
-  let title = ""
-  let StartDate = ""
 
   if (user) {
-    const eventsRef = db.collection("users").doc(userID).collection("events");
-    eventsRef.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-         eventData = doc.data();
-         title = eventData.title;
-         startDate = eventData.start_date;
-      })
+    const eventsRef = db.collection("users").doc(userID).collection("events").doc(eventId);
+
+    eventsRef.get()
+    .then((doc) => {
+      if (doc.exists) {
+        const eventData = doc.data();
+        const title = eventData.title;
+        const startDate = formatDate(eventData.start_date);
+
+        // Delete the event
+        return eventsRef.delete().then(() => {
+          updateCalendar();
+          console.log("Event successfully deleted!");
+          showToast(`Event "${title}" on ${startDate} deleted`);
+          // Reload the upcoming events
+          loadUpcomingEvents();
+        });
+      } else {
+        console.error("Event not found.");
+        showToast("Error: Event not found.");
+      }
     })
-    db.collection("users")
-    .doc(user.uid)
-    .collection("events")
-    .doc(eventId)
-    .delete()
-    .then(() => {
-      console.log("Event successfully deleted!");
-      showToast(`Event ${title} on ${startDate} deleted`);
-      // reload the upcoming evnets
-      loadUpcomingEvents();
+    .catch((error) => {
+      console.error("Error fetching or deleting event: ", error);
+      showToast("Error deleting event: " + error.message);
     })
-    .catch(error => {
-      console.error("Error deleting event: ", error);
-      showToast("Failed to delete event: " + error.message);
-    });
   }
   else {
-    showToast("User is not signed in.");
+    console.error("User is not signed in.");
+    updateCalendar();
   }
+  updateCalendar();
 }
 ///////////////////////////////////////////////////////////////////////////
 
@@ -560,4 +567,13 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
 }
