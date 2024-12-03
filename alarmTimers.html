@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>RoutineSync : Alarms</title>
+  <title>Alarm</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!------------------------>
@@ -59,8 +59,7 @@
       style="background-color: #417ab8; color: white; border: 1px solid black;" href="#"><u><b>Alarm</b></u></a>
   </div>
 
-  <div id="presetTimerContainer" class="preset-timer"
-    style="display: none; width: 100%; margin: 0 auto;">
+  <div id="presetTimerContainer" class="preset-timer" style="display: none; width: 100%; margin: 0 auto;">
     <h1 class="text-center" style="font-size: 200%; padding-top: 2rem; padding-bottom: 1rem;">Create an Alarm</h1>
     <div class="text-center mt-3" style="width: 90%; margin: 0 auto;">
       <div class="row mb-4">
@@ -93,11 +92,13 @@
     <input type="text" id="presetName" class="form-control" placeholder="Alarm Name"
       style="text-align:Center; padding-top: 1%; padding-bottom: 1%; font-size: 100%; width: 70%; margin: 0 auto;"
       maxlength="18">
-      <div class="createTimerButtons" style="display: flex; width: 100%; justify-content: center;">
-        <button id="savePreset" class="btn btn-primary mt-1" style="width: 25%; padding-top: 0.5%; padding-bottom: 0.5%; margin-right: 0.5%;">Save</button>
-        <button id="cancelPreset" class="btn btn-danger mt-1" style="width: 25%; padding-top: 0.5%; padding-bottom: 0.5%; padding-bottom: 0.5%;">Cancel</button>
-      </div>
-      
+    <div class="createTimerButtons" style="display: flex; width: 100%; justify-content: center;">
+      <button id="savePreset" class="btn btn-primary mt-1"
+        style="width: 25%; padding-top: 0.5%; padding-bottom: 0.5%; margin-right: 0.5%;">Save</button>
+      <button id="cancelPreset" class="btn btn-danger mt-1"
+        style="width: 25%; padding-top: 0.5%; padding-bottom: 0.5%; padding-bottom: 0.5%;">Cancel</button>
+    </div>
+
   </div>
 
   <div id="savedTimerContainer" class="presetTimer container mt-4" style="display: block;">
@@ -110,6 +111,9 @@
           style="background:white; border: 1px solid rgb(174, 174, 174); margin-left: 5%; margin-right: 0; width: 100%;">
           Create Alarm
         </button>
+
+        <button class="btn btn-custom mt-1" id="manageAlarmsButton"
+          style="background: white; border: 1px solid rgb(174, 174, 174); width: 100%;">Manage Alarms</button>
       </div>
       <div class="card-body" style="margin-top: -1rem;">
         <div id="timerPresets" class="list-group">
@@ -125,35 +129,35 @@
               </div>
             </div>
             <div class="form-check form-switch">
-              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
-              <label class="form-check-label preset" for="presetToggle"
-                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
-            </div>
-          </div>
-        </div>
-        <div id="timerPresets" class="list-group">
-          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
-            <div class="timeContainer">
-              <span class="preset-name font-weight-bold">Blank Timer</span>
-              <div class="row mt-2">
-                <div class="col" style="margin-left: 0.25rem;">
-                  <p class="preset-hours">00 : </p>
-                  <p class="preset-minutes">00 : </p>
-                  <p class="preset-seconds">00</p>
-                </div>
-              </div>
-            </div>
-            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
               <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
               <label class="form-check-label preset" for="presetToggle"
                 style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
             </div>
           </div>
-          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
-            <button class="cancel-timer btn btn-danger mt-1"
-              style="width: 50%; color: white; display:none;">Cancel</button>
-            <button class="pause-timer btn btn mt-1"
-              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
           </div>
         </div>
         <div id="timerPresets" class="list-group">
@@ -169,16 +173,13 @@
               </div>
             </div>
             <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
               <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
               <label class="form-check-label preset" for="presetToggle"
-                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
             </div>
-          </div>
-          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
-            <button class="cancel-timer btn btn-danger mt-1"
-              style="width: 50%; color: white; display:none;">Cancel</button>
-            <button class="pause-timer btn btn mt-1"
-              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
           </div>
         </div>
         <div id="timerPresets" class="list-group">
@@ -194,16 +195,13 @@
               </div>
             </div>
             <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
               <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
               <label class="form-check-label preset" for="presetToggle"
-                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
             </div>
-          </div>
-          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
-            <button class="cancel-timer btn btn-danger mt-1"
-              style="width: 50%; color: white; display:none;">Cancel</button>
-            <button class="pause-timer btn btn mt-1"
-              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
           </div>
         </div>
         <div id="timerPresets" class="list-group">
@@ -219,22 +217,133 @@
               </div>
             </div>
             <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
               <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
               <label class="form-check-label preset" for="presetToggle"
-                style="min-width:60px; text-align:left; font-size:80%;">Inactive</label>
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
             </div>
           </div>
-          <div class="timerOptions d-flex gap-2" style="display: inline; width: 100%;">
-            <button class="cancel-timer btn btn-danger mt-1"
-              style="width: 50%; color: white; display:none;">Cancel</button>
-            <button class="pause-timer btn btn mt-1"
-              style="width: 50%; background-color: rgb(157, 157, 157); color: white; display:none">Pause</button>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
+          </div>
+        </div>
+        <div id="timerPresets" class="list-group">
+          <div class="list-group-item preset justify-content-between align-items-center" style="display:none;">
+            <div class="timeContainer">
+              <span class="preset-name font-weight-bold">Blank Timer</span>
+              <div class="row mt-2">
+                <div class="col" style="margin-left: 0.25rem;">
+                  <p class="preset-hours">00 : </p>
+                  <p class="preset-minutes">00 : </p>
+                  <p class="preset-seconds">00</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <button class="delete-timer btn btn-custon mt-1"
+                style="display:none; width: 100%; color: rgb(0, 0, 0); font-size: 150%;" data-id="timerId"><i
+                  class='bx bx-trash'></i></button>
+              <input class="form-check-input preset" type="checkbox" role="switch" style="transform: scale(1.25)">
+              <label class="form-check-label preset" for="presetToggle"
+                style="min-width:60px; max-width: 100%; text-align:left; font-size:80%;">Inactive</label>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="emptySpace" style="padding-bottom: 10%">
 
+  </div>
+
+  
 
 
   <!-- toasts for notifs-->

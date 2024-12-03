@@ -12,66 +12,138 @@ function formatLeadZero(time) {
   }
 }
 
+
 firebase.auth().onAuthStateChanged(user => {
-  if (user) { //check if user is signed in
-
+  if (user) { // Check if the user is signed in
+    const addButton = document.getElementById('addTimerButton');
     const currentUserId = user.uid;
-    const timerCollection = firebase.firestore().collection("users").doc(currentUserId).collection("alarms"); // Updated to 'alarms' collection
+    const timerCollection = firebase.firestore().collection("users").doc(currentUserId).collection("alarms");
 
-    const presetName = document.querySelectorAll('.preset-name');
-    const presetHours = document.querySelectorAll('.preset-hours');
-    const presetMinutes = document.querySelectorAll('.preset-minutes');
-    const presetSeconds = document.querySelectorAll('.preset-seconds');
-    const presetListItem = document.querySelectorAll('.list-group-item.preset');
+    timerCollection.get()
+    .then(snapshot => {
+      if (snapshot.size >= 10) { //if there are more than or equal to 10 alarms disable timer
+        if (addButton) {
+          addButton.disabled = true;
+          addButton.textContent = "(Capacity of 10 Alarms Reached)";
+        }
+      } else {
+        if (addButton) {
+          addButton.disabled = false;
+          addButton.textContent = "Create Alarm";
+        }
+      }
+    })
+    .catch(error => {
+      console.error("Error checking alarms count:", error);
+    });
 
-    if (currentUserId && timerCollection) {
-      timerCollection
-        .orderBy("createdAt", "desc") //documents ordered in descending order based off when it was created
-        .get()
-        .then((snapshot) => {
-          if (!snapshot.empty) { //if snapshot got anything
-            snapshot.docs.forEach((doc, index) => { //for each document in the alarm collection run the code
-              if (index < presetName.length) {
-                const timerData = doc.data();
-                presetName[index].textContent = timerData.presetName;
-                presetHours[index].textContent = formatLeadZero(timerData.hours) + " : ";
-                presetMinutes[index].textContent = formatLeadZero(timerData.minutes) + " : ";
-                presetSeconds[index].textContent = formatLeadZero(timerData.seconds);
-                presetListItem[index].style.display = 'flex';
-                presetListItem[index].style.paddingTop = '0.5rem';
+    timerCollection
+      .orderBy("timerValue", "asc") // Order timers by time (ascending)
+      .get()
+      .then(snapshot => {
+        if (!snapshot.empty) {
+          snapshot.docs.forEach((doc, index) => {
+            const timerData = doc.data();
+            const timerId = doc.id; // Get the timer document ID
+
+            const presetName = document.querySelectorAll('.preset-name')[index];
+            const presetHours = document.querySelectorAll('.preset-hours')[index];
+            const presetMinutes = document.querySelectorAll('.preset-minutes')[index];
+            const presetSeconds = document.querySelectorAll('.preset-seconds')[index];
+            const presetListItem = document.querySelectorAll('.list-group-item.preset')[index];
+            const deleteButton = document.querySelectorAll('.delete-timer')[index];
+
+            presetName.textContent = timerData.presetName;
+            presetHours.textContent = formatLeadZero(timerData.hours) + " : ";
+            presetMinutes.textContent = formatLeadZero(timerData.minutes);
+            presetSeconds.textContent = timerData.amPm;
+            presetListItem.style.display = 'flex';
+            presetListItem.style.paddingTop = '0.5rem';
+            presetListItem.style.marginBottom = '0.5rem';
+
+            // Set the data-id of the delete button to the timer's ID
+            if (deleteButton) {
+              deleteButton.setAttribute('data-id', timerId);
+            }
+          });
+
+          const deleteButtons = document.querySelectorAll('.delete-timer');
+          deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+            const timerId = button.getAttribute('data-id'); // Get the ID from the data-id attribute
+
+              if (timerId) {
+                deleteTimerFromFirestore(timerId); //Deletes the timer based off corresponding delete button
+                addButton.disabled = false;
+                addButton.textContent = "Create Alarm";
               }
             });
-          } else {
-            console.log("No timers found");
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching timers:", error);
-        });
-    }
+          });
+
+        } else {
+          console.log("No timers found");
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching timers:", error);
+      });
   } else {
     console.log("User is not signed in");
   }
 });
 
+function deleteTimerFromFirestore(timerId) {
+  const user = firebase.auth().currentUser;
+
+  if (user) {
+    const currentUserId = user.uid;
+    const timerCollection = firebase.firestore().collection("users").doc(currentUserId).collection("alarms");
+
+    timerCollection.doc(timerId).delete()
+      .then(() => {
+        console.log(`Timer with ID ${timerId} deleted successfully!`);
+
+        const timerElement = document.querySelector(`button[data-id='${timerId}']`).closest('.preset');
+        if (timerElement) {
+          timerElement.remove();
+        }
+      })
+      .catch(error => {
+        console.error("Error deleting timer: ", error);
+      });
+  } else {
+    console.log("No user is signed in.");
+  }
+}
+
+
+
 document.getElementById("savePreset").addEventListener("click", function () {
   const user = firebase.auth().currentUser;
 
   if (user) {
-    const presetName = document.getElementById("presetName").value;
-    const hours = document.getElementById("hours").value;
-    const minutes = document.getElementById("minutes").value;
-    const seconds = document.getElementById("seconds").value;
+    const presetName = document.getElementById("presetName").value.trim();
+    const hours = parseInt(document.getElementById("hoursCount").value.trim()) || 12;
+    const minutes = parseInt(document.getElementById("minutesCount").value.trim()) || 0;
+    const amPm = document.getElementById("secondsCount").value.trim();
+
+    let timerValue = hours * 60 + minutes;  // Convert time to minutes
+    if (amPm === "P.M." && hours !== 12) {
+      timerValue += 12 * 60; //Add 12 hours for PM if it's not 12
+    } else if (amPm === "A.M." && hours === 12) {
+      timerValue = 0 + minutes; 
+    }
+    
 
     const timerPreset = {
-      presetName: presetName || "",
-      hours: parseInt(hours) || 0,
-      minutes: parseInt(minutes) || 0,
-      seconds: parseInt(seconds) || 0,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      presetName: presetName || "Unnamed Timer",
+      hours: hours,
+      minutes: minutes,
+      timerValue: timerValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      amPm: amPm
     };
 
-    // Save to alarms collection
     firebase.firestore().collection("users").doc(user.uid).collection("alarms").add(timerPreset)
       .then(function () {
         console.log("Timer preset saved:", timerPreset);
@@ -85,6 +157,7 @@ document.getElementById("savePreset").addEventListener("click", function () {
     console.log("No user is signed in.");
   }
 });
+
 
 function timeRestriction() {
   const hoursInput = document.getElementById('hours');
@@ -186,78 +259,79 @@ function timerVisibility() {
 
 timerVisibility();
 
-function toggleActiveStatus() {
-  const toggleButton = document.querySelectorAll('.form-check-input.preset');
-  const toggleStatuses = document.querySelectorAll('.form-check-label.preset');
-  const presetHours = document.querySelectorAll('.preset-hours');
-  const presetMinutes = document.querySelectorAll('.preset-minutes');
-  const presetSeconds = document.querySelectorAll('.preset-seconds');
 
-  toggleButton.forEach((toggleButton, index) => {
+function toggleActiveStatus() {
+  const toggleButtons = document.querySelectorAll('.form-check-input.preset');
+  const toggleStatuses = document.querySelectorAll('.form-check-label.preset');
+
+  toggleButtons.forEach((toggleButton, index) => {
     const toggleStatus = toggleStatuses[index];
 
-    if (toggleButton) {
-      toggleButton.addEventListener('change', function () {
-        if (toggleButton.checked) {
-          toggleStatus.textContent = "Active";
-          toggleButton.disabled = true;
-          startCountdown(index);
-        } else {
-          toggleStatus.textContent = "Inactive";
-          toggleButton.disabled = false;
-        }
-      });
-    }
+    toggleButton.addEventListener('change', function () {
+      if (toggleButton.checked) {
+        toggleStatus.textContent = "Active";
+        startAlarmCheck(index);
+      } else {
+        toggleStatus.textContent = "Inactive";
+        toggleButton.disabled = false;
+      }
+    });
   });
 
-  function startCountdown(index) {
-    const originalHours = parseInt(presetHours[index].textContent.split(' : ')[0]);
-    const originalMinutes = parseInt(presetMinutes[index].textContent.split(' : ')[0]);
-    const originalSeconds = parseInt(presetSeconds[index].textContent);
+function toggleDeleteButtons() {
+  var deleteButtons = document.querySelectorAll('.delete-timer');
 
-    let hours = originalHours;
-    let minutes = originalMinutes;
-    let seconds = originalSeconds;
-
-    let countdownInterval = setInterval(function () {
-        if (seconds > 0) {
-          seconds--;
-        } else if (minutes > 0) {
-          minutes--;
-          seconds = 59;
-        } else if (hours > 0) {
-          hours--;
-          minutes = 59;
-          seconds = 59;
-        }
-
-      presetHours[index].textContent = formatLeadZero(hours) + " : ";
-      presetMinutes[index].textContent = formatLeadZero(minutes) + " : ";
-      presetSeconds[index].textContent = formatLeadZero(seconds);
-
-      if (hours === 0 && minutes === 0 && seconds === 0) {
-        clearInterval(countdownInterval);
-
-        setTimeout(function () {
-          if (hours === 0 && minutes === 0 && seconds === 0) {
-            alert("Time's up!");
-          }
-
-          presetHours[index].textContent = formatLeadZero(originalHours) + " : ";
-          presetMinutes[index].textContent = formatLeadZero(originalMinutes) + " : ";
-          presetSeconds[index].textContent = formatLeadZero(originalSeconds);
-
-          toggleButton[index].disabled = false;
-          toggleButton[index].checked = false;
-          toggleStatuses[index].textContent = "Inactive";
-        });
+  deleteButtons.forEach(function(button) {
+      if (button.style.display === 'none' || button.style.display === '') {
+          button.style.display = 'block';
+      } else {
+          button.style.display = 'none';
       }
-    }, 1000);
+  });
+}
 
+document.getElementById('manageAlarmsButton').addEventListener('click', toggleDeleteButtons);
+
+
+  function startAlarmCheck(index) {
+    const alarmTime = getPresetTime(index);
+    const alarmInterval = setInterval(function () {
+      const currentTime = new Date();
+      const currentHours = currentTime.getHours();
+      const currentMinutes = currentTime.getMinutes();
+      const currentAmPm = currentHours >= 12 ? "P.M." : "A.M.";
+
+      const [presetHours, presetMinutes, presetAmPm] = alarmTime;
+
+      let adjustedHours;
+
+      if (presetAmPm === "P.M." && presetHours !== 12) {
+        adjustedHours = presetHours + 12;
+      } else if (presetAmPm === "A.M." && presetHours === 12) {
+        adjustedHours = 0;
+      } else {
+        adjustedHours = presetHours;
+      }
+
+      if (currentHours === adjustedHours && currentMinutes === presetMinutes && currentAmPm === presetAmPm) {
+        clearInterval(alarmInterval);
+        alert("Time's up! Alarm is ringing.");
+        toggleButtons[index].checked = false;
+        toggleStatuses[index].textContent = "Inactive";
+      }
+    }, 1000); 
+  }
+
+  function getPresetTime(index) {
+    const hours = parseInt(document.querySelectorAll('.preset-hours')[index].textContent.trim().split(' : ')[0], 10);
+    const minutes = parseInt(document.querySelectorAll('.preset-minutes')[index].textContent.trim(), 10);
+    const amPm = document.querySelectorAll('.preset-seconds')[index].textContent.trim();
+    return [hours, minutes, amPm];
   }
 }
 
 toggleActiveStatus();
+
 
 
 const hoursCountInput = document.getElementById('hoursCount');
@@ -365,57 +439,55 @@ function updateMinuteNeighbors() {
 }
 
 function updateSecondNeighbors() {
-  const currentValue = secondsCountInput.value;
+  const currentValue = secondsCountInput.value.trim();
 
   if (currentValue === "A.M.") {
-      prevSecond.textContent = "P.M.";
-      nextSecond.textContent = "P.M.";
+    prevSecond.textContent = "P.M.";
+    nextSecond.textContent = "P.M.";
   } else if (currentValue === "P.M.") {
-      prevSecond.textContent = "A.M.";
-      nextSecond.textContent = "A.M.";
+    prevSecond.textContent = "A.M.";
+    nextSecond.textContent = "A.M.";
+  } else {
+    secondsCountInput.value = "A.M.";
+    prevSecond.textContent = "P.M.";
+    nextSecond.textContent = "P.M.";
   }
 }
 
-
 function inputButtons() {
-    if (upHours) {
-        if (hoursCountInput) {
-            upHours.addEventListener('click', function () {
-                hoursCountInput.value = prevHour.textContent;
-                updateHourNeighbors();
-            });
-            downHours.addEventListener('click', function () {
-                hoursCountInput.value = nextHour.textContent;
-                updateHourNeighbors();
-            });
-        }
-    }
+  if (upHours && downHours) {
+    upHours.addEventListener('click', function () {
+      hoursCountInput.value = prevHour.textContent;
+      updateHourNeighbors();
+    });
+    downHours.addEventListener('click', function () {
+      hoursCountInput.value = nextHour.textContent;
+      updateHourNeighbors();
+    });
+  }
 
-    if (upMinutes) {
-        if (minutesCountInput) {
-            upMinutes.addEventListener('click', function () {
-                minutesCountInput.value = prevMinute.textContent;
-                updateMinuteNeighbors();
-            });
-            downMinutes.addEventListener('click', function () {
-                minutesCountInput.value = nextMinute.textContent;
-                updateMinuteNeighbors();
-            });
-        }
-    }
+  if (upMinutes && downMinutes) {
+    upMinutes.addEventListener('click', function () {
+      minutesCountInput.value = prevMinute.textContent;
+      updateMinuteNeighbors();
+    });
+    downMinutes.addEventListener('click', function () {
+      minutesCountInput.value = nextMinute.textContent;
+      updateMinuteNeighbors();
+    });
+  }
 
-    if (upSeconds) {
-        if (secondsCountInput) {
-            upSeconds.addEventListener('click', function () {
-                secondsCountInput.value = prevSecond.textContent;
-                updateSecondNeighbors();
-            });
-            downSeconds.addEventListener('click', function () {
-                secondsCountInput.value = nextSecond.textContent;
-                updateSecondNeighbors();
-            });
-        }
-    }
+  if (upSeconds && downSeconds) {
+    upSeconds.addEventListener('click', function () {
+      secondsCountInput.value = prevSecond.textContent;
+      updateSecondNeighbors();
+    });
+    downSeconds.addEventListener('click', function () {
+      secondsCountInput.value = nextSecond.textContent;
+      updateSecondNeighbors();
+    });
+  }
 }
 
+updateSecondNeighbors();
 inputButtons();
