@@ -152,6 +152,10 @@ if (CalenderExists){
     const tableBody = document.querySelector('tbody');
     tableBody.innerHTML = '';
     
+      // Clear all existing event dots
+  const allEventDots = document.querySelectorAll('.event-dot');
+  allEventDots.forEach(dot => dot.remove());
+
     let row = document.createElement('tr');
     calendarDates.forEach((date, index) => {
       // start a new row every 7 days
@@ -426,6 +430,7 @@ function closeModal() {
 ///////////////////////////////////////////////////////////////////////////
 // delete an event from Firesotre
 function deleteEvent(eventId) {
+  updateCalendar();
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
   const userID = user.uid;
@@ -448,6 +453,7 @@ function deleteEvent(eventId) {
     .doc(eventId)
     .delete()
     .then(() => {
+      updateCalendar();
       console.log("Event successfully deleted!");
       showToast(`Event ${title} on ${startDate} deleted`);
       // reload the upcoming evnets
@@ -456,11 +462,14 @@ function deleteEvent(eventId) {
     .catch(error => {
       console.error("Error deleting event: ", error);
       showToast("Failed to delete event: " + error.message);
+      updateCalendar();
     });
   }
   else {
     showToast("User is not signed in.");
+    updateCalendar();
   }
+  updateCalendar();
 }
 ///////////////////////////////////////////////////////////////////////////
 

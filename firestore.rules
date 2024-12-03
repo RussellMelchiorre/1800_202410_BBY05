@@ -1,0 +1,53 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Match for timers in the user's document
+    match /users/{userId}/timers/{timerId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Match for alarms in the user's document
+    match /users/{userId}/alarms/{alarmId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Main user document match
+    match /users/{userId} {
+      // Allow read/write for the user's own data
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+			
+      //for writing previous friend requests
+      match /friends/{friendRequest}{
+      allow read, write: if request.auth != null;
+      }
+      
+      // Match for friends subcollection
+      match /friends/friendStatus {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+        allow write: if request.auth != null; // Allow any authenticated user to write
+      }
+
+      // Match for events in the user's document
+      match /events/{eventId} {
+        // Allow read for the user or their friends
+        allow read: if request.auth != null && (
+          request.auth.uid == userId ||
+          request.auth.uid in get(/databases/$(database)/documents/users/$(userId)/friends/friendStatus).data.currentFriends
+        );
+        // Allow write if the user is authenticated
+        allow write: if request.auth != null;
+      }
+
+      // Match for alerts in the user's document (new rule added here)
+      match /alerts/{alertId} {
+        // Allow read and write for the user only
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Allow read for any authenticated user on user documents (general rule)
+    match /users/{userId} {
+      allow read: if request.auth != null;
+    }
+  }
+}
