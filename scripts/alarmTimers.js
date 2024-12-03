@@ -134,7 +134,6 @@ document.getElementById("savePreset").addEventListener("click", function () {
       timerValue = 0 + minutes;
     }
 
-
     const timerPreset = {
       presetName: presetName || "Unnamed Timer",
       hours: hours,

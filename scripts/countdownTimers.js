@@ -269,9 +269,9 @@ function startCountdown() {
         const currentMinutes = Math.floor((totalSeconds % 3600) / 60);
         const currentSeconds = totalSeconds % 60;
 
-        hoursCountInput.value = currentHours;
-        minutesCountInput.value = currentMinutes;
-        secondsCountInput.value = currentSeconds;
+        hoursCountInput.value = formatLeadZero(currentHours);
+        minutesCountInput.value = formatLeadZero(currentMinutes);
+        secondsCountInput.value = formatLeadZero(currentSeconds);
 
         updateHourNeighbors();
         updateMinuteNeighbors();
