@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let eventEndDate = new Date(endDate); // convert end date to date obgject
             const promises = [];
 
-            // Repeat event handling
+            // repeat event handling
             if (repeat !== "None") {
                 const repeatCount = 10;
                 for (let i = 0; i < repeatCount; i++) {

@@ -94,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log('User signed in:', user.uid);
+      
       if(CalenderExists){
       updateCalendar(); // update the calendar if the user is signed in
       loadUpcomingEvents(); // load the user's upcoming evnets
@@ -146,15 +147,15 @@ if (CalenderExists){
     // upcate the displayed month name
     const monthElement = document.getElementById('currentMonth');
     if (monthElement) {
-      monthElement.innerText = `${currentMonthName} ${now.getFullYear()}`;
+      monthElement.innerText = `${currentMonthName} ${now.getFullYear()}`; // month + year
     }
     
     const tableBody = document.querySelector('tbody');
     tableBody.innerHTML = '';
     
-      // Clear all existing event dots
-  const allEventDots = document.querySelectorAll('.event-dot');
-  allEventDots.forEach(dot => dot.remove());
+    // clear all existing event dot
+    const allEventDots = document.querySelectorAll('.event-dot');
+    allEventDots.forEach(dot => dot.remove());
 
     let row = document.createElement('tr');
     calendarDates.forEach((date, index) => {
@@ -194,34 +195,35 @@ function checkIfEventOnDate(date, cell) {
     return;
   }
   
-  console.log(`Checking events for date: ${date}`);
+  console.log(`Checking events for date: ${date}`); // cheking events for the given date
   
   const db = firebase.firestore(); // get Firesotre instance
-  // start of the day
+  // set the start of the day
   const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0);
-  // end of the day
+  // set the end of the day
   const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
   
+  // log the range of dates being queried
   console.log(`Looking for events from ${eventDateStart} to ${eventDateEnd}`);
   
   // query the Firesotre collection for events on the specified date
   db.collection("users").doc(user.uid).collection("events")
   .get()
   .then(snapshot => {
-    if (!snapshot.empty) {
+    if (!snapshot.empty) { // if events exist, process each event
       snapshot.docs.forEach(doc => {
         const eventData = doc.data();
-        const eventStartDateStr = eventData.start_date;
-        const eventStartDate = new Date(eventStartDateStr);
+        const eventStartDateStr = eventData.start_date; // get event start date as a sting
+        const eventStartDate = new Date(eventStartDateStr); // convert string to date object
           
         // if an event exists within the date range, display a dot on the calendar
         if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
           console.log(`Found event for date ${date}:`, eventData);
             
-          const eventDot = document.createElement('div');
-          eventDot.classList.add('event-dot');
-          cell.classList.add('highlight-event');
-          cell.appendChild(eventDot);
+          const eventDot = document.createElement('div'); // create a dot for the event
+          eventDot.classList.add('event-dot'); // add CSS
+          cell.classList.add('highlight-event'); // hightlight the cell for the evnet
+          cell.appendChild(eventDot); // append the dot to the cell
         }
       });
     }
@@ -237,6 +239,7 @@ function checkIfEventOnDate(date, cell) {
   // query the user's firend's event  
   db.collection("users").doc(user.uid).collection("friends").doc("friendStatus").get()
   .then(friendStatusDoc => {
+    // get the list of currnet friends
     const currentFriends = friendStatusDoc.data()?.currentFriends || [];
     
     currentFriends.forEach(friendId => {
@@ -252,10 +255,10 @@ function checkIfEventOnDate(date, cell) {
           if (eventStartDate >= eventDateStart && eventStartDate <= eventDateEnd) {
             console.log(`Found friend's event for date ${date}:`, eventData);
             
-            const friendEventDot = document.createElement('div');
-            friendEventDot.classList.add('friend-event-dot');
-            cell.classList.add('highlight-friend-event');
-            cell.appendChild(friendEventDot);
+            const friendEventDot = document.createElement('div'); // create a dot for the firned's event
+            friendEventDot.classList.add('friend-event-dot'); // add CSS
+            cell.classList.add('highlight-friend-event'); // highlight the cell for the friend's evnet
+            cell.appendChild(friendEventDot); // append the dot to the cell
           }
         });
       });
@@ -271,6 +274,7 @@ function checkIfEventOnDate(date, cell) {
 // function to load the user's upcoming events
 if (CalenderExists){
   
+  // function to load upcoming evnets
   function loadUpcomingEvents() {
     const db = firebase.firestore();
     const user = firebase.auth().currentUser;
@@ -286,13 +290,14 @@ if (CalenderExists){
       .limit(3)
       .get()
       .then(snapshot => {
-        if (!snapshot.empty) {
-          snapshot.forEach(doc => {
-            const eventData = doc.data();
-            const eventId = doc.id;
-            const listItem = document.createElement('li');
-            listItem.classList.add('list-group-item');
+        if (!snapshot.empty) { // if evnets are found
+          snapshot.forEach(doc => { // loop through each evnet document
+            const eventData = doc.data(); // get evnet data
+            const eventId = doc.id; // get the evnet document ID
+            const listItem = document.createElement('li'); // create a new list item
+            listItem.classList.add('list-group-item'); // add a style calss 
             
+            // add event information to the list item
             listItem.innerHTML = `
             <strong>${eventData.title}</strong><br>
             ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
@@ -301,6 +306,7 @@ if (CalenderExists){
             <button class="btn btn-danger btn-sm delete-btn" data-id="${eventId}">Delete</button>
             `;
             
+            // append the list item to the event list
             eventListElement.appendChild(listItem);
           });
           
@@ -328,9 +334,10 @@ if (CalenderExists){
 function showEventDetails(date, cell) {
   const existingDetails = cell.querySelector(".event-details");
   
+  // if there are existing details and it contains the "active" class
   if (existingDetails && existingDetails.classList.contains("active")) {
-    existingDetails.remove();
-    cell.classList.remove("selected-cell");
+    existingDetails.remove(); // remove the existing evnet details
+    cell.classList.remove("selected-cell"); // remove the selected cell styling
     return;
   }
 
@@ -342,8 +349,11 @@ function showEventDetails(date, cell) {
     selected.classList.remove("selected-cell");
   });
 
+  // create a new div
   const detailsDiv = document.createElement("div");
+  // add the "event-details" class
   detailsDiv.classList.add("event-details");
+  // add the "active" class to make it active
   detailsDiv.classList.add("active");
 
   // load events for the selected date
@@ -359,6 +369,7 @@ function showEventDetails(date, cell) {
 function loadEventsForDate(date, detailsDiv) {
   const user = firebase.auth().currentUser;
 
+  // if mo user is logged in, log message to the console
   if (!user) {
     console.log("No user is signed in.");
     detailsDiv.textContent = "Sign in to see events.";
@@ -366,25 +377,26 @@ function loadEventsForDate(date, detailsDiv) {
   }
 
   const db = firebase.firestore();
-  const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0);
-  const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59);
+  const eventDateStart = new Date(new Date().getFullYear(), new Date().getMonth(), date, 0, 0, 0); // set the start date for the evnet
+  const eventDateEnd = new Date(new Date().getFullYear(), new Date().getMonth(), date, 23, 59, 59); // set the end date for the evnet
 
   db.collection("users").doc(user.uid).collection("events")
   .where("start_date", ">=", eventDateStart.toISOString())
   .where("start_date", "<=", eventDateEnd.toISOString())
   .get()
   .then(snapshot => {
-    if (snapshot.empty) {
+    if (snapshot.empty) { // if no events are found
       detailsDiv.textContent = "No events for this date.";
     }
-    else {
-      const eventList = document.createElement("ul");
-      eventList.classList.add("list-group");
+    else { // if events are found
+      const eventList = document.createElement("ul"); // create a new ul element
+      eventList.classList.add("list-group"); // add the "list-group" class
       
+      // for each event document
       snapshot.docs.forEach(doc => {
-        const eventData = doc.data();
-        const listItem = document.createElement("li");
-        listItem.classList.add("list-group-item");
+        const eventData = doc.data(); // get event data
+        const listItem = document.createElement("li"); // create a new li element
+        listItem.classList.add("list-group-item"); // add the "list-group-item" class
         listItem.innerHTML = `
         <strong>${eventData.title}</strong><br>
         ${new Date(eventData.start_date).toLocaleString()} - ${new Date(eventData.end_date).toLocaleString()}<br>
@@ -405,23 +417,23 @@ function loadEventsForDate(date, detailsDiv) {
 ///////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-//functions for selecting events to delete.
+//functions for selecting events to delete
 function addDeleteButtonListener() {
   const deleteButtons = document.querySelectorAll(".delete-btn");
 
   deleteButtons.forEach(button => {
-    button.addEventListener("click", function () {
-      const eventId = this.getAttribute("data-id");
-      document.querySelector("#confirmation-modal").style.display = "block";
-      document.querySelector("#confirm-delete").onclick = () => {
-        deleteEvent(eventId);
-        closeModal();
+    button.addEventListener("click", function () { // add click evnet listener
+      const eventId = this.getAttribute("data-id"); // get the evnet ID to delete
+      document.querySelector("#confirmation-modal").style.display = "block"; // show the confirmation modal
+      document.querySelector("#confirm-delete").onclick = () => { // when the delete confirmation button is clicked
+        deleteEvent(eventId); // call deleteEvent function
+        closeModal(); // close the modal
       };
     });
   });
 }
 
-//closes delete conformation popup.
+//closes delete conformation popup
 function closeModal() {
   document.querySelector("#confirmation-modal").style.display = "none";
 }
@@ -430,7 +442,7 @@ function closeModal() {
 ///////////////////////////////////////////////////////////////////////////
 // delete an event from Firesotre
 function deleteEvent(eventId) {
-  updateCalendar();
+  updateCalendar(); // update the calendar
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
   const userID = user.uid;
@@ -441,16 +453,16 @@ function deleteEvent(eventId) {
     eventsRef.get()
     .then((doc) => {
       if (doc.exists) {
-        const eventData = doc.data();
-        const title = eventData.title;
-        const startDate = formatDate(eventData.start_date);
+        const eventData = doc.data(); // get evnet data
+        const title = eventData.title; // get event title
+        const startDate = formatDate(eventData.start_date); // format the start date
 
         // Delete the event
-        return eventsRef.delete().then(() => {
-          updateCalendar();
+        return eventsRef.delete().then(() => { // after deleting the evnet
+          updateCalendar(); // update the calendar
           console.log("Event successfully deleted!");
           showToast(`Event "${title}" on ${startDate} deleted`);
-          // Reload the upcoming events
+          // reload the upcoming events
           loadUpcomingEvents();
         });
       } else {
