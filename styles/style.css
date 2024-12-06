@@ -502,7 +502,6 @@ input[type="number"]::-webkit-outer-spin-button {
   display: block;
 }
 
-/* Modal overlay for background dim */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -513,7 +512,6 @@ input[type="number"]::-webkit-outer-spin-button {
   z-index: 1000;
 }
 
-/* Modal card styling */
 .modal-card {
   position: fixed;
   top: 50%;
@@ -529,7 +527,6 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Modal actions container */
 .modal-actions {
   display: flex;
   justify-content: space-evenly;

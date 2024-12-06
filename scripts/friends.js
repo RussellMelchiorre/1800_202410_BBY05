@@ -1,5 +1,11 @@
-// for sending friend requsets, watches for the button click
+//This is the js page for most stuff realting to the friends system, as a note: the words Notification and Alert are used intechangably and mean a displayed toast.
+// please not that Alert and Alarm are diffrent, alerts are the toasts alarms are used in the timers section.
+////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////
+//if on the profile page, watches for the add friend button to be clicked. if the button is clicked the a friend request is attemped to be sent
+//if the user already has a pending request or is already friends with that user then a toast is displayed with that information and the array is not updated.
+//if the user does not meet those conditions then the user who sent the request's ID is added to the recipients pending friends array.
 const FriendsExists = document.getElementById('addFriendButton');
 
 if (FriendsExists){
@@ -43,11 +49,14 @@ if (FriendsExists){
       });
     }
   });
-  
-  
 }
+////////////////////////////////////////////////////////////////////////////////////////////
 
-
+////////////////////////////////////////////////////////////////////////////////////////////
+//checks for updates in the friend status document to watch for incoming friend requests,
+//to avoid spam duplicate notifications when a new unseen request is seen then it is saved to the firestore,
+//before any alerts are called they are checked against the contentes of the freinds firestore collection and
+// if it has already been seen then no alert is displayed. if it is unique then an alert is displayed.
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     const currentUserId = user.uid;
@@ -78,10 +87,11 @@ firebase.auth().onAuthStateChanged(user => {
       });
   }
 });
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+//This mionitors for an auh state change and when it occurs it gets the arrays and displays them in thier respective lists.
 const FriendsListExists = document.getElementById('addFriendButton');
 
 if (FriendsListExists){
@@ -129,8 +139,12 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 }
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// accepts a friend request
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Accepts a friend request, when called it removes the users ID from the pending friends array and adds it to the current friends array
+// since friendships go both ways when an friend is accepted the UserID of the accepting friend is added to the current friends array of 
+// the user who sent the request. when a request is accepted an notification is displayed conforming this.
 function acceptFriend(friendId) {
   const currentUserId = firebase.auth().currentUser.uid;
 
@@ -149,8 +163,11 @@ function acceptFriend(friendId) {
     showToast(`Friend Request from ${senderDoc.data().name}` + " Accepted!");
   });
 }
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// removes a friend from current friends
+////////////////////////////////////////////////////////////////////////////////////////////////
+//Removes a friend, When called your UserID is removed from your friends current friends array and thier UserID is removed from your current
+//friends array. A toast notification is then displayed conforming this.
 function removeFriend(friendId) {
   const currentUserId = firebase.auth().currentUser.uid;
 
@@ -168,8 +185,11 @@ function removeFriend(friendId) {
     showToast(`${senderDoc.data().name}` + " Removed As A Friend");
   });
 }
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-//log previous friend requests
+////////////////////////////////////////////////////////////////////////////////////////////////
+//This logs freind requests when called to avoid them being displayed repeatedly, the friends UserID and the time of the request is logged
+//to a document in the friends collection. a toast alert is then shown for conformation or error.
 function logFriendRequest(friendID) {
   const user = firebase.auth().currentUser;
   const userId = user.uid; 
@@ -188,3 +208,4 @@ function logFriendRequest(friendID) {
     console.error("Request logging alert to Firestore: ", error);
   });
 }
+////////////////////////////////////////////////////////////////////////////////////////////////
