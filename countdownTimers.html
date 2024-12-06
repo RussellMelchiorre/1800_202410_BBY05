@@ -51,12 +51,12 @@
     <a class="btn btn-custom" href="#" style="background-color: #417ab8; color: white; border: 1px solid black;">
       <u><b>Timer</b></u>
     </a>
-    <a class="btn btn-custom" href="presetTimers.html" 
-    style="background-color: #417ab8; color: white; border: 1px solid black;">Presets</a>
-    <a class="btn btn-custom" href="alarmTimers.html" 
-    style="background-color: #417ab8; color: white; border: 1px solid black;">Alarm</a>
-  </ul>
-</div>
+    <a class="btn btn-custom" href="presetTimers.html"
+      style="background-color: #417ab8; color: white; border: 1px solid black;">Presets</a>
+    <a class="btn btn-custom" href="alarmTimers.html"
+      style="background-color: #417ab8; color: white; border: 1px solid black;">Alarm</a>
+    </ul>
+  </div>
 
   <div id="countdownTimerContainer" class="countdownTimer" style="display: block; margin-top: 1rem;">
     <div class="text-center mt-3" style="width: 90%; margin: 0 auto;">
@@ -65,8 +65,8 @@
           <p>Hours</p>
           <button id="upHours" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
           <p id="prevHour">99</p>
-          <input type="number" style="padding-top: 15%; padding-bottom: 15%; text-align: center; font-size: 150%;" id="hoursCount" class="form-control" 
-          placeholder="00" min="0" max="99">
+          <input type="number" style="padding-top: 15%; padding-bottom: 15%; text-align: center; font-size: 150%;"
+            id="hoursCount" class="form-control" placeholder="00" min="0" max="99">
           <p id="nextHour" style="margin-top: 1rem;">01</p>
           <button id="downHours" style="font-size: 150%; width: 100%;">˅</button>
         </div>
@@ -74,8 +74,8 @@
           <p>Minutes</p>
           <button id="upMinutes" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
           <p id="prevMinute">59</p>
-          <input type="number" style="padding-top: 15%; padding-bottom: 15%;  text-align: center; font-size: 150%;" id="minutesCount" class="form-control" 
-          placeholder="00" min="0" max="59">
+          <input type="number" style="padding-top: 15%; padding-bottom: 15%;  text-align: center; font-size: 150%;"
+            id="minutesCount" class="form-control" placeholder="00" min="0" max="59">
           <p id="nextMinute" style="margin-top: 1rem">01</p>
           <button id="downMinutes" style="font-size: 150%; width: 100%;">˅</button>
         </div>
@@ -83,32 +83,34 @@
           <p>Seconds</p>
           <button id="upSeconds" style="font-size: 150%; width: 100%; margin-bottom: 1rem;">˄</button>
           <p id="prevSecond">59</p>
-          <input type="number" style="padding-top: 15%; padding-bottom: 15%;  text-align: center; font-size: 150%;" id="secondsCount" class="form-control" 
-          placeholder="00" min="0" max="59">
+          <input type="number" style="padding-top: 15%; padding-bottom: 15%;  text-align: center; font-size: 150%;"
+            id="secondsCount" class="form-control" placeholder="00" min="0" max="59">
           <p id="nextSecond" style="margin-top: 1rem;">01</p>
           <button id="downSeconds" style="font-size: 150%; width: 100%;">˅</button>
         </div>
       </div>
     </div>
-    <button id="startTimer" class="btn btn-primary mt-1" style="width: 40%; display: block; margin: 0 auto;">Start</button>
-      <div class="duringTimerButtons justify-content-center" style="width: 100%; display: none; margin: 0 auto; justify-content: space-between; gap: 1rem;">
-        <button id="cancelTimer" class="btn btn-danger mt-1" style="width: 30%;">Cancel</button>
-        <button id="pauseTimer" class="btn btn mt-1" style="width: 30%; background-color: rgb(157, 157, 157); color: white;">Pause</button>
+    <button id="startTimer" class="btn btn-primary mt-1"
+      style="width: 40%; display: block; margin: 0 auto;">Start</button>
+    <div class="duringTimerButtons justify-content-center"
+      style="width: 100%; display: none; margin: 0 auto; justify-content: space-between; gap: 1rem;">
+      <button id="cancelTimer" class="btn btn-danger mt-1" style="width: 30%;">Cancel</button>
+      <button id="pauseTimer" class="btn btn mt-1"
+        style="width: 30%; background-color: rgb(157, 157, 157); color: white;">Pause</button>
     </div>
   </div>
 
-      <!-- toasts for notifs-->
-      <div id="basicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body">
-          <span id="toast-message"></span>
-        </div>
-      </div>
-      
+  <!-- toasts for notifs-->
+  <div id="basicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body">
+      <span id="toast-message"></span>
+    </div>
+  </div>
+
   <!-- Our own navbar goes here -->
   <nav id="navbarPlaceholder"></nav>
   <!-- Our own footer goes here-->
   <nav id="footerPlaceholder"></nav>
-
 
   <!---------------------------------------------->
   <!-- Your own JavaScript functions go here    -->

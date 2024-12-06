@@ -18,7 +18,7 @@ This browser based web application to help keep you and your friends on task and
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps ...
-* The project can be hoasted through a liveserve service
+* The project can be hosted through a liveserve service
 * The project can also be acessed at: https://comp-1800-202430-team05.web.app/
 
 ## 5. Known Bugs and Limitations
@@ -32,6 +32,7 @@ What we'd like to build in the future:
 * We would like to add better navigation such as where friends names can be clicked to bring up thier events.
 * We would like to add a feature to be able to import external calendars.
 * We would like to add a way to add friend and login through external sources.
+* We would like to add timers which work across all pages.
 	
 ## 7. Contents of Folder
 Content of the project folder:

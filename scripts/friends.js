@@ -1,5 +1,5 @@
-//This is the js page for most stuff realting to the friends system, as a note: the words Notification and Alert are used intechangably and mean a displayed toast.
-// please not that Alert and Alarm are diffrent, alerts are the toasts alarms are used in the timers section.
+//This is the js page for most stuff relating to the friends system, as a note: the words Notification and Alert are used intechangably and mean a displayed toast.
+// please note that Alert and Alarm are diffrent, alerts are the toasts alarms are used in the timers section.
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////
