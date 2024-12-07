@@ -38,6 +38,7 @@ What we'd like to build in the future:
 ## 7. Contents of Folder
 Content of the project folder:
 
+```
 1800_202410_BBY05/
 ├─ .firebase/
 │  └─ hosting..cache
@@ -82,7 +83,7 @@ Content of the project folder:
 │  └─ nav_before_login.html
 ├─ underConst.html
 └─ underConstPreLogin.html
-
+```
         
 ## Firebase rules
 
