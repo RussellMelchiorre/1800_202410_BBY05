@@ -38,57 +38,51 @@ What we'd like to build in the future:
 ## 7. Contents of Folder
 Content of the project folder:
 
-C:.
-|   .firebaserc
-|   .gitignore
-|   404.html
-|   alarmTimers.html
-|   countdownTimers.html
-|   firebase.json
-|   firestore.indexes.json
-|   firestore.rules
-|   index.html
-|   login.html
-|   main.html
-|   notifs.html
-|   presetTimers.html
-|   profile.html
-|   README.md
-|   README_tree.txt
-|   schedule.html
-|   template.html
-|   underConst.html
-|   underConstPreLogin.html
-|   
-+---.firebase
-|       hosting..cache
-|       
-+---.vscode
-|       settings.json
-|       
-+---images
-|       Toast-image.png
-|       
-+---scripts
-|       alarmTimers.js
-|       authentication.js
-|       calendar.js
-|       countdownTimers.js
-|       firebaseAPI_TEAM05 copy.js
-|       firebaseAPI_TEAM05.js
-|       friends.js
-|       main.js
-|       presetTimers.js
-|       script.js
-|       skeleton.js
-|       
-+---styles
-|       style.css
-|       
-\---text
-        footer.html
-        nav_after_login.html
-        nav_before_login.html
+1800_202410_BBY05/
+├─ .firebase/
+│  └─ hosting..cache
+├─ .firebaserc
+├─ .gitignore
+├─ .vscode/
+│  └─ settings.json
+├─ 404.html
+├─ alarmTimers.html
+├─ countdownTimers.html
+├─ firebase.json
+├─ firestore.indexes.json
+├─ firestore.rules
+├─ images/
+│  └─ Toast-image.png
+├─ index.html
+├─ login.html
+├─ main.html
+├─ notifs.html
+├─ presetTimers.html
+├─ profile.html
+├─ README.md
+├─ schedule.html
+├─ scripts/
+│  ├─ alarmTimers.js
+│  ├─ authentication.js
+│  ├─ calendar.js
+│  ├─ countdownTimers.js
+│  ├─ firebaseAPI_TEAM05 copy.js
+│  ├─ firebaseAPI_TEAM05.js
+│  ├─ friends.js
+│  ├─ main.js
+│  ├─ presetTimers.js
+│  ├─ script.js
+│  └─ skeleton.js
+├─ styles/
+│  └─ style.css
+├─ template.html
+├─ text/
+│  ├─ footer.html
+│  ├─ nav_after_login.html
+│  └─ nav_before_login.html
+├─ underConst.html
+└─ underConstPreLogin.html
+
         
 ## Firebase rules
 
