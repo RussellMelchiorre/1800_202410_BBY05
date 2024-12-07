@@ -1,4 +1,5 @@
 # Project Title
+RoutineSync
 
 ## 1. Project Description
 This browser based web application to help keep you and your friends on task and improve your productivity, you can create and delete events, use preset timers, create custom timers and alarms, and manage your friendships. 
